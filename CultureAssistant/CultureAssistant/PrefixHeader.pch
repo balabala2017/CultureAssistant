@@ -1,0 +1,113 @@
+//
+//  PrefixHeader.pch
+//  CultureAssistant
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+#import "Object+Extension.h"   //扩展函数
+#import "Header.h"             //函数接口宏定义
+#import "CustomViewController.h"
+#import "CustomElementView.h"  
+#import "DataModel.h"
+
+#import "MBProgressHUD.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
+
+#import "AFNetAPIClient.h"
+#import "RequestParameters.h"
+#import "DataModel.h"
+#import "DeviceHelper.h"
+
+#import "LoginViewController.h"
+
+//define this constant if you want to use Masonry without the 'mas_' prefix
+#define MAS_SHORTHAND
+//define this constant if you want to enable auto-boxing for default syntax
+#define MAS_SHORTHAND_GLOBALS
+
+#import "Masonry.h"
+
+#ifndef WeakObj
+#define WeakObj(obj) __weak typeof(obj) w##obj = obj;
+#endif
+
+#define CLog(format, ...)  NSLog(format, ## __VA_ARGS__)
+#define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+
+// 判断是否是iPhone X
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+// 状态栏高度
+#define STATUS_BAR_HEIGHT (iPhoneX ? 44.f : 20.f)
+// 导航栏高度
+#define NAVIGATION_BAR_HEIGHT (iPhoneX ? 88.f : 64.f)
+// tabBar高度
+#define TAB_BAR_HEIGHT (iPhoneX ? (49.f+34.f) : 49.f)
+// home indicator
+#define HOME_INDICATOR_HEIGHT (iPhoneX ? 34.f : 0.f)
+
+
+#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+
+
+#define TabBarHeight 50.f
+
+#define BaseColor   [UIColor colorWithRed:0x03/255.f green:0xa9/255.f blue:0xf4/255.f alpha:1.f]
+#define Color666666 [UIColor colorWithRed:0x66/255.f green:0x66/255.f blue:0x66/255.f alpha:1.f]
+#define Colorebebeb [UIColor colorWithRed:0xeb/255.f green:0xeb/255.f blue:0xeb/255.f alpha:1.f]
+#define Color999999 [UIColor colorWithRed:0x99/255.f green:0x99/255.f blue:0x99/255.f alpha:1.f]
+#define Color333333 [UIColor colorWithRed:0x33/255.f green:0x33/255.f blue:0x33/255.f alpha:1.f]
+#define Colore83e0b [UIColor colorWithRed:0xe8/255.f green:0x3e/255.f blue:0x0b/255.f alpha:1.f]
+#define Colordddddd [UIColor colorWithWhite:0xdd/255.f alpha:1.f]
+#define Color212121 [UIColor colorWithWhite:0x21/255.f alpha:1.f]
+
+
+#define BackupUserInfo @"BackupUserInfo"   //注册或登录成功后保存到NSUserDefaults中
+
+//搜索
+#define SearchHistoryKey @"SearchHistoryKey"
+
+//城市列表  数组结构  城市code或机构id  城市或机构name  城市或机构的标识
+#define LocationSelectedArea  @"LocationSelectedArea"
+#define LocationHistoryArea   @"LocationHistoryArea"
+
+//招募查询条件
+#define RecruitQueryServiceType    @"RecruitQueryServiceType"
+#define RecruitQueryServiceObject  @"RecruitQueryServiceObject"
+#define RecruitQueryRecruitNum     @"RecruitQueryRecruitNum"
+
+#define Start_Query_Recruit        @"Start_Query_Recruit"
+
+//选择城市、场馆
+#define Change_City_Library        @"Change_City_Library"
+#define SelectedCityKey            @"SelectedCityKey"
+#define SelectedLibraryKey         @"SelectedLibraryKey"
+
+
+#define CityModelKey                  @"CityModelKey"
+#define LibraryModelKey               @"LibraryModelKey"
+
+
+//保存到NSUserDefaults中，退出后台再次登录时，需要重新执行一次登录操作
+#define LocalUserPassword @"LOCALUSERPASSWORD"
+//第三方登录的情况需要保存openid 和  登录类型
+#define ThirdLoginOpenid       @"THIRDLOGINOPENID"
+#define ThirdLoginType         @"THIRDLOGINTYPE"
+
+#define twsm_secretKey  @"f36f3e02dee7e1c429f3ab91e106d898"   //不参与加密之前的排序
+#define twsm_appId      @"8d1da37fe9294024a4306c14abf53ac5"   //不参与加密
+
+
+#define PAGESIZE @"10"
+#define VERSIONSTR @"1.0.0"
+#define VERSIONCODE @"10"
+
+
+#endif /* PrefixHeader_pch */
