@@ -13,7 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"关于";
     
     UIScrollView* scrollView = [UIScrollView new];
@@ -47,11 +47,12 @@
         make.height.equalTo(10);
     }];
     
-    NSString* content = @"       文化助盲以弘扬中华传统文化为己任，坚持做传递正能量的高品质文化传播交流平台。依托大数据等先进技术，汇集全网热点文化资讯，提供丰富的传统文化资源；创新文化互动活动，扶持各地文化特色产品发展。为全民文化交流提供个性展示舞台，为文化机构等提供互联网宣传运营平台。\n       专业的运营团队，具有丰富的线上线下运营经验，热忱期待与各地文化机构等进行广泛合作，共同弘扬中华民族传统！";
+    NSString* content = @"中国盲文图书馆文化助盲APP旨在为中国盲文图书馆及各分支馆建立统一的志愿者管理平台，依托互联网、尤其是移动互联网技术，利用数字化信息化手段，方便志愿者招募、志愿服务，志愿者培训、管理交流，志愿服务宣传、志愿服务评估等志愿者管理工作的开展。";
     
     NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:content];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.firstLineHeadIndent = 24.0f;
     [paragraphStyle setLineSpacing:12];
     [attributedString setAttributes:@{NSParagraphStyleAttributeName:paragraphStyle,NSFontAttributeName:[UIFont systemFontOfSize:12]} range:NSMakeRange(0, [attributedString length])];
     
