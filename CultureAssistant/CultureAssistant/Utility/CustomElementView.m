@@ -783,6 +783,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         _starIcon = [UILabel new];
         _starIcon.text = @"*";
@@ -907,6 +908,17 @@
 
 @end
 
+@implementation  RegisterButtonCell
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    return self;
+}
+
+@end
+
 @interface RegisterSkillCell ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property(nonatomic,strong)UICollectionView* collectionView;
@@ -917,6 +929,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         UILabel* label = [UILabel new];
         label.text =  @"特长：请选择（多选）";
@@ -952,6 +965,12 @@
         }];
     }
     return self;
+}
+
+- (void)setSpecialitys:(NSArray *)specialitys{
+    _specialitys = specialitys;
+    
+    [self.collectionView reloadData];
 }
 
 + (CGFloat)heightForRegisterSkillCell{
@@ -1016,6 +1035,8 @@
 @implementation RegisterBoxCell
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self  = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         _boxBtn = [UIButton new];
         [_boxBtn setImage:[UIImage imageNamed:@"checkbox_normal"] forState:UIControlStateNormal];
         [_boxBtn setImage:[UIImage imageNamed:@"checkbox_selected"] forState:UIControlStateSelected];

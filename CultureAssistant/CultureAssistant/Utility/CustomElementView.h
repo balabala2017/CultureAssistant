@@ -92,6 +92,11 @@
 @property(nonatomic,strong)UIButton* boxBtn;
 @end
 
+@interface RegisterButtonCell : UITableViewCell
+
+@end
+
+
 @interface RegisterSkillCell : UITableViewCell
 @property(nonatomic,strong)NSArray *specialitys;
 @property(nonatomic,copy)void(^selectedSkillHandler)(BOOL selected,NSString * skillId);

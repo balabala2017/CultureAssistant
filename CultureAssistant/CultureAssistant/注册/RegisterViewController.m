@@ -94,9 +94,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
+
     self.skillArray = [NSMutableArray array];
     self.dictionary = [NSMutableDictionary dictionary];
     
@@ -134,13 +132,15 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegisterButtonCell"];
+    [_tableView registerClass:[RegisterButtonCell class] forCellReuseIdentifier:@"RegisterButtonCell"];
     [_tableView registerClass:[RegisterSkillCell class] forCellReuseIdentifier:@"RegisterSkillCell"];
     [self.view addSubview:_tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.left.right.equalTo(self.view);
         make.bottom.equalTo(self.view.bottom).offset(-49);
     }];
+    
+   
     
     
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 2)
@@ -165,13 +165,23 @@
         vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         [self presentViewController:vc animated:NO completion:nil];
     }
-
-
+    
     self.nextBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     self.nextBtn.backgroundColor = BaseColor;
     [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [self.nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.nextBtn addTarget:self action:@selector(onNextStepAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    //审核状态不可修改
+    if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
+        [self.nextBtn setTitle:@"审核中，不允许修改" forState:UIControlStateNormal];
+        self.nextBtn.enabled = NO;
+    }else{
+        [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        self.nextBtn.enabled = YES;
+    }
+
 
     self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
     self.pickerView.dataSource = self;
@@ -310,7 +320,7 @@
     
     //审核状态不可修改
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
-        [self.nextBtn setTitle:@"审核中" forState:UIControlStateNormal];
+        [self.nextBtn setTitle:@"审核中，不允许修改" forState:UIControlStateNormal];
         self.nextBtn.enabled = NO;
     }else{
         [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
@@ -394,6 +404,7 @@
     self.politicalData = nil;
     self.postCodeData = nil;
     
+    [self.skillArray  removeAllObjects];
     
     VolunteerInfo* volunteer = [UserInfoManager sharedInstance].volunteer;
     if (volunteer)
@@ -697,7 +708,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.titleArray.count){
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"RegisterButtonCell" forIndexPath:indexPath];
+        RegisterButtonCell* cell = [tableView dequeueReusableCellWithIdentifier:@"RegisterButtonCell" forIndexPath:indexPath];
+        cell.contentView.backgroundColor = BaseColor;
         [cell addSubview:self.nextBtn];
         return cell;
     }

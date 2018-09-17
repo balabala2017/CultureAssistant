@@ -355,7 +355,8 @@
     _scrollView = [UIScrollView new];
     [self.view addSubview:_scrollView];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.left.right.equalTo(self.view);
+        make.top.equalTo(-20);
+        make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.view).offset(-40);
     }];
     
