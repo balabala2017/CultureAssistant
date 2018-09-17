@@ -415,7 +415,7 @@
     button.selected = YES;
     _lastButton = button;
     [_menuRedLineView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_lastButton.frame.origin.x);
+        make.left.equalTo(self.lastButton.frame.origin.x);
     }];
     //上方小的滑动视图的滚动
     float xx = SCREENWIDTH * (button.tag - 1) * (_kButtonWidth / SCREENWIDTH) - _kButtonWidth;
@@ -439,7 +439,7 @@
         button.selected = YES;
         _lastButton = button;
         [_menuRedLineView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(_lastButton.frame.origin.x));
+            make.left.equalTo(self.lastButton.frame.origin.x);
         }];
     }
 }

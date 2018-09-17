@@ -66,6 +66,8 @@
 + (BOOL) validateEmail:(NSString *)candidate;
 //判断身份证号码是否正确
 + (BOOL)validateIdentityCard:(NSString *)IDCardNumber;
+//从身份证中提取出生日期
++ (NSString *)extractBirthday:(NSString *)str;
 
 + (NSString *)ConvertStr:(NSString *)str;
 

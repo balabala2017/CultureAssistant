@@ -213,7 +213,7 @@
             if (self.banners.list.count >0) {
                 [wself layoutTopBanner];
             }else{
-                _scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
+                self.scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
             }
         }
     }failure:^(id JSON, NSError *error){

@@ -107,7 +107,6 @@
 		BEAB8E371F430BC40053F174 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D791F430BC40053F174 /* JSONModel+networking.m */; };
 		BEAB8E381F430BC40053F174 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D7C1F430BC40053F174 /* JSONKeyMapper.m */; };
 		BEAB8E391F430BC40053F174 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D7E1F430BC40053F174 /* JSONValueTransformer.m */; };
-		BEAB8E3A1F430BC40053F174 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEAB8D811F430BC40053F174 /* Info.plist */; };
 		BEAB8E3B1F430BC40053F174 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D831F430BC40053F174 /* MASCompositeConstraint.m */; };
 		BEAB8E3C1F430BC40053F174 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D861F430BC40053F174 /* MASConstraint.m */; };
 		BEAB8E3D1F430BC40053F174 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAB8D881F430BC40053F174 /* MASConstraintMaker.m */; };
@@ -369,7 +368,6 @@
 		BEAB8D7D1F430BC40053F174 /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
 		BEAB8D7E1F430BC40053F174 /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
 		BEAB8D7F1F430BC40053F174 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		BEAB8D811F430BC40053F174 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEAB8D821F430BC40053F174 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		BEAB8D831F430BC40053F174 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		BEAB8D841F430BC40053F174 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -1012,7 +1010,6 @@
 		BEAB8D801F430BC40053F174 /* Masonry */ = {
 			isa = PBXGroup;
 			children = (
-				BEAB8D811F430BC40053F174 /* Info.plist */,
 				BEAB8D821F430BC40053F174 /* MASCompositeConstraint.h */,
 				BEAB8D831F430BC40053F174 /* MASCompositeConstraint.m */,
 				BEAB8D841F430BC40053F174 /* MASConstraint+Private.h */,
@@ -1379,7 +1376,6 @@
 				BEAB8E1B1F430BC40053F174 /* single_sel.png in Resources */,
 				BEAB8E191F430BC40053F174 /* pic_video_default.png in Resources */,
 				BEAB8E1A1F430BC40053F174 /* single.png in Resources */,
-				BEAB8E3A1F430BC40053F174 /* Info.plist in Resources */,
 				BEAB8E111F430BC40053F174 /* large-font.js in Resources */,
 				BE7B7F63205008E700013ED2 /* volunteer_bg.jpg in Resources */,
 			);

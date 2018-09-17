@@ -109,6 +109,9 @@
                     
                     [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
                         if (finished) {
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh_volunteer_info" object:nil];
+                            
                             if (wself.loginSuccess) {
                                 wself.loginSuccess();
                             }

@@ -96,7 +96,7 @@
             
             [self.allCityDic setValue:mArray forKey:self.allCityKeys[2]];
             self.cityList = mArray;
-            [_collectionView reloadData];
+            [self.collectionView reloadData];
         }
     } failure:^(id JSON, NSError *error) {
         
@@ -114,7 +114,7 @@
             
             NSArray * cityList = [CityModel arrayOfModelsFromDictionaries:array];
             [self.allCityDic setValue:cityList forKey:self.allCityKeys[1]];
-            [_collectionView reloadData];
+            [self.collectionView reloadData];
         }
         
     } failure:^(id JSON, NSError *error) {

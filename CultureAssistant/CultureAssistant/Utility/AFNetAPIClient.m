@@ -61,7 +61,7 @@
             aString = [aString stringByReplacingOccurrencesOfString:@"amp;" withString:@""];
             aString=[aString stringByReplacingOccurrencesOfString:@"&#183;" withString:@"."];
             
-            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
+//            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
             
             
             DataModel * model = [[DataModel alloc] initWithString:aString error:nil];
@@ -97,8 +97,6 @@
             }
             else
             {
-//                UIWindow * window = [[[UIApplication sharedApplication] delegate] window];
-//                [MBProgressHUD MBProgressHUDWithView:window Str:@"服务器连接失败"];
                 failure(@"请求失败",nil);
             }
         }
@@ -128,7 +126,7 @@
             aString = [aString stringByReplacingOccurrencesOfString:@"&ldquo;" withString:@"\""];
             aString = [aString stringByReplacingOccurrencesOfString:@"&rdquo;" withString:@"\""];
             
-            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
+//            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
             DataModel * model = [[DataModel alloc] initWithString:aString error:nil];
             if ([model.code intValue] == 200) {
                 success(aString,nil);
@@ -151,11 +149,8 @@
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         NSLog(@"AFNetAPIClient post error %@",error.debugDescription);
-        if (failure && ![Function isEqualToString:@"/api/login/toExit"]) {
-            UIWindow * window = [[[UIApplication sharedApplication] delegate] window];
-            [MBProgressHUD MBProgressHUDWithView:window Str:@"请检查网络"];
-            failure(@"请求失败",nil);
-        }
+
+        failure(@"请求失败",nil);
     }];
 }
 

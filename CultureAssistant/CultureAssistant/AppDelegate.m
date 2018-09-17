@@ -100,6 +100,8 @@
                 }
             }
             [UserInfoManager sharedInstance].isAlreadyLogin = YES;
+            
+
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refresh_volunteer_info" object:nil];
             [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
                 
@@ -108,7 +110,7 @@
             [[UserInfoManager sharedInstance] deleteUserInfo];
         }
     }failure:^(id JSON, NSError *error){
-        
+        [[UserInfoManager sharedInstance] deleteUserInfo];
     }];
 }
 

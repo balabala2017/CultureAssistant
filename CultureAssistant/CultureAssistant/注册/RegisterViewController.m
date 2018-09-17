@@ -95,7 +95,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     self.skillArray = [NSMutableArray array];
+    self.dictionary = [NSMutableDictionary dictionary];
     
     [self initDictionaryData];
     
@@ -103,10 +106,10 @@
                         @"场馆：",
                         @"姓名：",
                         @"性别：",
-                        @"出生年月：",
                         @"学历：",
                         @"证件类型：",
                         @"证件号码：",
+                        @"出生年月：",
                         @"工作单位：",
                         @"单位地址：",
                         @"民族：",
@@ -265,6 +268,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCityLibrary:) name:Change_City_Library object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeliveryCheckState:) name:@"delivery_check_state" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(freshPageContent:) name:@"Logout_Account" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(freshPageContent:) name:@"GetVolunteerInfo_Finish" object:nil];
 }
 
 - (void)onDeliveryCheckState:(NSNotification *)notify{
@@ -298,7 +303,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)freshPageContent:(NSNotification *)notify{
+    
+    [self initDictionaryData];
+    [self.tableView reloadData];
+    
+    //审核状态不可修改
+    if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
+        [self.nextBtn setTitle:@"审核中" forState:UIControlStateNormal];
+        self.nextBtn.enabled = NO;
+    }else{
+        [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        self.nextBtn.enabled = YES;
+    }
+}
 #pragma mark-
 - (void)changeCityLibrary:(NSNotification *)notify{
     NSDictionary* dictionary = notify.userInfo;
@@ -340,8 +358,7 @@
 
 - (void)initDictionaryData
 {
-    self.dictionary = [NSMutableDictionary dictionary];
-    
+
     [self.dictionary setObject:@"" forKey:@"orgId"];
     [self.dictionary setObject:@"" forKey:@"realName"];
     [self.dictionary setObject:@"" forKey:@"sex"];
@@ -368,6 +385,14 @@
     [self.dictionary setObject:@"" forKey:@"zipCode"];
     [self.dictionary setObject:@"" forKey:@"email"];
     [self.dictionary setObject:@"" forKey:@"telephone"];
+    
+    self.tempLibrary = nil;
+    self.sexData = nil;
+    self.educationData = nil;
+    self.certifTypeData = nil;
+    self.ethnicityData = nil;
+    self.politicalData = nil;
+    self.postCodeData = nil;
     
     
     VolunteerInfo* volunteer = [UserInfoManager sharedInstance].volunteer;
@@ -577,10 +602,9 @@
 {
     if (areaCode.length <= 0) areaCode = @"";
     if (areaName.length <= 0) areaName = @"";
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     [AFNetAPIClient GET:APIGetOrgs parameters:[RequestParameters getOrgsByAreaCode:areaCode areaName:areaName] success:^(id JSON, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.result isKindOfClass:[NSArray class]]) {
             self.librarys = [LibraryModel arrayOfModelsFromDictionaries:(NSArray *)model.result];
@@ -592,7 +616,7 @@
         }
         
     } failure:^(id JSON, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     }];
 }
 
@@ -742,19 +766,8 @@
                 }
             }
                 break;
-            case 4:{//出生年月日
-                cell.showStar = YES;
-                self.birthdayTextField = cell.textField;
-                self.birthdayTextField.inputView = self.datePicker;
-                cell.showSelectBtn = YES;
-                
-                tempString = self.dictionary[@"birthDay"];
-                if (tempString.length > 0) {
-                    self.birthdayTextField.text = tempString;
-                }
-            }
-                break;
-            case 5:{//学历
+
+            case 4:{//学历
                 cell.showStar = YES;
                 self.educationTextField = cell.textField;
                 self.educationTextField.inputView = self.pickerView;
@@ -765,18 +778,20 @@
             }
                 break;
 
-            case 6:{//证件类型
+            case 5:{//证件类型
                 cell.showStar = YES;
+                cell.textField.text = @"居民身份证";
                 self.certifTypeTextField = cell.textField;
-                self.certifTypeTextField.inputView = self.pickerView;
-                cell.showSelectBtn = YES;
                 
-                if (self.certifTypeData) {
-                    self.certifTypeTextField.text = self.certifTypeData.name;
-                }
+//                self.certifTypeTextField.inputView = self.pickerView;
+//                cell.showSelectBtn = YES;
+                
+//                if (self.certifTypeData) {
+//                    self.certifTypeTextField.text = self.certifTypeData.name;
+//                }
             }
                 break;
-            case 7:{//证件号码
+            case 6:{//证件号码
                 cell.showStar = YES;
                 self.certifNoTextField = cell.textField;
                 tempString = self.dictionary[@"certifNo"];
@@ -785,6 +800,20 @@
                 }
             }
                 break;
+            case 7:{//出生年月日
+                cell.showStar = YES;
+                self.birthdayTextField = cell.textField;
+//                self.birthdayTextField.inputView = self.datePicker;
+//                cell.showSelectBtn = YES;
+                
+                tempString = self.dictionary[@"birthDay"];
+                if (tempString.length > 0) {
+                    self.birthdayTextField.text = tempString;
+                }
+            }
+                break;
+                
+                
             case 8:{//工作单位
                 self.workUnitTextField = cell.textField;
                 
@@ -968,6 +997,8 @@
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
         return NO;
     }
+    if (textField == self.birthdayTextField || textField == self.certifTypeTextField) return NO;
+    
     
     self.showAddress = NO;
     self.tempTextField = textField;
@@ -1036,10 +1067,10 @@
             }
         }
     }
-    else if (textField == self.birthdayTextField)
-    {
-        [self dateChanged];
-    }
+//    else if (textField == self.birthdayTextField)
+//    {
+//        [self dateChanged];
+//    }
     else if (textField == self.educationTextField)
     {
         self.dataArray = [DeviceHelper sharedInstance].educations;
@@ -1065,31 +1096,31 @@
             }
         }
     }
-    else if (textField == self.certifTypeTextField)
-    {
-        self.dataArray = [DeviceHelper sharedInstance].certifTypes;
-        [self.pickerView reloadAllComponents];
-        
-        if (self.dataArray.count > 0 )
-        {
-            [self.pickerView selectRow:0 inComponent:0 animated:NO];
-            
-            if (!self.certifTypeData) {
-                InitDictData* data = self.dataArray[0];
-                self.certifTypeData = data;
-                self.certifTypeTextField.text = data.name;
-                [self.dictionary setObject:self.certifTypeData.id forKey:@"certifType"];
-            }else{
-                for (NSInteger i = 0; i < self.dataArray.count; i++) {
-                    InitDictData* data = self.dataArray[i];
-                    if ([data.id intValue] == [self.certifTypeData.id intValue]) {
-                        [self.pickerView selectRow:i inComponent:0 animated:NO];
-                        break;
-                    }
-                }
-            }
-        }
-    }
+//    else if (textField == self.certifTypeTextField)
+//    {
+//        self.dataArray = [DeviceHelper sharedInstance].certifTypes;
+//        [self.pickerView reloadAllComponents];
+//
+//        if (self.dataArray.count > 0 )
+//        {
+//            [self.pickerView selectRow:0 inComponent:0 animated:NO];
+//
+//            if (!self.certifTypeData) {
+//                InitDictData* data = self.dataArray[0];
+//                self.certifTypeData = data;
+//                self.certifTypeTextField.text = data.name;
+//                [self.dictionary setObject:self.certifTypeData.id forKey:@"certifType"];
+//            }else{
+//                for (NSInteger i = 0; i < self.dataArray.count; i++) {
+//                    InitDictData* data = self.dataArray[i];
+//                    if ([data.id intValue] == [self.certifTypeData.id intValue]) {
+//                        [self.pickerView selectRow:i inComponent:0 animated:NO];
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//    }
     else if (textField == self.politicalTextField)
     {
         self.dataArray = [DeviceHelper sharedInstance].politicals;
@@ -1178,7 +1209,18 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     NSLog(@"%s  %@",__func__,textField.text);
     
-    if (textField == self.nameTextField && self.nameTextField.text.length > 0){
+    if (textField == self.certifNoTextField && self.certifNoTextField.text.length > 0){
+        BOOL flag = [NSString validateIdentityCard:self.certifNoTextField.text];
+        if (flag) {
+            [self.dictionary setObject:self.certifNoTextField.text forKey:@"certifNo"];
+            NSString* birthday = [NSString extractBirthday:self.certifNoTextField.text];
+            self.birthdayTextField.text = birthday;
+            [self.dictionary setObject:self.birthdayTextField.text forKey:@"birthDay"];
+        }else{
+            [MBProgressHUD MBProgressHUDWithView:self.view Str:@"证件号码不规范"]; return;
+        }
+    }
+    else if (textField == self.nameTextField && self.nameTextField.text.length > 0){
         [self.dictionary setObject:self.nameTextField.text forKey:@"realName"];
     }
     else if (textField == self.workUnitTextField && self.workUnitTextField.text.length > 0){
@@ -1186,9 +1228,6 @@
     }
     else if (textField == self.workAddressTextField && self.workAddressTextField.text.length > 0){
         [self.dictionary setObject:self.workAddressTextField.text forKey:@"workAddress"];
-    }
-    else if (textField == self.certifNoTextField && self.certifNoTextField.text.length > 0){
-        [self.dictionary setObject:self.certifNoTextField.text forKey:@"certifNo"];
     }
     else if (textField == self.domicileTextField && self.domicileTextField.text.length > 0){
         [self.dictionary setObject:self.domicileTextField.text forKey:@"domicile"];
@@ -1452,16 +1491,16 @@
     if (!self.sexData) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择性别"];return;
     }
-    tempString = self.dictionary[@"birthDay"];
-    if (tempString.length <= 0) {
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择出生日期"];return;
-    }
+//    tempString = self.dictionary[@"birthDay"];
+//    if (tempString.length <= 0) {
+//        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择出生日期"];return;
+//    }
     if (!self.educationData) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择学历"];return;
     }
-    if (!self.certifTypeData) {
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择证件类型"];return;
-    }
+//    if (!self.certifTypeData) {
+//        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择证件类型"];return;
+//    }
     tempString = self.dictionary[@"certifNo"];
     if (tempString.length <= 0) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请填写证件号码"];return;

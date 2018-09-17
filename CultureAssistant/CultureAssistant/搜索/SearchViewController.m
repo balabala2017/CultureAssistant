@@ -221,16 +221,16 @@
             
             if ([pageMode.firstPage boolValue]) {
                 [self.searchNewsArr removeAllObjects];
-                _searchView.tableV.contentOffset = CGPointMake(0, 0);
+                self.searchView.tableV.contentOffset = CGPointMake(0, 0);
             }
             [self.searchNewsArr addObjectsFromArray:pageMode.list];
             pageMode.list = self.searchNewsArr;
-            [_searchView showSearchNewsWithData:pageMode];
+            [self.searchView showSearchNewsWithData:pageMode];
         }
         
     }failure:^(id JSON, NSError *error){
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [_searchView showSearchNewsWithData:nil];
+        [self.searchView showSearchNewsWithData:nil];
         
         [self getHistoryNews];
         

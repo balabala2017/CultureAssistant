@@ -77,7 +77,7 @@
         [_view addSubview:_collectionView];
         
         [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(_view);
+            make.edges.equalTo(self.view);
         }];
         
         
@@ -380,12 +380,12 @@
         
         typeof(self) __weak wself = self;
         _tableV.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            _cpage = 1;
-            [wself searchWithKey:_searchKey withPageIndex:@"1"];
+            self.cpage = 1;
+            [wself searchWithKey:self.searchKey withPageIndex:@"1"];
         }];
         _tableV.mj_footer = [MJRefreshBackNormalFooter  footerWithRefreshingBlock:^{
-            _cpage++;
-            [wself searchWithKey:_searchKey withPageIndex:[NSString stringWithFormat:@"%ld",(long)_cpage]];
+            self.cpage++;
+            [wself searchWithKey:self.searchKey withPageIndex:[NSString stringWithFormat:@"%ld",(long)self.cpage]];
         }];
         
         _tableV.mj_header.hidden = YES;
@@ -394,7 +394,7 @@
         self.blankView = [BlankContentView new];
         [_tableV addSubview:self.blankView];
         [self.blankView makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(_tableV);
+            make.center.equalTo(self.tableV);
             make.width.height.equalTo(300);
         }];
         self.blankView.hidden = YES;

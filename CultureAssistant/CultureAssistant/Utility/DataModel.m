@@ -375,6 +375,10 @@
     
     self.userModel = nil;
     self.isAlreadyLogin = NO;
+    
+    self.volunteer = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Logout_Account" object:nil];
 }
 
 - (BOOL)isAlreadyLogin{

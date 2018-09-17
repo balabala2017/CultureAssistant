@@ -89,7 +89,7 @@
     _questionView.attributedText = attributedString;
     [_questionView mas_remakeConstraints:^(MASConstraintMaker *make){
         make.left.equalTo(12);
-        make.top.equalTo(_scoreLabel.bottom).offset(10);
+        make.top.equalTo(self.scoreLabel.bottom).offset(10);
         make.right.equalTo(self.view.right).offset(-12);
         make.height.equalTo(attSize.height+20);
     }];

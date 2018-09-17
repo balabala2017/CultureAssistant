@@ -17,6 +17,7 @@
 
 @property(nonatomic,strong)RecruitDetail* detail;
 
+@property(nonatomic,strong)UIView* btnView;
 @property(nonatomic,strong)UIButton* signBtn;
 @property(nonatomic,strong)NSString* serviceId;//服务记录ID可在 活动计时开始接口或招募活动详情接口中获取
 
@@ -63,8 +64,8 @@
         RecruitPostDescController* vc = [RecruitPostDescController new];
         vc.eventId = self.eventId;
         vc.enrollSucessHandler = ^{
-            _signBtn.enabled = NO;
-            [_signBtn setTitle:@"待审核" forState:UIControlStateNormal];
+            self.signBtn.enabled = NO;
+            [self.signBtn setTitle:@"待审核" forState:UIControlStateNormal];
         };
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -139,8 +140,8 @@
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.result isKindOfClass:[NSDictionary class]]) {
             self.detail = [RecruitDetail RecruitDetailWithDictionary:(NSDictionary *)model.result];
-            _topView.recruitDetail = self.detail;
-            _bottomView.recruitDetail = self.detail;
+            self.topView.recruitDetail = self.detail;
+            self.bottomView.recruitDetail = self.detail;
 
             //activeState 活动状态(0:预热中; 1:报名中; 2:进行中; 3:已结束; 4:已结项; 5:已取消)
             //预热中、已结束、已结项的活动，没有我要报名按钮。
@@ -150,8 +151,8 @@
                 case 0://预热中  不显示
                 case 5://已取消
                 {
-                    _signBtn.hidden = YES;
-                    [_scrollView mas_updateConstraints:^(MASConstraintMaker *make){
+                    self.signBtn.hidden = YES;
+                    [self.scrollView mas_updateConstraints:^(MASConstraintMaker *make){
                         make.bottom.equalTo(self.view);
                     }];
                 }
@@ -166,44 +167,44 @@
 
                     if (![self.detail.applyFlag boolValue]) {
                         if ([self.detail.planRecruitNum intValue] - [self.detail.hasRecruitNum intValue] > 0) {
-                            [_signBtn setTitle:@"我要报名" forState:UIControlStateNormal];
+                            [self.signBtn setTitle:@"我要报名" forState:UIControlStateNormal];
                         }else{
-                            _signBtn.enabled = NO;
-                            [_signBtn setTitle:@"已报满" forState:UIControlStateNormal];
+                            self.signBtn.enabled = NO;
+                            [self.signBtn setTitle:@"已报满" forState:UIControlStateNormal];
                         }
                     }
                     else
                     {
-                        _signBtn.enabled = NO;
+                        self.signBtn.enabled = NO;
                         if (self.detail.apply)
                         {
                             switch ([self.detail.apply.statu intValue]) {
                                 case 0:
-                                    [_signBtn setTitle:@"已提交" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"已提交" forState:UIControlStateNormal];
                                     break;
                                 case 1:
-                                    [_signBtn setTitle:@"待审核" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"待审核" forState:UIControlStateNormal];
                                     break;
                                 case 2:
-                                    [_signBtn setTitle:@"待参加" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"待参加" forState:UIControlStateNormal];
                                     break;
                                 case 3:
-                                    [_signBtn setTitle:@"审核不通过" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"审核不通过" forState:UIControlStateNormal];
                                     break;
                                 case 4:
-                                    [_signBtn setTitle:@"取消审核" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"取消审核" forState:UIControlStateNormal];
                                     break;
                                 case 5:
-                                    [_signBtn setTitle:@"服务中" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"服务中" forState:UIControlStateNormal];
                                     break;
                                 case 6:
-                                    [_signBtn setTitle:@"待评价" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"待评价" forState:UIControlStateNormal];
                                     break;
                                 case 7:
-                                    [_signBtn setTitle:@"待确定" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"待确定" forState:UIControlStateNormal];
                                     break;
                                 case 8:
-                                    [_signBtn setTitle:@"已确认" forState:UIControlStateNormal];
+                                    [self.signBtn setTitle:@"已确认" forState:UIControlStateNormal];
                                     break;
                                     
                                 default:
@@ -219,10 +220,10 @@
                     //2.正在计时：显示“已开始xx小时xx分xx秒”，点击结束计时，点击后恢复到未开始状态
                 
                     if ( [self.detail.applyFlag boolValue] && self.detail.apply){
-                        [_signBtn setTitle:@"开始计时" forState:UIControlStateNormal];
+                        [self.signBtn setTitle:@"开始计时" forState:UIControlStateNormal];
                     }else{
-                        _signBtn.hidden = YES;
-                        [_scrollView mas_updateConstraints:^(MASConstraintMaker *make){
+                        self.btnView.hidden = YES;
+                        [self.scrollView mas_updateConstraints:^(MASConstraintMaker *make){
                             make.bottom.equalTo(self.view);
                         }];
                     }
@@ -237,11 +238,11 @@
                     
                     if (self.detail.service && self.detail.questionId.length > 0 && [self.detail.answerFlag boolValue] == false)
                     {
-                        [_signBtn setTitle:@"填写问卷" forState:UIControlStateNormal];
+                        [self.signBtn setTitle:@"填写问卷" forState:UIControlStateNormal];
                     }
                     else if((self.detail.service && [self.detail.answerFlag boolValue] == true)||(self.detail.service && self.detail.questionId.length <= 0))
                     {
-                        _signBtn.enabled = NO;
+                        self.signBtn.enabled = NO;
                         
                         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
                         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -262,11 +263,11 @@
                         s = interval - h*3600 - m*60;
                         
                         NSString* string = [NSString stringWithFormat:@"服务时长%d时%d分%d秒",h,m,s];
-                        [_signBtn setTitle:string forState:UIControlStateNormal];
+                        [self.signBtn setTitle:string forState:UIControlStateNormal];
                         
                     }else{
-                        _signBtn.hidden = YES;
-                        [_scrollView mas_updateConstraints:^(MASConstraintMaker *make){
+                        self.btnView.hidden = YES;
+                        [self.scrollView mas_updateConstraints:^(MASConstraintMaker *make){
                             make.bottom.equalTo(self.view);
                         }];
                     }
@@ -278,7 +279,7 @@
                     //2.没有参加服务：不显示按钮
                     if((self.detail.service && [self.detail.answerFlag boolValue] == true)||(self.detail.service && self.detail.questionId.length <= 0))
                     {
-                        _signBtn.enabled = NO;
+                        self.signBtn.enabled = NO;
                         
                         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
                         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -299,11 +300,11 @@
                         s = interval - h*3600 - m*60;
                         
                         NSString* string = [NSString stringWithFormat:@"服务时长%d时%d分%d秒",h,m,s];
-                        [_signBtn setTitle:string forState:UIControlStateNormal];
+                        [self.signBtn setTitle:string forState:UIControlStateNormal];
                         
                     }else{
-                        _signBtn.hidden = YES;
-                        [_scrollView mas_updateConstraints:^(MASConstraintMaker *make){
+                        self.btnView.hidden = YES;
+                        [self.scrollView mas_updateConstraints:^(MASConstraintMaker *make){
                             make.bottom.equalTo(self.view);
                         }];
                     }
@@ -396,14 +397,23 @@
     }];
     [backBtn addTarget:self action:@selector(onTapBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    _btnView = [UIView new];
+    _btnView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_btnView];
+    [_btnView mas_makeConstraints:^(MASConstraintMaker *make){
+        make.height.equalTo(44+HOME_INDICATOR_HEIGHT);
+        make.bottom.left.right.equalTo(self.view);
+    }];
+    
     _signBtn = [UIButton new];
     _signBtn.backgroundColor = BaseColor;
     [_signBtn setTitle:@"我要报名" forState:UIControlStateNormal];
     [_signBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:_signBtn];
+    [_btnView addSubview:_signBtn];
     [_signBtn mas_makeConstraints:^(MASConstraintMaker *make){
-        make.height.equalTo(44+HOME_INDICATOR_HEIGHT);
-        make.bottom.left.right.equalTo(self.view);
+        make.height.equalTo(44);
+        make.top.left.right.equalTo(self.btnView);
     }];
     [_signBtn addTarget:self action:@selector(onTapButton:) forControlEvents:UIControlEventTouchUpInside];
 }

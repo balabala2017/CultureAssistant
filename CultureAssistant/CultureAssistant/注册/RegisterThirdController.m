@@ -73,7 +73,7 @@
         make.left.equalTo(15);
         make.height.equalTo(1);
         make.right.equalTo(self.view.right).offset(-15);
-        make.bottom.equalTo(_btn.top).offset(-70);
+        make.bottom.equalTo(self.btn.top).offset(-70);
     }];
     
     UIButton* boxBtn = [UIButton new];
@@ -113,7 +113,7 @@
                                                                                     realName:self.paramDic[@"realName"]
                                                                                          sex:self.paramDic[@"sex"]
                                                                                     birthDay:self.paramDic[@"birthDay"]
-                                                                                  certifType:self.paramDic[@"certifType"]
+                                                                                  certifType:@"357"   //self.paramDic[@"certifType"]
                                                                                     certifNo:self.paramDic[@"certifNo"]
                                                                                    ethnicity:self.paramDic[@"ethnicity"]
                                                                                  nativePlace:self.paramDic[@"nativePlace"]
@@ -140,7 +140,7 @@
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
                          [MBProgressHUD MBProgressHUDWithView:self.view Str:@"修改成功"];
-                         _btn.hidden = YES ;
+                         self.btn.hidden = YES ;
                          
                          [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
                              if (finished) {
@@ -190,7 +190,7 @@
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
                          [MBProgressHUD MBProgressHUDWithView:self.view Str:@"注册成功"];
-                         _btn.hidden = YES ;
+                         self.btn.hidden = YES ;
                          
                          [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
                              if (finished) {

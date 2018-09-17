@@ -45,7 +45,7 @@
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(15);
             make.right.equalTo(self.right).offset(-15);
-            make.top.equalTo(_coverView.bottom).offset(15);
+            make.top.equalTo(self.coverView.bottom).offset(15);
         }];
         if (SCREENWIDTH <= 320) {
             _titleLabel.font = [UIFont systemFontOfSize:15];
@@ -55,7 +55,7 @@
         [self addSubview:areaImage];
         [areaImage mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(15);
-            make.top.equalTo(_titleLabel.bottom).offset(15);
+            make.top.equalTo(self.titleLabel.bottom).offset(15);
         }];
         
         _areaLabel = [UILabel new];
@@ -79,7 +79,7 @@
         [self addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(areaImage);
-            make.top.equalTo(_areaLabel.bottom).offset(7);
+            make.top.equalTo(self.areaLabel.bottom).offset(7);
         }];
         if (SCREENWIDTH <= 320) {
             label.font = [UIFont systemFontOfSize:10];
@@ -111,7 +111,7 @@
         [self addSubview:label1];
         [label1 mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(areaImage);
-            make.top.equalTo(_typeLabel.bottom).offset(7);
+            make.top.equalTo(self.typeLabel.bottom).offset(7);
         }];
         if (SCREENWIDTH <= 320) {
             label1.font = [UIFont systemFontOfSize:10];
@@ -135,7 +135,7 @@
         _progressView.layer.cornerRadius = 1.5;
         [self addSubview:_progressView];
         [_progressView mas_makeConstraints:^(MASConstraintMaker *make){
-            make.top.equalTo(_dateLabel.bottom).offset(13);
+            make.top.equalTo(self.dateLabel.bottom).offset(13);
             make.left.equalTo(15);
             make.right.equalTo(self.right).offset(-15);
             make.height.equalTo(3);
@@ -165,7 +165,7 @@
         _progressLabel.clipsToBounds = YES;
         [self addSubview:_progressLabel];
         [_progressLabel mas_makeConstraints:^(MASConstraintMaker *make){
-            make.centerY.equalTo(_progressView);
+            make.centerY.equalTo(self.progressView);
             make.left.equalTo(15);
             make.width.equalTo(40);
             make.height.equalTo(16);
@@ -178,7 +178,7 @@
         _textView1.topLabel.text = @"支持人数";
         [self addSubview:_textView1];
         [_textView1 mas_makeConstraints:^(MASConstraintMaker *make){
-            make.top.equalTo(_progressView.bottom).offset(20);
+            make.top.equalTo(self.progressView.bottom).offset(20);
             make.left.equalTo(15);
             make.width.equalTo(width);
             make.height.equalTo(height);
@@ -189,24 +189,24 @@
         _textView2.topLabel.text = @"报名人数";
         [self addSubview:_textView2];
         [_textView2 mas_makeConstraints:^(MASConstraintMaker *make){
-            make.top.width.height.equalTo(_textView1);
-            make.left.equalTo(_textView1.right);
+            make.top.width.height.equalTo(self.textView1);
+            make.left.equalTo(self.textView1.right);
         }];
         
         _textView3 = [RecruitTextView new];
         _textView3.topLabel.text = @"服务对象";
         [self addSubview:_textView3];
         [_textView3 mas_makeConstraints:^(MASConstraintMaker *make){
-            make.top.width.height.equalTo(_textView1);
-            make.left.equalTo(_textView2.right);
+            make.top.width.height.equalTo(self.textView1);
+            make.left.equalTo(self.textView2.right);
         }];
         
         _textView4 = [RecruitTextView new];
         _textView4.topLabel.text = @"报名结束时间";
         [self addSubview:_textView4];
         [_textView4 mas_makeConstraints:^(MASConstraintMaker *make){
-            make.top.width.height.equalTo(_textView1);
-            make.left.equalTo(_textView3.right);
+            make.top.width.height.equalTo(self.textView1);
+            make.left.equalTo(self.textView3.right);
         }];
         
     }

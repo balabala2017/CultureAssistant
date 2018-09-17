@@ -516,7 +516,9 @@
 }
 
 //修改志愿者信息前 先获取志愿者信息
-- (void)getVolunteerToUpdate{
+- (void)getVolunteerToUpdate
+{
+    if (![[UserInfoManager sharedInstance].userModel.volunteerFlag boolValue]) return;
     
     //修改完成  变成待审核状态
     [UserInfoManager sharedInstance].userModel.auditFlag = @"1";
@@ -606,6 +608,8 @@
             volunteer.volunteerLibrary = library;
             
             [UserInfoManager sharedInstance].volunteer = volunteer;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetVolunteerInfo_Finish" object:nil];
         }
     } failure:^(id JSON, NSError *error){
         
