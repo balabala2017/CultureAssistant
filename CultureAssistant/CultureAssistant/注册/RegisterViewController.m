@@ -1011,6 +1011,11 @@
     }
     if (textField == self.birthdayTextField || textField == self.certifTypeTextField) return NO;
     
+    if (textField == self.certifNoTextField){
+        self.birthdayTextField.text = @"";
+        [self.dictionary setObject:@"" forKey:@"birthDay"];
+    }
+    
     
     self.showAddress = NO;
     self.tempTextField = textField;
@@ -1221,15 +1226,23 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     NSLog(@"%s  %@",__func__,textField.text);
     
-    if (textField == self.certifNoTextField && self.certifNoTextField.text.length > 0){
-        BOOL flag = [NSString validateIdentityCard:self.certifNoTextField.text];
-        if (flag) {
-            [self.dictionary setObject:self.certifNoTextField.text forKey:@"certifNo"];
-            NSString* birthday = [NSString extractBirthday:self.certifNoTextField.text];
-            self.birthdayTextField.text = birthday;
-            [self.dictionary setObject:self.birthdayTextField.text forKey:@"birthDay"];
+    
+    if (textField == self.certifNoTextField)
+    {
+        if (self.certifNoTextField.text.length > 0) {
+            BOOL flag = [NSString validateIdentityCard:self.certifNoTextField.text];
+            if (flag) {
+                [self.dictionary setObject:self.certifNoTextField.text forKey:@"certifNo"];
+                NSString* birthday = [NSString extractBirthday:self.certifNoTextField.text];
+                self.birthdayTextField.text = birthday;
+                [self.dictionary setObject:self.birthdayTextField.text forKey:@"birthDay"];
+            }else{
+                [self.dictionary setObject:self.certifNoTextField.text forKey:@"certifNo"];
+                [MBProgressHUD MBProgressHUDWithView:self.view Str:@"证件号码不规范"];
+                return;
+            }
         }else{
-            [MBProgressHUD MBProgressHUDWithView:self.view Str:@"证件号码不规范"]; return;
+            [self.dictionary setObject:@"" forKey:@"certifNo"];
         }
     }
     else if (textField == self.nameTextField && self.nameTextField.text.length > 0){
@@ -1503,10 +1516,7 @@
     if (!self.sexData) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择性别"];return;
     }
-//    tempString = self.dictionary[@"birthDay"];
-//    if (tempString.length <= 0) {
-//        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择出生日期"];return;
-//    }
+
     if (!self.educationData) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择学历"];return;
     }
@@ -1530,6 +1540,10 @@
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请填写正确的邮箱"];return;
     }
 
+    tempString = self.dictionary[@"birthDay"];
+    if (tempString.length <= 0) {
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请填写正确的身份证号码"];return;
+    }
     
     //个人特长(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
     NSString * skill = @"";

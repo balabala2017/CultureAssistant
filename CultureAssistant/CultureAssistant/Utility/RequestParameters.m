@@ -40,7 +40,7 @@
     return [[RequestHelper sharedInstance] prepareRequestparameter:dic];
 }
 #pragma mark- 资讯
-//获取banner列表
+//获取banner列表 
 + (NSDictionary *)getBannersByChannelId:(NSString *)channelId
                                    type:(NSString *)type
                                   cpage:(NSString *)cpage

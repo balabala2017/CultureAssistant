@@ -163,7 +163,7 @@
                                                                                     realName:self.paramDic[@"realName"]
                                                                                          sex:self.paramDic[@"sex"]
                                                                                     birthDay:self.paramDic[@"birthDay"]
-                                                                                  certifType:self.paramDic[@"certifType"]
+                                                                                  certifType:@"357"
                                                                                     certifNo:self.paramDic[@"certifNo"]
                                                                                    ethnicity:self.paramDic[@"ethnicity"]
                                                                                  nativePlace:self.paramDic[@"nativePlace"]
