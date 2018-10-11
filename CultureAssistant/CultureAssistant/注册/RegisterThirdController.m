@@ -136,7 +136,7 @@
                                                                                 serviceTimes:self.paramDic[@"serviceTimes"]
                                                                                 serviceTypes:self.paramDic[@"serviceTypes"]
                                                                                  workAddress:self.paramDic[@"workAddress"]]
-                 showLoading:NO success:^(id JSON, NSError *error){
+                  success:^(id JSON, NSError *error){
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
                          [MBProgressHUD MBProgressHUDWithView:self.view Str:@"修改成功"];
@@ -186,7 +186,7 @@
                                                                                 serviceTimes:self.paramDic[@"serviceTimes"]
                                                                                 serviceTypes:self.paramDic[@"serviceTypes"]
                                                                                  workAddress:self.paramDic[@"workAddress"]]
-                 showLoading:NO  success:^(id JSON, NSError *error){
+                 success:^(id JSON, NSError *error){
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
                          [MBProgressHUD MBProgressHUDWithView:self.view Str:@"注册成功"];

@@ -8,6 +8,7 @@
 
 #import "ValidateViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "RegisterThirdController.h"
 
 @interface ValidateViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPopoverControllerDelegate>
 @property(nonatomic,strong)UIImageView* cardFrontView;
@@ -243,8 +244,18 @@
 
 - (void)uploadVerifiedInfo:(NSString *)uploadJson
 {
+    
+    RegisterThirdController* vc = [RegisterThirdController new];
+    vc.paramDic = self.paramDic;
+    vc.modifyVolunteer = self.modifyVolunteer;
+    [self.navigationController pushViewController:vc animated:YES];
+
+    
+    
+    
+    
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIUploadVerifiedInfo parameters:[RequestParameters uploadVerifiedInfo:uploadJson] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUploadVerifiedInfo parameters:[RequestParameters uploadVerifiedInfo:uploadJson] success:^(id JSON, NSError *error){
         
          [MBProgressHUD hideHUDForView:self.view animated:YES];
         
@@ -271,11 +282,12 @@
     UIButton* button = [UIButton new];
     button.backgroundColor = BaseColor;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitle:@"认证" forState:UIControlStateNormal];
+    [button setTitle:@"下一步" forState:UIControlStateNormal];
     [self.view addSubview:button];
     [button addTarget:self action:@selector(tapButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [button mas_makeConstraints:^(MASConstraintMaker *make){
-        make.left.right.bottom.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(-HOME_INDICATOR_HEIGHT);
         make.height.equalTo(44);
     }];
     

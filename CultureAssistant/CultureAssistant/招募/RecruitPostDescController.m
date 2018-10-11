@@ -106,7 +106,7 @@
     RecruitPost *recruitPost = self.dataArray[button.tag];
     
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIVolEventEnroll parameters:[RequestParameters volEventDoEnroll:recruitPost.eventId postId:recruitPost.id] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIVolEventEnroll parameters:[RequestParameters volEventDoEnroll:recruitPost.eventId postId:recruitPost.id] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.code intValue] == 200) {
             RecruitEnrollResultController* vc = [RecruitEnrollResultController new];

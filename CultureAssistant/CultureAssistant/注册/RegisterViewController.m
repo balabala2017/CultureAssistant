@@ -315,6 +315,9 @@
 
 - (void)freshPageContent:(NSNotification *)notify{
     
+    [self.infoView removeFromSuperview];
+    self.infoView = nil;
+    
     [self initDictionaryData];
     [self.tableView reloadData];
     

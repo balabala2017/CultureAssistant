@@ -61,7 +61,7 @@
             aString = [aString stringByReplacingOccurrencesOfString:@"amp;" withString:@""];
             aString=[aString stringByReplacingOccurrencesOfString:@"&#183;" withString:@"."];
             
-//            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
+            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
             
             
             DataModel * model = [[DataModel alloc] initWithString:aString error:nil];
@@ -105,7 +105,7 @@
 }
 
 + (NSURLSessionDataTask *)POST:(NSString *)Function
-                    parameters:(id)parameters showLoading:(BOOL)show
+                    parameters:(id)parameters 
                        success:(void (^)(id JSON, NSError *error))success
                        failure:(void (^)(id JSON, NSError *error))failure
 {
@@ -126,7 +126,7 @@
             aString = [aString stringByReplacingOccurrencesOfString:@"&ldquo;" withString:@"\""];
             aString = [aString stringByReplacingOccurrencesOfString:@"&rdquo;" withString:@"\""];
             
-//            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
+            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
             DataModel * model = [[DataModel alloc] initWithString:aString error:nil];
             if ([model.code intValue] == 200) {
                 success(aString,nil);

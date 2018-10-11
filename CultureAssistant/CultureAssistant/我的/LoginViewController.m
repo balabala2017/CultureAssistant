@@ -58,7 +58,7 @@
 - (void)checkByUserName:(NSString *)userName
 {
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APICheckByUserName parameters:[RequestParameters checkByUserName:self.accountField.text] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APICheckByUserName parameters:[RequestParameters checkByUserName:self.accountField.text] success:^(id JSON, NSError *error){
         
         
     }failure:^(id JSON, NSError *error){
@@ -81,7 +81,7 @@
     }
     
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIUserLogin parameters:[RequestParameters toLogin:self.accountField.text userPwd:self.passwordField.text type:@"6"] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUserLogin parameters:[RequestParameters toLogin:self.accountField.text userPwd:self.passwordField.text type:@"6"] success:^(id JSON, NSError *error){
         
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if (200 == [model.code integerValue])

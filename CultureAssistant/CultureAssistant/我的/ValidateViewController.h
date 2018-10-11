@@ -9,5 +9,6 @@
 #import "CustomDetailViewController.h"
 
 @interface ValidateViewController : CustomDetailViewController
-
+@property(nonatomic,assign)BOOL modifyVolunteer;
+@property(nonatomic,strong)NSMutableDictionary* paramDic;
 @end

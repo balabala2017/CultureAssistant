@@ -15,6 +15,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"\n\n>>>>>>>>>> %@\n\n",[self class]);
+    
     self.view.backgroundColor = [UIColor colorWithHexString:@"ebebeb"];
     
     UISwipeGestureRecognizer* swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeBack:)];

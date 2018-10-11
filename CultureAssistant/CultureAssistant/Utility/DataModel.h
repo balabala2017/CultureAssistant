@@ -488,6 +488,7 @@
 @property(nonatomic,strong)NSString<Optional> * phoneNum;
 @property(nonatomic,strong)NSString<Optional> * sex;
 @property(nonatomic,strong)NSString<Optional> * score;
+@property(nonatomic,strong)NSString<Optional> * mail;
 @end
 
 @interface UserModel : JSONModel

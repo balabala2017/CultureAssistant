@@ -84,7 +84,7 @@
     NSString* password = [userDefaults objectForKey:LocalUserPassword];
     if (!accountStr || !password) return;
     
-    [AFNetAPIClient POST:APIUserLogin parameters:[RequestParameters toLogin:accountStr userPwd:password type:@"6"] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUserLogin parameters:[RequestParameters toLogin:accountStr userPwd:password type:@"6"] success:^(id JSON, NSError *error){
         
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if (200 == [model.code integerValue])

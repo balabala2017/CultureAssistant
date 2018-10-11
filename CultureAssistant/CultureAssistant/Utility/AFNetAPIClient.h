@@ -20,7 +20,7 @@
                       failure:(void (^)(id JSON, NSError *error))failure;
 
 + (NSURLSessionDataTask *)POST:(NSString *)Function
-                    parameters:(id)parameters showLoading:(BOOL)show
+                    parameters:(id)parameters 
                        success:(void (^)(id JSON, NSError *error))success
                        failure:(void (^)(id JSON, NSError *error))failure;
 

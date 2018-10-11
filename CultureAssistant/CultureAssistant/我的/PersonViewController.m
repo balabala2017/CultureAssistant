@@ -51,17 +51,13 @@
 
     self.dataSource = @[//@{@"title":@"志愿者信息",@"image":@"my_info"},
                         @{@"title":@"证书申请",@"image":@"my_apply"},
-                        @{@"title":@"实名认证",@"image":@"my_validate"},
+                        //@{@"title":@"实名认证",@"image":@"my_validate"},
                         @{@"title":@"设置",@"image":@"my_setting"},
                         @{@"title":@"关于",@"image":@"my_about"}];
     
     self.starImgArray = [NSMutableArray array];
     
     [self createSubViews];
-    
-//    [self getVolunteerToUpdate];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"ModifySuccess_Notify" object:nil];
     
 }
 
@@ -94,94 +90,7 @@
     }
 }
 
-////修改志愿者信息前 先获取志愿者信息
-//- (void)getVolunteerToUpdate{
-//    [AFNetAPIClient GET:APIGetVolunteerInfo parameters:[RequestParameters commonRequestParameter] success:^(id JSON, NSError *error){
-//        DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
-//        if ([model.code isEqualToString:@"200"] && [model.result isKindOfClass:[NSDictionary class]]) {
-//            NSDictionary* dic = (NSDictionary *)model.result;
-//            VolunteerInfo* volunteer = [VolunteerInfo new];
-//            if ([dic[@"volunteer"] objectForKey:@"id"] && ![[dic[@"volunteer"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.id = [[dic[@"volunteer"] objectForKey:@"id"] stringValue];
-//            }
-//
-//            if ([dic[@"org"] objectForKey:@"id"] && ![[dic[@"org"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.orgId = [[dic[@"org"] objectForKey:@"id"] stringValue];
-//            }
-//            volunteer.areaName = [dic[@"org"] objectForKey:@"areaName"];
-//            volunteer.orgName = [dic[@"org"] objectForKey:@"name"];
-//
-//            volunteer.realName = [dic[@"volunteer"] objectForKey:@"volunteName"];
-//            if ([[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"id"] && ![[[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.identityId = [[[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"id"] stringValue];
-//            }
-//            volunteer.sex = [[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"sex"];
-//            volunteer.birthDay = [[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"birthDay"];
-//
-//            volunteer.educationName = [dic[@"volunteer"] objectForKey:@"educationName"];
-//            if ([dic[@"volunteer"] objectForKey:@"education"] && ![[dic[@"volunteer"] objectForKey:@"education"] isKindOfClass:[NSNull class]]) {
-//                volunteer.education = [[dic[@"volunteer"] objectForKey:@"education"] stringValue];
-//            }
-//
-//            volunteer.certifNo = [[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"certifNo"];
-//            if ([[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"certifType"] && ![[[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"certifType"] isKindOfClass:[NSNull class]]) {
-//                volunteer.certifType = [[[dic[@"volunteer"] objectForKey:@"identity"] objectForKey:@"certifType"] stringValue];
-//            }
-//
-//            if ([[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"id"] && ![[[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.otherId = [[[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"id"] stringValue];
-//            }
-//            volunteer.workUnit = [[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"workUnit"];
-//            volunteer.workAddress = [[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"workAddress"];
-//
-//            if ([dic[@"volunteer"] objectForKey:@"ethnicity"] && ![[dic[@"volunteer"] objectForKey:@"ethnicity"] isKindOfClass:[NSNull class]]) {
-//                volunteer.ethnicity = [[dic[@"volunteer"] objectForKey:@"ethnicity"] stringValue];
-//            }
-//
-//            volunteer.nativePlace = [dic[@"volunteer"] objectForKey:@"nativePlace"];
-//            volunteer.nativePlaceName = [dic[@"volunteer"] objectForKey:@"nativePlaceName"];
-//
-//            volunteer.domicile = [dic[@"volunteer"] objectForKey:@"domicile"];
-//            if ([dic[@"volunteer"] objectForKey:@"political"] && ![[dic[@"volunteer"] objectForKey:@"political"] isKindOfClass:[NSNull class]]) {
-//                volunteer.political = [[dic[@"volunteer"] objectForKey:@"political"] stringValue];
-//            }
-//
-//            volunteer.faith = [dic[@"volunteer"] objectForKey:@"faith"];
-//
-//            volunteer.postCode = [[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"postCode"];
-//            volunteer.job = [[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"job"];
-//            volunteer.profession = [[dic[@"volunteer"] objectForKey:@"other"] objectForKey:@"profession"];
-//
-//            volunteer.school = [dic[@"volunteer"] objectForKey:@"school"];
-//            volunteer.livePlace = [dic[@"volunteer"] objectForKey:@"livePlace"];
-//
-//            if ([[dic[@"volunteer"] objectForKey:@"speciality"] objectForKey:@"id"] && ![[[dic[@"volunteer"] objectForKey:@"speciality"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.specialityId = [[[dic[@"volunteer"] objectForKey:@"speciality"] objectForKey:@"id"] stringValue];
-//            }
-//
-//            volunteer.specialitys = [[dic[@"volunteer"] objectForKey:@"speciality"] objectForKey:@"specialitys"];
-//
-//            volunteer.hobby = [dic[@"volunteer"] objectForKey:@"hobby"];
-//            volunteer.contactAddress = [dic[@"volunteer"] objectForKey:@"contactAddress"];
-//            volunteer.zipCode = [dic[@"volunteer"] objectForKey:@"zipCode"];
-//            volunteer.email = [dic[@"volunteer"] objectForKey:@"email"];
-//            volunteer.telephone = [dic[@"volunteer"] objectForKey:@"telephone"];
-//
-//            if ([[dic[@"volunteer"] objectForKey:@"serviceDesire"] objectForKey:@"id"] && ![[[dic[@"volunteer"] objectForKey:@"serviceDesire"] objectForKey:@"id"] isKindOfClass:[NSNull class]]) {
-//                volunteer.serviceDesireId = [[[dic[@"volunteer"] objectForKey:@"serviceDesire"] objectForKey:@"id"] stringValue];
-//            }
-//            volunteer.serviceTypeList = [[dic[@"volunteer"] objectForKey:@"serviceDesire"] objectForKey:@"serviceTypeList"];
-//            volunteer.serviceTimeList = [[dic[@"volunteer"] objectForKey:@"serviceDesire"] objectForKey:@"serviceTimeList"];
-//
-//            LibraryModel* library = [[LibraryModel alloc] initWithDictionary:dic[@"org"] error:nil];
-//            volunteer.volunteerLibrary = library;
-//
-//            [UserInfoManager sharedInstance].volunteer = volunteer;
-//        }
-//    } failure:^(id JSON, NSError *error){
-//
-//    }];
-//}
+
 
 - (void)layoutView
 {
@@ -330,7 +239,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 4) {
+    if (indexPath.row == 3) {
         AboutViewController *controller = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
         return;
@@ -355,17 +264,17 @@
             [self applyCertificate];
         }
             break;
-        case 2://实名认证
-        {
-            if ([[UserInfoManager sharedInstance].userModel.auditFlag integerValue] == 2) {
-                [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请先注册成为志愿者"]; return;
-            }
-            ValidateViewController* vc = [ValidateViewController new];
-            [self.navigationController pushViewController:vc animated:YES];
-
-        }
-            break;
-        case 3://设置
+//        case 2://实名认证
+//        {
+//            if ([[UserInfoManager sharedInstance].userModel.auditFlag integerValue] == 2) {
+//                [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请先注册成为志愿者"]; return;
+//            }
+//            ValidateViewController* vc = [ValidateViewController new];
+//            [self.navigationController pushViewController:vc animated:YES];
+//
+//        }
+//            break;
+        case 2://设置
         {
             SettingViewController *controller = [[SettingViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];

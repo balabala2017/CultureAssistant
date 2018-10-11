@@ -13,7 +13,7 @@
 
 #import "CustomNavigationController.h"
 
-@interface MainViewController ()<CLLocationManagerDelegate,UIAlertViewDelegate>
+@interface MainViewController ()<CLLocationManagerDelegate>
 
 @property(nonatomic,strong)UIButton *locationButton;
 @property(nonatomic,strong)UIView* blueView;
@@ -164,13 +164,9 @@
     
 //    self.selectIndex = 0;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startLocationCity:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSelectedCity:) name:Change_City_Library object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(donotShowRegister:) name:@"Do_Not_Show_Register" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRegisterSucess:) name:@"RegisterSuccess_Notify" object:nil];
+    [self addNSNotification];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"refresh_volunteer_info" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"ModifySuccess_Notify" object:nil];
+    [self checkAppUpdate];
 }
 
 //- (void)viewWillLayoutSubviews{
@@ -222,7 +218,16 @@
     }];
 }
 
-
+- (void)addNSNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startLocationCity:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSelectedCity:) name:Change_City_Library object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(donotShowRegister:) name:@"Do_Not_Show_Register" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRegisterSucess:) name:@"RegisterSuccess_Notify" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"refresh_volunteer_info" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"ModifySuccess_Notify" object:nil];
+}
 
 #pragma mark-
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
@@ -492,8 +497,16 @@
         case kCLErrorDenied:
         {
             errorString = @"Access to Location Services denied by user";
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"前往设置打开定位功能" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
-            [alert show];
+
+            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"定位失败" message:@"前往设置打开定位功能" preferredStyle:UIAlertControllerStyleAlert];
+            [vc addAction:[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+                
+            }]];
+            [vc addAction:[UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }]];
+            
+            [self presentViewController:vc animated:YES completion:nil];
         }
             break;
         case kCLErrorLocationUnknown:
@@ -511,9 +524,6 @@
 }
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-}
 
 //修改志愿者信息前 先获取志愿者信息
 - (void)getVolunteerToUpdate
@@ -615,6 +625,83 @@
         
     }];
 }
+
+
+
+#pragma mark- 检查更新
+-(void)checkAppUpdate
+{
+    NSString* appid = @"1428182700";
+    NSDictionary* infoDict=[[NSBundle mainBundle] infoDictionary];
+    NSString* nowVersion=[infoDict objectForKey:@"CFBundleShortVersionString"];
+    
+    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appid]];
+    NSString* file=[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    if (!file) {
+        return;
+    }
+    
+    NSError *err = nil;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[file dataUsingEncoding:NSUTF8StringEncoding]
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&err];
+    if ([dict[@"resultCount"] integerValue] == 0) {
+        return;
+    }
+    NSRange substr=[file rangeOfString:@"\"version\":\""];//判断是不是找到字符
+    NSRange range1=NSMakeRange(substr.location+substr.length,10);
+    NSRange substr2=[file rangeOfString:@"\""options:NSCaseInsensitiveSearch range:range1];
+    NSRange range2=NSMakeRange(substr.location+substr.length,substr2.location-substr.location-substr.length);
+    NSString*newVersion=[file substringWithRange:range2];
+    
+    NSLog(@"nowVersion %@   newVersion %@",nowVersion,newVersion);
+    if (newVersion)
+    {
+        BOOL flag = [self compareEditionNumber:newVersion localNumber:nowVersion];
+        if (flag) {
+
+            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"发现新版本" message:@"是否前往App Store更新?" preferredStyle:UIAlertControllerStyleAlert];
+            [vc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+                
+            }]];
+            [vc addAction:[UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+                
+                NSString* appid = @"1428182700";
+                NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@",appid ];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            }]];
+            [self presentViewController:vc animated:YES completion:nil];
+        }
+    }
+    
+}
+
+//输出YES（服务器大与本地） 输出NO（服务器小于本地）
+- (BOOL)compareEditionNumber:(NSString *)serverNumberStr localNumber:(NSString*)localNumberStr {
+    //剔除版本号字符串中的点
+    serverNumberStr = [serverNumberStr stringByReplacingOccurrencesOfString:@"." withString:@""];
+    localNumberStr = [localNumberStr stringByReplacingOccurrencesOfString:@"." withString:@""];
+    //计算版本号位数差
+    int placeMistake = (int)(serverNumberStr.length-localNumberStr.length);
+    //根据placeMistake的绝对值判断两个版本号是否位数相等
+    if (abs(placeMistake) == 0) {
+        //位数相等
+        return [serverNumberStr integerValue] > [localNumberStr integerValue];
+    }else {
+        //位数不等
+        //multipleMistake差的倍数
+        NSInteger multipleMistake = pow(10, abs(placeMistake));
+        NSInteger server = [serverNumberStr integerValue];
+        NSInteger local = [localNumberStr integerValue];
+        if (server > local) {
+            return server > local * multipleMistake;
+        }else {
+            return server * multipleMistake > local;
+        }
+    }
+}
+
+
 #pragma mark-
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

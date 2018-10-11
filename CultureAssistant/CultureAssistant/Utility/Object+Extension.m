@@ -274,14 +274,14 @@
 @implementation MBProgressHUD (Extension)
 
 +(void)MBProgressHUDWithView:(UIView *)view Str:(NSString *)str
-{
+{    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.mode = MBProgressHUDModeText;
     hud.margin = 10.f;
-    hud.yOffset = view.center.y/2.0; // CGPointMake(view.center.x, view.center.y *1.5);
+    hud.offset = CGPointZero;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
-    hud.labelText = str;
+    [hud hideAnimated:YES afterDelay:1.f];
+    hud.label.text = str;
 }
 @end
 

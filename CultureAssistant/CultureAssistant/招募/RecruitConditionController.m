@@ -34,7 +34,8 @@
     [self.view addSubview:btn];
     [btn mas_makeConstraints:^(MASConstraintMaker *make){
         make.height.equalTo(44);
-        make.bottom.left.right.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(-HOME_INDICATOR_HEIGHT);
     }];
     [btn addTarget:self action:@selector(onTapButton:) forControlEvents:UIControlEventTouchUpInside];
     

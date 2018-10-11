@@ -24,6 +24,7 @@
 #import "RequestParameters.h"
 #import "DataModel.h"
 #import "DeviceHelper.h"
+#import "RequestHelper.h"
 
 #import "LoginViewController.h"
 

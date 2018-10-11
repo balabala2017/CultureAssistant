@@ -9,8 +9,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "VPImageCropperViewController.h"
 #import "AuthenticationViewController.h"
+#import "EditViewController.h"
 
-@interface SettingViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,VPImageCropperDelegate,UIPopoverControllerDelegate>
+@interface SettingViewController ()
 
 @property(nonatomic,strong)UIImageView* headerIcon;
 @property(nonatomic,strong)UILabel* phoneLabel;
@@ -49,14 +50,12 @@
     }
 }
 
-- (void)modifyUserHeadIcon:(UITapGestureRecognizer *)gesture{
-    UIActionSheet* sheeet = [[UIActionSheet alloc] initWithTitle:@"修改头像"
-                                                        delegate:self
-                                               cancelButtonTitle:@"取消"
-                                          destructiveButtonTitle:nil
-                                               otherButtonTitles:@"拍照",@"从相册选取", nil];
-    [sheeet showInView:self.view];
+- (void)editBasicInfo:(UIButton *)button
+{
+    EditViewController * vc = [EditViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
 
 - (void)modifyPhoneNumber:(UITapGestureRecognizer *)gesture{
     AuthenticationViewController* controller = [AuthenticationViewController new];
@@ -80,7 +79,7 @@
         sexString = @"female";
     }
     
-    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updateSex:sexString userid:[UserInfoManager sharedInstance].userModel.userinfo.id] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updateSex:sexString userid:[UserInfoManager sharedInstance].userModel.userinfo.id] success:^(id JSON, NSError *error){
         [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
             
         }];
@@ -106,19 +105,19 @@
 
 
 - (void)onLogoutAction:(UIButton *)button{
-    [[[UIAlertView alloc] initWithTitle:nil
-                                message:@"确认退出当前账号"
-                               delegate:self
-                      cancelButtonTitle:@"取消"
-                      otherButtonTitles:@"退出", nil] show];
+
+    UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"确认退出当前账号" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    
+    typeof(self) __weak wself = self;
+    [vc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [vc addAction:[UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+        [wself logoutAccount];
+    }]];
+    
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
-#pragma mark-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (1 == buttonIndex) {
-        [self logoutAccount];
-    }
-}
 
 - (void)logoutAccount{
     [[UserInfoManager sharedInstance] deleteUserInfo];
@@ -126,160 +125,31 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    
-    if (0 == buttonIndex){//相机
-        [self takePhoto];
-    }else if (1 == buttonIndex){//相册
-        [self openPhotoLib];
-    }
-}
 
--(void)takePhoto
-{
-    NSString *mediaType = AVMediaTypeVideo;
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
-        [[[UIAlertView alloc] initWithTitle:@"提示"
-                                    message:@"请在系统【设置】-【隐私】设置文化助盲应用权限"
-                                   delegate:nil
-                          cancelButtonTitle:@"好"
-                          otherButtonTitles: nil] show];
-        
-        return;
-    }
-    
-    UIImagePickerController *camera = [[UIImagePickerController alloc] init];
-    camera.delegate = self;
-    camera.allowsEditing = YES;
-    camera.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    
-    //检查摄像头是否支持摄像机模式
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        //UI 显示样式，显示的格式确定
-        camera.sourceType = UIImagePickerControllerSourceTypeCamera;
-        camera.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
-        camera.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-    }
-    else
-    {
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"摄像头不存在"];
-        return;
-    }
-    //拍摄照片的清晰度，只有在照相机模式下可用
-    camera.videoQuality = UIImagePickerControllerQualityTypeLow;
-    [self presentViewController:camera animated:YES completion:nil];
-}
-
--(void)openPhotoLib
-{
-    UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-    controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    NSMutableArray *mediaTypes = [[NSMutableArray alloc] init];
-    [mediaTypes addObject:(__bridge NSString *)kUTTypeImage];
-    controller.mediaTypes = mediaTypes;
-    controller.delegate = self;
-    [self presentViewController:controller
-                       animated:YES
-                     completion:^(void){
-                         NSLog(@"Picker View Controller is presented");
-                     }];
-}
-
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    
-    UIImage* originalImg = info[ UIImagePickerControllerOriginalImage];
-    UIImage *userImage = [Utility fixOrientation:originalImg];
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        UIImageWriteToSavedPhotosAlbum(originalImg, nil, nil, nil);
-    }
-    VPImageCropperViewController *imgEditorVC = [[VPImageCropperViewController alloc] initWithImage:userImage cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
-    imgEditorVC.view.backgroundColor=[UIColor blackColor];
-    imgEditorVC.delegate = self;
-    
-    [self presentViewController:imgEditorVC animated:YES completion:^{
-        
-    }];
-}
-#pragma mark- VPImageCropperDelegate
-- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage
-{
-    self.tabBarController.tabBar.hidden = NO;
-    //编辑图片后，上传头像图片
-    [cropperViewController dismissViewControllerAnimated:YES completion:^{
-        [self uploadUserHeadImage:editedImage];
-        
-    }];
-}
-//取消的方法
-- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController
-{
-    self.tabBarController.tabBar.hidden = NO;
-    [cropperViewController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
-//上传用户头像
-- (void)uploadUserHeadImage:(UIImage *)image
-{
-    NSString* imageHash = [image UIImageToMD5];
-    typeof(self) __weak wself = self;
-    
-    [AFNetAPIClient PostMediaData:APIUplaodFile parameters:[RequestParameters uploadFile:@"1" md5:imageHash coverType:@"3"] mediaData:@[ImageFile,image] success:^(id JSON, NSError *error){
-        DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
-        UploadImageModel* imageModel = [[UploadImageModel alloc] initWithString:(NSString *)model.result error:nil];
-        [wself updateUserHead:imageModel.url];
-    }failure:^(id JSON, NSError *error){
-        
-    }];
-}
-
-- (void)updateUserHead:(NSString *)urlString{
-    
-    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updateUserHead:urlString userid:[UserInfoManager sharedInstance].userModel.userinfo.id] showLoading:NO success:^(id JSON, NSError *error){
-        [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
-            if (finished) {
-                UserInfo* userInfo = [UserInfoManager sharedInstance].userModel.userinfo;
-                if (userInfo.headerIconUrl) {
-                    [self.headerIcon sd_setImageWithURL:[NSURL URLWithString:userInfo.headerIconUrl] placeholderImage:[UIImage imageNamed:@"my_header"]];
-                }
-            }
-        }];
-    }failure:^(id JSON, NSError *error){
-        
-    }];
-}
 
 #pragma mark-
 - (void)createSubViews{
     SettingCellView* cell1 = [SettingCellView new];
-    cell1.titleLabel.text = @"头像";
+    cell1.titleLabel.text = @"基本信息";
     [self.view addSubview:cell1];
     [cell1 mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.left.right.equalTo(self.view);
-        make.height.equalTo(72);
+        make.height.equalTo(44);
     }];
+    [cell1 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editBasicInfo:)]];
     {
-        self.headerIcon = [UIImageView_SD new];
-        self.headerIcon.image = [UIImage imageNamed:@"my_header"];
-        self.headerIcon.layer.masksToBounds = YES;
-        self.headerIcon.layer.cornerRadius = 55/2.0;
-        self.headerIcon.userInteractionEnabled = YES;
-        [cell1 addSubview:self.headerIcon];
-        [self.headerIcon addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyUserHeadIcon:)]];
-        [self.headerIcon mas_makeConstraints:^(MASConstraintMaker *make){
-            make.right.equalTo(cell1).offset(-40);
-            make.centerY.equalTo(cell1.centerY);
-            make.height.width.equalTo(55);
-        }];
+//        self.headerIcon = [UIImageView_SD new];
+//        self.headerIcon.image = [UIImage imageNamed:@"my_header"];
+//        self.headerIcon.layer.masksToBounds = YES;
+//        self.headerIcon.layer.cornerRadius = 55/2.0;
+//        self.headerIcon.userInteractionEnabled = YES;
+//        [cell1 addSubview:self.headerIcon];
+//        [self.headerIcon addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyUserHeadIcon:)]];
+//        [self.headerIcon mas_makeConstraints:^(MASConstraintMaker *make){
+//            make.right.equalTo(cell1).offset(-40);
+//            make.centerY.equalTo(cell1.centerY);
+//            make.height.width.equalTo(55);
+//        }];
     }
     
     
@@ -355,28 +225,28 @@
     
 //    UIView* lineView;
     
-    SettingCellView* cell5 = [SettingCellView new];
-    cell5.titleLabel.text = @"手机号码";
-    [self.view addSubview:cell5];
-    cell5.arrowView.hidden = YES;
-//    cell5.lineView.hidden = YES;
-//    [cell5 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyPhoneNumber:)]];
-    [cell5 mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.equalTo(cell1.mas_bottom);
-        make.left.right.equalTo(cell1);
-        make.height.equalTo(44);
-    }];
+//    SettingCellView* cell5 = [SettingCellView new];
+//    cell5.titleLabel.text = @"手机号码";
+//    [self.view addSubview:cell5];
+//    cell5.arrowView.hidden = YES;
+////    cell5.lineView.hidden = YES;
+////    [cell5 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyPhoneNumber:)]];
+//    [cell5 mas_makeConstraints:^(MASConstraintMaker *make){
+//        make.top.equalTo(cell1.mas_bottom);
+//        make.left.right.equalTo(cell1);
+//        make.height.equalTo(44);
+//    }];
     {
-        self.phoneLabel = [UILabel new];
-        self.phoneLabel.font = [UIFont systemFontOfSize:16];
-        self.phoneLabel.textAlignment = NSTextAlignmentRight;
-        [cell5 addSubview:self.phoneLabel];
-        [self.phoneLabel mas_makeConstraints:^(MASConstraintMaker *make){
-            make.right.equalTo(cell5.right).offset(-47);
-            make.centerY.equalTo(cell5.centerY);
-            make.width.equalTo(200);
-            make.height.equalTo(20);
-        }];
+//        self.phoneLabel = [UILabel new];
+//        self.phoneLabel.font = [UIFont systemFontOfSize:16];
+//        self.phoneLabel.textAlignment = NSTextAlignmentRight;
+//        [cell5 addSubview:self.phoneLabel];
+//        [self.phoneLabel mas_makeConstraints:^(MASConstraintMaker *make){
+//            make.right.equalTo(cell5.right).offset(-47);
+//            make.centerY.equalTo(cell5.centerY);
+//            make.width.equalTo(200);
+//            make.height.equalTo(20);
+//        }];
         
 //        lineView = [UIView new];
 //        lineView.backgroundColor = [UIColor colorWithWhite:232/255.f alpha:1.f];
@@ -401,8 +271,8 @@
     [cell6 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyPassword:)]];
     [self.view addSubview:cell6];
     [cell6 mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.equalTo(cell5.bottom);
-        make.left.right.height.equalTo(cell5);
+        make.top.equalTo(cell1.bottom);
+        make.left.right.height.equalTo(cell1);
     }];
 //    {
 //        lineView = [UIView new];
@@ -421,7 +291,7 @@
     [self.view addSubview:cell7];
     [cell7 mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.equalTo(cell6.bottom);
-        make.left.right.height.equalTo(cell5);
+        make.left.right.height.equalTo(cell1);
     }];
     {
         self.cacheLabel = [UILabel new];
@@ -431,8 +301,6 @@
         [self.cacheLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.right.equalTo(cell7.right).offset(-47);
             make.centerY.equalTo(cell7.centerY);
-            make.width.equalTo(200);
-            make.height.equalTo(20);
         }];
         
         self.cacheLabel.text = [DeviceHelper getDiskSize];

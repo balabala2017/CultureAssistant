@@ -2212,6 +2212,7 @@
 
 - (id)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
         
         self.titleLabel = [UILabel new];
         self.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -2219,8 +2220,6 @@
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(self).offset(23);
             make.centerY.equalTo(self.mas_centerY);
-            make.height.equalTo(20);
-            make.width.equalTo(100);
         }];
         
         self.arrowView = [UIImageView new];

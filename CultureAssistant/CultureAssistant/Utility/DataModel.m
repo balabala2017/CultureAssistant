@@ -392,7 +392,7 @@
 - (void)refreshTokenCode{
     if (self.userModel == nil) return;
     
-    [AFNetAPIClient POST:APIRefreshTokenCode parameters:[RequestParameters commonRequestParameter] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIRefreshTokenCode parameters:[RequestParameters commonRequestParameter] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.result isKindOfClass:[NSString class]]) {
             NSString* jsonString = (NSString *)model.result;

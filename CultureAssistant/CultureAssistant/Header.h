@@ -70,6 +70,10 @@
 #define APIGetUserApplys @"/api/braille/volEvent/getJoinEventByUserId"
 //获取带有场馆的城市
 #define APIGetProvincesByArea @"/api/braille/area/getProvincesByArea"
+//通过手机号发送该账号下绑定的邮箱的验证码
+#define APISendEmailVCode @"/trunk/api/login/sendEmailVCode"
+//通过邮箱验证码来重置密码
+#define APIResetPwdFromEmailVCode @"/trunk/api/login/resetPwdFromEmailVCode"
 
 #pragma mark- 以下是老接口
 

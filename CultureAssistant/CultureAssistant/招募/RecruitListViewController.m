@@ -204,15 +204,15 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (scrollView.contentOffset.y <= 0 ) {
-        if (self.scrollHandler) {
-            self.scrollHandler(@"down");
-        }
-    }else if(scrollView.contentOffset.y > 0 ){
-        if (self.scrollHandler) {
-            self.scrollHandler(@"up");
-        }
-    }
+//    if (scrollView.contentOffset.y <= 0 ) {
+//        if (self.scrollHandler) {
+//            self.scrollHandler(@"down");
+//        }
+//    }else if(scrollView.contentOffset.y > 0 ){
+//        if (self.scrollHandler) {
+//            self.scrollHandler(@"up");
+//        }
+//    }
 }
 
 #pragma mark-

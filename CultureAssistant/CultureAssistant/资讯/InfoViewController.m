@@ -221,6 +221,14 @@
     if (_bigScrollView.contentOffset.x < -50) {
 
     }
+    
+    if (self.menuScrollView.contentOffset.y < 0) {
+        self.menuScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+    }
+    
+    if (self.menuScrollView.contentOffset.y > 0) {
+        self.menuScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+    }
 }
 
 

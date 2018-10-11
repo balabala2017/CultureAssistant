@@ -48,7 +48,7 @@
         _times = 180;
     }
     
-    [AFNetAPIClient POST:APIUpdatePhoneNumSendSms parameters:[RequestParameters updatePhoneNumSendSms:self.accountField.text] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUpdatePhoneNumSendSms parameters:[RequestParameters updatePhoneNumSendSms:self.accountField.text] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.code integerValue] != 200) {
             [MBProgressHUD MBProgressHUDWithView:self.view Str:@"验证码发送失败，请重新获取"];
@@ -112,7 +112,7 @@
     }
     
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIUpdatePhoneNum parameters:[RequestParameters updatePhoneNum:[UserInfoManager sharedInstance].userModel.userinfo.id phoneNum:self.accountField.text smsCode:self.verifyCodeField.text] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUpdatePhoneNum parameters:[RequestParameters updatePhoneNum:[UserInfoManager sharedInstance].userModel.userinfo.id phoneNum:self.accountField.text smsCode:self.verifyCodeField.text] success:^(id JSON, NSError *error){
         [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
             if (finished) {
                 [wself.navigationController popToViewController:self.navigationController.childViewControllers[2] animated:YES];

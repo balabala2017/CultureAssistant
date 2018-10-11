@@ -126,7 +126,7 @@
         return;
     }
     
-    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updatePassword:self.passwordField1.text userPwd:self.passwordField2.text userid:[UserInfoManager sharedInstance].userModel.userinfo.id] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updatePassword:self.passwordField1.text userPwd:self.passwordField2.text userid:[UserInfoManager sharedInstance].userModel.userinfo.id] success:^(id JSON, NSError *error){
         
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"密码修改成功"];
         [self performSelector:@selector(onBackToLogin) withObject:nil afterDelay:1.f];

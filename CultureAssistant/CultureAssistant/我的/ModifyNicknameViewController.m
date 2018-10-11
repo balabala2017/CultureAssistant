@@ -66,7 +66,7 @@
     }
     typeof(self) __weak wself = self;
     UserModel* userModel = [UserInfoManager sharedInstance].userModel;
-    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updateNickname:self.nicknameField.text userid:userModel.userinfo.id] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUpdateUserInfo parameters:[RequestParameters updateNickname:self.nicknameField.text userid:userModel.userinfo.id] success:^(id JSON, NSError *error){
         
         [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
             if (finished) {

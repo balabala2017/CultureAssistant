@@ -16,6 +16,7 @@
 		774507C71F7BF6A600A0043D /* RecruitDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774507C61F7BF6A600A0043D /* RecruitDetailBottomView.m */; };
 		77559BF220DCF74000798AD0 /* ValidateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77559BF120DCF74000798AD0 /* ValidateViewController.m */; };
 		775C68801F6973D30009052A /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C687F1F6973D30009052A /* LibraryViewController.m */; };
+		7764033C216DAC6F00EFAF62 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7764033B216DAC6F00EFAF62 /* EditViewController.m */; };
 		776F3A3E1F56F8150047DBF0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A3D1F56F8150047DBF0 /* LoginViewController.m */; };
 		776F3A451F56FA550047DBF0 /* ModifyPhoneNumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A441F56FA550047DBF0 /* ModifyPhoneNumViewController.m */; };
 		776F3A481F56FA6D0047DBF0 /* FindPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A471F56FA6D0047DBF0 /* FindPasswordViewController.m */; };
@@ -212,6 +213,8 @@
 		77559BF120DCF74000798AD0 /* ValidateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ValidateViewController.m; sourceTree = "<group>"; };
 		775C687E1F6973D30009052A /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
 		775C687F1F6973D30009052A /* LibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryViewController.m; sourceTree = "<group>"; };
+		7764033A216DAC6F00EFAF62 /* EditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		7764033B216DAC6F00EFAF62 /* EditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		776F3A3C1F56F8150047DBF0 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		776F3A3D1F56F8150047DBF0 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		776F3A431F56FA550047DBF0 /* ModifyPhoneNumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPhoneNumViewController.h; sourceTree = "<group>"; };
@@ -705,6 +708,8 @@
 				BEA2D21C1F71458B00F6572B /* EnrollRecordController.m */,
 				77559BF020DCF74000798AD0 /* ValidateViewController.h */,
 				77559BF120DCF74000798AD0 /* ValidateViewController.m */,
+				7764033A216DAC6F00EFAF62 /* EditViewController.h */,
+				7764033B216DAC6F00EFAF62 /* EditViewController.m */,
 			);
 			path = "我的";
 			sourceTree = "<group>";
@@ -1424,6 +1429,7 @@
 				BEB98B0A1F57AD9A0099D9F4 /* VPImageCropperViewController.m in Sources */,
 				BEB8472B1F4C48FD00070553 /* InfoListViewController.m in Sources */,
 				BEB1E5961F7BB8B8002E0755 /* RecruitPostDescController.m in Sources */,
+				7764033C216DAC6F00EFAF62 /* EditViewController.m in Sources */,
 				BEAB8E311F430BC40053F174 /* JSONModelArray.m in Sources */,
 				BECC0FF81F442E09003FA9BA /* RegisterViewController.m in Sources */,
 				BEAB8E291F430BC40053F174 /* IQTextView.m in Sources */,

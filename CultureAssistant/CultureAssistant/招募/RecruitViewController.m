@@ -28,6 +28,8 @@
 
 @property(nonatomic,strong)NSString* areaCode;
 @property(nonatomic,strong)NSString* orgId;
+
+@property (nonatomic,strong) UIView * arrowView;
 @end
 
 @implementation RecruitViewController
@@ -35,15 +37,15 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-    _scrollView = [UIScrollView new];
-    _scrollView.delegate = self;
-    [self.view addSubview:_scrollView];
-    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.view.bottom).offset(-49);
-    }];
-    
-    _scrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT+SCREENWIDTH/2.f);
+//    _scrollView = [UIScrollView new];
+//    _scrollView.delegate = self;
+//    [self.view addSubview:_scrollView];
+//    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make){
+//        make.top.left.right.equalTo(self.view);
+//        make.bottom.equalTo(self.view.bottom).offset(-49);
+//    }];
+//
+//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT+SCREENWIDTH/2.f);
     
     
     self.channelArray = @[@"全部",@"预热中",@"报名中",@"进行中",@"已结束",@"已结项"];
@@ -65,7 +67,7 @@
     }
     
     //用3进行测试
-    [self getBannerList];
+//    [self getBannerList];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCityLibrary:) name:Change_City_Library object:nil];
     
@@ -73,13 +75,13 @@
 
 - (void)creatSubviews
 {
-    if (!self.WYNetScrollView) {
-        self.WYNetScrollView = [[WYScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH/2.0)];
-        self.WYNetScrollView.placeholderImage = [UIImage imageNamed:@"placeholderImage"];
-        self.WYNetScrollView.netDelagate = self;
-        self.WYNetScrollView.iconView.image = [UIImage imageNamed:@"recruit_banner"];
-    }
-    [_scrollView addSubview:self.WYNetScrollView];
+//    if (!self.WYNetScrollView) {
+//        self.WYNetScrollView = [[WYScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH/2.0)];
+//        self.WYNetScrollView.placeholderImage = [UIImage imageNamed:@"placeholderImage"];
+//        self.WYNetScrollView.netDelagate = self;
+//        self.WYNetScrollView.iconView.image = [UIImage imageNamed:@"recruit_banner"];
+//    }
+//    [_scrollView addSubview:self.WYNetScrollView];
     
     
     
@@ -90,32 +92,56 @@
         _kButtonWidth = 100;
     }
     
-    _menuScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREENWIDTH/2.f, SCREENWIDTH, 40)];
+    _menuScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     _menuScrollView.contentSize = CGSizeMake(_kButtonWidth * self.channelArray.count, 40);
     _menuScrollView.showsHorizontalScrollIndicator = NO;
-    [_scrollView addSubview:_menuScrollView];
+    _menuScrollView.delegate = self;
+    _menuScrollView.pagingEnabled = YES;
+    [self.view addSubview:_menuScrollView];
     
     for (UIImageView* subView in _menuScrollView.subviews) {
         [subView removeFromSuperview];
     }
-    WeakObj(self);
+    {
+        
+        _arrowView = [UIView new];
+        [self.view addSubview:_arrowView];
+        [_arrowView mas_makeConstraints:^(MASConstraintMaker *make){
+            make.right.top.bottom.equalTo(self.menuScrollView);
+            make.width.equalTo(40);
+        }];
+        
+        UIImageView* imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zixun_square"]];
+        [_arrowView addSubview:imgView];
+        [imgView mas_makeConstraints:^(MASConstraintMaker *make){
+            make.edges.equalTo(self.arrowView);
+        }];
+        
+        imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zixun_arrow"]];
+        [_arrowView addSubview:imgView];
+        [imgView mas_makeConstraints:^(MASConstraintMaker *make){
+            make.center.equalTo(self.arrowView);
+        }];
+        
+    }
+    typeof(self) __weak wself = self;
     UIView* line = [UIView new];
     line.backgroundColor = [UIColor colorWithWhite:194/255.f alpha:1.f];
-    [_scrollView addSubview:line];
+    [self.view addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make){
-        make.left.equalTo(wself.menuScrollView.mas_left);
-        make.bottom.equalTo(wself.menuScrollView.mas_bottom);
-        make.right.equalTo(wself.menuScrollView.mas_right);
+        make.left.equalTo(wself.menuScrollView.left);
+        make.bottom.equalTo(wself.menuScrollView.bottom);
+        make.right.equalTo(wself.menuScrollView.right);
         make.height.equalTo(1);
     }];
     
-    _bigScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREENWIDTH/2.f+40, SCREENWIDTH, SCREENHEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-40)];
+    _bigScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, SCREENWIDTH, SCREENHEIGHT-NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT-40)];
     _bigScrollView.contentSize = CGSizeMake(SCREENWIDTH*self.channelArray.count, _bigScrollView.bounds.size.height);
     _bigScrollView.showsHorizontalScrollIndicator = NO;
     _bigScrollView.showsVerticalScrollIndicator = NO;
     _bigScrollView.pagingEnabled = YES;
     _bigScrollView.delegate = self;
-    [_scrollView addSubview:_bigScrollView];
+    [self.view addSubview:_bigScrollView];
     
     
     for (NSInteger i = 0; i < self.channelArray.count; i++)
@@ -154,31 +180,15 @@
 {
     self.channelArray = @[@"全部",@"预热中",@"报名中",@"进行中",@"已结束",@"已结项"];
     NSArray* stateArray = @[@"",@"0",@"1",@"2",@"3",@"4"];
-    WeakObj(self);
+
     for (NSInteger i = 0; i < self.channelArray.count; i++) {
         RecruitListViewController *VC = [[RecruitListViewController alloc] init];
+        VC.view.frame = CGRectMake(i*self.bigScrollView.bounds.size.width, 0, self.bigScrollView.bounds.size.width, self.bigScrollView.bounds.size.height);
         VC.activeState = stateArray[i];
-        VC.scrollHandler = ^(NSString* direction){
-            if (self.banners.list.count >0)
-            {
-                if ([direction isEqualToString:@"up"]) {
-                    [UIView animateWithDuration:.5f animations:^{
-                        wself.scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
-                    }];
-                }else{
-                    [UIView animateWithDuration:.5f animations:^{
-                        wself.scrollView.contentOffset = CGPointMake(0, 0);
-                    }];
-                }
-            }
-        };
+
+        [self.bigScrollView addSubview:VC.view];
         [self addChildViewController:VC];
     }
-    
-    // 添加默认控制器
-    RecruitListViewController *vc = [self.childViewControllers firstObject];
-    vc.view.frame = self.bigScrollView.bounds;
-    [self.bigScrollView addSubview:vc.view];
 }
 
 - (void)clickButton:(UIButton *)button
@@ -186,12 +196,15 @@
     _lastButton.selected = NO;
     button.selected = YES;
     _lastButton = button;
+    
     [_menuRedLineView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.lastButton.frame.origin.x);
     }];
+    
     //上方小的滑动视图的滚动
     float xx = SCREENWIDTH * (button.tag - 1) * (_kButtonWidth / SCREENWIDTH) - _kButtonWidth;
     [_menuScrollView scrollRectToVisible:CGRectMake(xx, 0, SCREENWIDTH, _menuScrollView.frame.size.height) animated:YES];
+
     
     //下方大的滑动视图的滚动
     CGFloat offsetX = button.tag * self.bigScrollView.frame.size.width;
@@ -202,78 +215,80 @@
 
 
 
-- (void)getBannerList{
-    //@"430000"
-    
-    typeof(self) __weak wself = self;
-    [AFNetAPIClient GET:APIGetBanners parameters:[RequestParameters getBannersByChannelId:@"8" type:@"" cpage:@"1" pageSize:@"4" areaCode:self.areaCode orgId:self.orgId objectType:@"6" visibled:@"1"] success:^(id JSON, NSError *error){
-        DataModel *model = [[DataModel alloc] initWithString:JSON error:nil];
-        if ([model.result isKindOfClass:[NSDictionary class]]){
-            self.banners = [BannerList BannerListWithDictionary:(NSDictionary *)model.result];
-            if (self.banners.list.count >0) {
-                [wself layoutTopBanner];
-            }else{
-                self.scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
-            }
-        }
-    }failure:^(id JSON, NSError *error){
-        
-    }];
-}
+//- (void)getBannerList{
+//    //@"430000"
+//
+//    typeof(self) __weak wself = self;
+//    [AFNetAPIClient GET:APIGetBanners parameters:[RequestParameters getBannersByChannelId:@"8" type:@"" cpage:@"1" pageSize:@"4" areaCode:self.areaCode orgId:self.orgId objectType:@"6" visibled:@"1"] success:^(id JSON, NSError *error){
+//        DataModel *model = [[DataModel alloc] initWithString:JSON error:nil];
+//        if ([model.result isKindOfClass:[NSDictionary class]]){
+//            self.banners = [BannerList BannerListWithDictionary:(NSDictionary *)model.result];
+//            if (self.banners.list.count >0) {
+//                [wself layoutTopBanner];
+//            }else{
+//                self.scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
+//            }
+//        }
+//    }failure:^(id JSON, NSError *error){
+//        self.scrollView.contentOffset = CGPointMake(0, SCREENWIDTH/2.f);
+//    }];
+//}
 
 #pragma mark-
-- (void)layoutTopBanner
-{
-    NSMutableArray* tempArray = [NSMutableArray array];
-    for (NSInteger i = 0;i < self.banners.list.count;i++) {
-        BannerItem* model = self.banners.list[i];
-        if (model.IMG_URL.length > 0) {
-            [tempArray addObject:model.IMG_URL];
-        }
-    }
-
-    self.WYNetScrollView.imageArray = tempArray;
-    self.WYNetScrollView.AutoScrollDelay = 3;
-    self.WYNetScrollView.showImageInfo = YES;
-    
-}
-
--(void)showNetworkImageInfoAtIndex:(NSInteger)index{
-    if (self.banners.list.count > 0  && index < self.banners.list.count ) {
-        BannerItem* model = self.banners.list[index];
-        self.WYNetScrollView.titleLabel.text = model.SUMMARY;
-    }
-}
-
--(void)didSelectedNetImageAtIndex:(NSInteger)index{
-    if (self.banners.list.count <= 0) return;
-    
-    BannerItem* model = self.banners.list[index];
-    
-    RecruitDetailController* vc = [RecruitDetailController new];
-    vc.eventId = model.ID;
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//- (void)layoutTopBanner
+//{
+//    NSMutableArray* tempArray = [NSMutableArray array];
+//    for (NSInteger i = 0;i < self.banners.list.count;i++) {
+//        BannerItem* model = self.banners.list[i];
+//        if (model.IMG_URL.length > 0) {
+//            [tempArray addObject:model.IMG_URL];
+//        }
+//    }
+//
+//    self.WYNetScrollView.imageArray = tempArray;
+//    self.WYNetScrollView.AutoScrollDelay = 3;
+//    self.WYNetScrollView.showImageInfo = YES;
+//
+//}
+//
+//-(void)showNetworkImageInfoAtIndex:(NSInteger)index{
+//    if (self.banners.list.count > 0  && index < self.banners.list.count ) {
+//        BannerItem* model = self.banners.list[index];
+//        self.WYNetScrollView.titleLabel.text = model.SUMMARY;
+//    }
+//}
+//
+//-(void)didSelectedNetImageAtIndex:(NSInteger)index{
+//    if (self.banners.list.count <= 0) return;
+//
+//    BannerItem* model = self.banners.list[index];
+//
+//    RecruitDetailController* vc = [RecruitDetailController new];
+//    vc.eventId = model.ID;
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 #pragma mark-
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    NSUInteger index = scrollView.contentOffset.x / self.bigScrollView.frame.size.width;
-    
-    _lastButton.selected = NO;
-    UIButton *button = _menuScrollView.subviews[index];
-    if ([button isKindOfClass:[UIButton class]]) {
-        button.selected = YES;
-        _lastButton = button;
-        [_menuRedLineView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.lastButton.frame.origin.x);
+    if (self.bigScrollView == scrollView)
+    {
+        NSUInteger index = scrollView.contentOffset.x / self.bigScrollView.frame.size.width;
+        [UIView animateWithDuration:.5f animations:^{
+            self.arrowView.hidden = index == self.channelArray.count - 1?YES:NO;
         }];
+        
+        
+        _lastButton.selected = NO;
+        UIButton *button = _menuScrollView.subviews[index];
+        if ([button isKindOfClass:[UIButton class]]) {
+            button.selected = YES;
+            _lastButton = button;
+            [_menuRedLineView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.lastButton.frame.origin.x);
+            }];
+        }
     }
-    
-    RecruitListViewController *VC = self.childViewControllers[index];
-    if (VC.view.superview) return;
-    VC.view.frame = scrollView.bounds;
-    [self.bigScrollView addSubview:VC.view];
 }
 
 
@@ -281,15 +296,18 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
     [self scrollViewDidEndScrollingAnimation:scrollView];
-    float xx = scrollView.contentOffset.x * (_kButtonWidth / SCREENWIDTH) - _kButtonWidth;
-    [_menuScrollView scrollRectToVisible:CGRectMake(xx, 0, SCREENWIDTH, _menuScrollView.frame.size.height) animated:YES];
+    
+    if (self.bigScrollView == scrollView)
+    {
+        float xx = scrollView.contentOffset.x * (_kButtonWidth / SCREENWIDTH) - _kButtonWidth;
+        [_menuScrollView scrollRectToVisible:CGRectMake(xx, 0, SCREENWIDTH, _menuScrollView.frame.size.height) animated:YES];
+    }
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (_scrollView == scrollView) {
-        
-    }
+
 }
 
 #pragma mark-
@@ -310,7 +328,7 @@
         self.orgId = library.id;
     }
     
-    [self getBannerList];
+//    [self getBannerList];
 }
 
 - (void)dealloc{

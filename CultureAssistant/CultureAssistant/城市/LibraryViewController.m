@@ -234,7 +234,7 @@
 - (void)setVisitHistory:(NSString *)code areaName:(NSString *)areaName{
     if (code.length <= 0 || areaName.length <= 0) return;
     
-    [AFNetAPIClient POST:APISetVisitHistory parameters:[RequestParameters setVisitHistory:code areaName:areaName] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APISetVisitHistory parameters:[RequestParameters setVisitHistory:code areaName:areaName] success:^(id JSON, NSError *error){
         
     }failure:^(id JSON, NSError *error){
         

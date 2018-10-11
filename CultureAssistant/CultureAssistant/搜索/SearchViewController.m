@@ -210,7 +210,7 @@
     _searchField.text = arr[0];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [AFNetAPIClient POST:APIDoSearch parameters:[RequestParameters doSearchType:arr[1] key:arr[0] cpage:arr[2] pageSize:PAGESIZE] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIDoSearch parameters:[RequestParameters doSearchType:arr[1] key:arr[0] cpage:arr[2] pageSize:PAGESIZE] success:^(id JSON, NSError *error){
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         DataModel *model = [[DataModel alloc] initWithString:JSON error:nil];

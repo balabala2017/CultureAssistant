@@ -15,6 +15,8 @@
 @property(nonatomic,strong)UIButton* verifyCodeBtn;
 @property(nonatomic,strong)NSTimer * timer;
 @property(nonatomic,assign)int times;
+@property(nonatomic,assign)BOOL usePhoneCode;
+
 @end
 
 @implementation FindPasswordViewController
@@ -26,7 +28,33 @@
     [self createSubViews];
 }
 
-- (void)getVerifyCode:(UIButton *)button{
+- (void)getVerifyCode:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    
+    UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"获取验证码" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    typeof(self) __weak wself = self;
+    [vc addAction:[UIAlertAction actionWithTitle:@"获取短信验证码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+        wself.usePhoneCode = YES;
+        [wself getPhoneCode];
+    }]];
+    
+    [vc addAction:[UIAlertAction actionWithTitle:@"获取邮箱验证码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+        wself.usePhoneCode = NO;
+        [wself getMailCode];
+    }]];
+    
+    [vc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action){
+        
+    }]];
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+//获取短信验证码
+- (void)getPhoneCode
+{
     if ([self.accountField.text length] == 0) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"手机号码不能为空"];
         return;
@@ -42,10 +70,13 @@
         _times = 180;
     }
     
-    [AFNetAPIClient POST:APIRegisterSendSms parameters:[RequestParameters sendSms:self.accountField.text] showLoading:NO success:^(id JSON, NSError *error){
+    typeof(self) __weak wself = self;
+    [AFNetAPIClient POST:APIRegisterSendSms parameters:[RequestParameters sendSms:self.accountField.text] success:^(id JSON, NSError *error){
         NSLog(@"检验码发送成功  %@",JSON);
         
     }failure:^(id JSON, NSError *error){
+        [wself stopTimer];
+        
         DataModel* model = (DataModel *)JSON;
         if ([model isKindOfClass:[DataModel class]]) {
             [MBProgressHUD MBProgressHUDWithView:self.view Str:model.msg];
@@ -74,10 +105,51 @@
     }
 }
 
+//获取邮箱验证码
+- (void)getMailCode
+{
+    if ([self.accountField.text length] == 0) {
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"手机号码不能为空"];
+        return;
+    }
+    if (![NSString isPureNumandCharacters:self.accountField.text]) {
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请输入正确的手机号码"];
+        return;
+    }
+    [self.view endEditing:YES];
+    
+    
+    if (!_timer) {
+        self.verifyCodeBtn.titleLabel.text = @"180s";
+        self.verifyCodeBtn.enabled = NO;
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+        _times = 180;
+    }
+    
+
+    NSDictionary* dic = @{
+                          @"phone":self.accountField.text,
+                          @"type":@"2"
+                          };
+    dic = [[RequestHelper sharedInstance] prepareRequestparameter:dic];
+    
+    typeof(self) __weak wself = self;
+    [AFNetAPIClient POST:APISendEmailVCode parameters:dic success:^(id JSON, NSError *error){
+        NSLog(@"检验码发送成功  %@",JSON);
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"登录邮箱查收验证码"];
+        
+    }failure:^(id JSON, NSError *error){
+        [wself stopTimer];
+        
+        DataModel* model = (DataModel *)JSON;
+        if ([model isKindOfClass:[DataModel class]]) {
+            [MBProgressHUD MBProgressHUDWithView:self.view Str:model.msg];
+        }
+    }];
+}
+
 - (void)onSureAction:(UIButton *)button{
-    [self.accountField resignFirstResponder];
-    [self.verifyCodeField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
+    [self.view endEditing:YES];
     
     if ([self.accountField.text length] == 0) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"手机号码不能为空"];
@@ -99,7 +171,28 @@
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"两次输入的密码不一致"];
         return;
     }
-    [AFNetAPIClient POST:APIFindPassword parameters:[RequestParameters toRegister:self.accountField.text userPwd:self.passwordField.text smsCode:self.verifyCodeField.text type:@"ios"] showLoading:NO success:^(id JSON, NSError *error){
+    NSString* urlString ;
+    NSDictionary* dic ;
+    if (self.usePhoneCode) {
+        urlString = APIFindPassword;
+        
+        dic = @{@"userName":self.accountField.text,
+                @"userPwd":self.passwordField.text,
+                @"smsCode":self.verifyCodeField.text,
+                @"type":@"ios"};
+    }else{
+        urlString = APIResetPwdFromEmailVCode;
+        
+        dic = @{@"phone":self.accountField.text,
+                @"password":self.passwordField.text,
+                @"vCode":self.verifyCodeField.text
+                };
+    }
+    
+    dic = [[RequestHelper sharedInstance] prepareRequestparameter:dic];
+    
+
+    [AFNetAPIClient POST:urlString parameters:dic success:^(id JSON, NSError *error){
         
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"密码修改成功，请重新登录"];
         [self performSelector:@selector(onBackToLogin) withObject:nil afterDelay:1.f];
@@ -132,7 +225,7 @@
         make.height.equalTo(40);
     }];
     
-    self.verifyCodeField = [CustomTextField textFieldWithPlaceholder:@"请输入短信验证码" textFont:font];
+    self.verifyCodeField = [CustomTextField textFieldWithPlaceholder:@"请输入验证码" textFont:font];
     self.verifyCodeField.backgroundColor = [UIColor whiteColor];
     self.verifyCodeField.keyboardType = UIKeyboardTypeNumberPad;
     self.verifyCodeField.returnKeyType = UIReturnKeyNext;

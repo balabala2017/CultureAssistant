@@ -42,7 +42,7 @@
 - (void)checkByUserName:(NSString *)userName
 {
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APICheckByUserName parameters:[RequestParameters checkByUserName:userName] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APICheckByUserName parameters:[RequestParameters checkByUserName:userName] success:^(id JSON, NSError *error){
         
         
     }failure:^(id JSON, NSError *error){
@@ -72,7 +72,7 @@
     }
     
     typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIRegisterSendSms parameters:[RequestParameters sendSms:self.accountField.text] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIRegisterSendSms parameters:[RequestParameters sendSms:self.accountField.text] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.code integerValue] != 200) {
             [MBProgressHUD MBProgressHUDWithView:self.view Str:@"验证码发送失败，请重新获取"];
@@ -137,7 +137,7 @@
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请输入4-20位密码"];
         return;
     }
-    [AFNetAPIClient POST:APIUserRegister parameters:[RequestParameters toRegister:self.accountField.text userPwd:self.passwordField.text smsCode:self.verifyCodeField.text type:@"6"] showLoading:NO success:^(id JSON, NSError *error){
+    [AFNetAPIClient POST:APIUserRegister parameters:[RequestParameters toRegister:self.accountField.text userPwd:self.passwordField.text smsCode:self.verifyCodeField.text type:@"6"] success:^(id JSON, NSError *error){
         
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"注册成功"];
 

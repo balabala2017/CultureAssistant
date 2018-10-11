@@ -5,7 +5,8 @@
 
 
 #import "RegisterSecondController.h"
-#import "RegisterThirdController.h"
+#import "ValidateViewController.h"
+
 
 @interface RegisterSecondController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView* tableView;
@@ -282,10 +283,13 @@
     }
      [self.dictionary setObject:serviceTime forKey:@"serviceTimes"];
     
-    RegisterThirdController* vc = [RegisterThirdController new];
+    
+    
+    ValidateViewController* vc = [ValidateViewController new];
     vc.paramDic = self.dictionary;
     vc.modifyVolunteer = self.modifyVolunteer;
     [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 @end
