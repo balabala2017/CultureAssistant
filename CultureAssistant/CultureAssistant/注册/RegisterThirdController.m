@@ -101,7 +101,8 @@
     
 }
 
-- (void)onRegisterAction:(id)sender{
+- (void)onRegisterAction:(id)sender
+{
     if (self.modifyVolunteer)
     {
         [AFNetAPIClient POST:APIUpdateVolunteer parameters:[RequestParameters doUpdateVolunteer:self.paramDic[@"id"]
@@ -135,11 +136,12 @@
                                                                                        hobby:self.paramDic[@"hobby"]
                                                                                 serviceTimes:self.paramDic[@"serviceTimes"]
                                                                                 serviceTypes:self.paramDic[@"serviceTypes"]
-                                                                                 workAddress:self.paramDic[@"workAddress"]]
+                                                                                 workAddress:self.paramDic[@"workAddress"]
+                                                                                  uploadJson:self.paramDic[@"uploadJson"]]
                   success:^(id JSON, NSError *error){
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
-                         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"修改成功"];
+                         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"信息修改成功"];
                          self.btn.hidden = YES ;
                          
                          [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){
@@ -185,11 +187,12 @@
                                                                                        hobby:self.paramDic[@"hobby"]
                                                                                 serviceTimes:self.paramDic[@"serviceTimes"]
                                                                                 serviceTypes:self.paramDic[@"serviceTypes"]
-                                                                                 workAddress:self.paramDic[@"workAddress"]]
+                                                                                 workAddress:self.paramDic[@"workAddress"]
+                                                                                  uploadJson:self.paramDic[@"uploadJson"]]
                  success:^(id JSON, NSError *error){
                      DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
                      if ([model.code isEqualToString:@"200"]) {
-                         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"注册成功"];
+                         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"注册信息提交成功,等待审核"];
                          self.btn.hidden = YES ;
                          
                          [[UserInfoManager sharedInstance] getUserCenterInfo:^(BOOL finished){

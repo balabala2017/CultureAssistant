@@ -297,6 +297,10 @@
 
 @end
 
+#pragma mark- 扫描结果
+@implementation ScanResult
+
+@end
 
 #pragma mark- 用户
 @implementation UserInfo

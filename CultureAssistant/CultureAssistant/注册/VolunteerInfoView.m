@@ -120,6 +120,7 @@
         
         _numberLabel = [self valueLabel];
         _numberLabel.text = volunteer.volunteNo;
+
         [self addSubview:_numberLabel];
         [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(label5.right).offset(20);
@@ -139,13 +140,21 @@
 - (UILabel *)profileLabel{
     UILabel* label = [UILabel new];
     label.textColor = [UIColor colorWithRed:0xec/255.f green:0x24/255.f blue:0x1d/255.f alpha:1.f];
-    label.font = [UIFont systemFontOfSize:18];
+    if (SCREENWIDTH < 375) {
+        label.font = [UIFont systemFontOfSize:15];
+    }else{
+        label.font = [UIFont systemFontOfSize:18];
+    }
     return label;
 }
 
 - (UILabel *)valueLabel{
     UILabel* label = [UILabel new];
-    label.font = [UIFont systemFontOfSize:18];
+    if (SCREENWIDTH < 375) {
+        label.font = [UIFont systemFontOfSize:15];
+    }else{
+        label.font = [UIFont systemFontOfSize:18];
+    }
     return label;
 }
 @end

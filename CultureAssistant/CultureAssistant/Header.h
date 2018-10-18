@@ -119,6 +119,8 @@
 //实名认证
 #define APIUploadVerifiedInfo  @"/api/braille/volunteer/uploadVerifiedInfo"
 #define APIGetCertifiedInfo  @"/api/braille/volunteer/getCertifiedInfo"
+//开始或结束活动计时
+#define APISignEvent  @"/api/braille/volEvent/signEvent"
 
 #pragma mark- 域名
 

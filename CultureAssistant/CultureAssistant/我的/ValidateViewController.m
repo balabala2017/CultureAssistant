@@ -17,6 +17,9 @@
 
 @property(nonatomic,assign)BOOL hasFront;
 @property(nonatomic,assign)BOOL hasBack;
+
+@property(nonatomic,strong)NSMutableDictionary* dictionary;//传递参数
+@property(nonatomic,strong)NSMutableArray* mutableArray;
 @end
 
 @implementation ValidateViewController
@@ -26,51 +29,20 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"f8f8f8"];
     self.title = @"实名认证";
     
+    self.mutableArray = [[NSMutableArray alloc] initWithCapacity:2];
+    [self.mutableArray addObject:[NSDictionary dictionary]];
+    [self.mutableArray addObject:[NSDictionary dictionary]];
+    
+    
+    if (self.paramDic) {
+        self.dictionary = [NSMutableDictionary dictionaryWithDictionary:self.paramDic];
+    }else{
+        self.dictionary = [NSMutableDictionary dictionary];
+    }
     
     [self setupUI];
-    
-    [self getCertifiedInfo];
-
 }
 
-- (void)getCertifiedInfo
-{
-    typeof(self) __weak wself = self;
-    [AFNetAPIClient GET:APIGetCertifiedInfo parameters:[RequestParameters commonRequestParameter] success:^(id JSON, NSError *error){
-        DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
-        if ([model.result isKindOfClass:[NSDictionary class]]) {
-            NSArray* array = [(NSDictionary *)model.result objectForKey:@"data"];
-            if ([array isKindOfClass:[NSArray class]]) {
-                array = [UploadImageModel arrayOfModelsFromDictionaries:array error:nil];
-                
-                if (array.count > 0) {
-                    UploadImageModel* item = array[0];
-                    [wself.cardFrontView sd_setImageWithURL:[NSURL URLWithString:item.remoteUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
-                        
-                        wself.hasFront = YES;
-                        for (UIView* subView in wself.cardFrontView.subviews) {
-                            [subView removeFromSuperview];
-                        }
-                    }];
-                    
-                }
-                if (array.count > 1) {
-                    UploadImageModel* item = array[1];
-                    [wself.cardBackView sd_setImageWithURL:[NSURL URLWithString:item.remoteUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
-
-                        wself.hasBack = YES;
-                        for (UIView* subView in wself.cardBackView.subviews) {
-                            [subView removeFromSuperview];
-                        }
-                    }];
-                    
-                }
-            }
-        }
-    } failure:^(id JSON, NSError *error){
-        
-    }];
-}
 
 - (void)tapCardFrontView:(UITapGestureRecognizer *)gesture
 {
@@ -175,12 +147,31 @@
         for (UIView* subView in _cardFrontView.subviews) {
             [subView removeFromSuperview];
         }
-    }else{
+        
+        [self uploadImage:_cardFrontView.image success:^(id JSON){
+            NSDictionary* dic = [Utility dictionaryWithJsonString:JSON];
+            [self.mutableArray replaceObjectAtIndex:0 withObject:dic];
+            
+        } failure:^(id JSON){
+
+        }];
+
+    }
+    else
+    {
         _cardBackView.image = userImage;
         self.hasBack = YES;
         for (UIView* subView in _cardBackView.subviews) {
             [subView removeFromSuperview];
         }
+        
+        [self uploadImage:_cardBackView.image success:^(id JSON){
+            NSDictionary* dic = [Utility dictionaryWithJsonString:JSON];
+            [self.mutableArray replaceObjectAtIndex:1 withObject:dic];
+            
+        } failure:^(id JSON){
+            
+        }];
     }
 }
 
@@ -207,69 +198,31 @@
 
 - (void)tapButtonAction:(UIButton *)button
 {
-    if (!self.hasFront) {
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请添加人像页"];return;
+    if (!self.modifyVolunteer)
+    {
+        if (!self.hasFront) {
+            [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请添加人像页"];return;
+        }
+        if (!self.hasBack) {
+            [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请添加国徽页"];return;
+        }
     }
-    if (!self.hasBack) {
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请添加国徽页"];return;
-    }
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    NSDictionary* dictionary = @{@"values":self.mutableArray};
     
-    typeof(self) __weak wself = self;
+    NSData *data= [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *base64Encode = [data base64EncodedStringWithOptions:0];
     
-    NSMutableArray* array = [NSMutableArray array];
+    [self.dictionary setObject:base64Encode forKey:@"uploadJson"];
     
-    [self uploadImage:_cardFrontView.image success:^(id JSON){
-        NSDictionary* dic = [Utility dictionaryWithJsonString:JSON];
-        [array addObject:dic];
-        
-        [wself uploadImage:self.cardBackView.image success:^(id JSON){
-            NSDictionary* dic = [Utility dictionaryWithJsonString:JSON];
-            [array addObject:dic];
-
-            NSDictionary* dictionary = @{@"values":array};
-
-            NSData *data= [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *base64Encode = [data base64EncodedStringWithOptions:0];
-            
-            [wself uploadVerifiedInfo:base64Encode];
-        } failure:^(id JSON){
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        }];
-    } failure:^(id JSON){
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
-
-}
-
-- (void)uploadVerifiedInfo:(NSString *)uploadJson
-{
     
     RegisterThirdController* vc = [RegisterThirdController new];
-    vc.paramDic = self.paramDic;
+    vc.paramDic = self.dictionary;
     vc.modifyVolunteer = self.modifyVolunteer;
     [self.navigationController pushViewController:vc animated:YES];
-
     
-    
-    
-    
-    typeof(self) __weak wself = self;
-    [AFNetAPIClient POST:APIUploadVerifiedInfo parameters:[RequestParameters uploadVerifiedInfo:uploadJson] success:^(id JSON, NSError *error){
-        
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"提交成功"];
-        [wself performSelector:@selector(backAction) withObject:nil afterDelay:1.f];
-        
-        
-    } failure:^(id JSON, NSError *error){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        DataModel* model = (DataModel *)JSON;
-        [MBProgressHUD MBProgressHUDWithView:self.view Str:model.msg];
-    }];
 }
+
 
 - (void)backAction
 {
@@ -290,6 +243,7 @@
         make.bottom.equalTo(-HOME_INDICATOR_HEIGHT);
         make.height.equalTo(44);
     }];
+    
     
     
     UILabel* label = [UILabel new];
@@ -363,11 +317,45 @@
         }];
     }
 
-    _cardFrontView.userInteractionEnabled = YES;
-    _cardBackView.userInteractionEnabled = YES;
+    if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] != 2)
+    {
+        _cardFrontView.userInteractionEnabled = YES;
+        _cardBackView.userInteractionEnabled = YES;
+        
+        [_cardFrontView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardFrontView:)]];
+        [_cardBackView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardBackView:)]];
+    }
+
     
-    [_cardFrontView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardFrontView:)]];
-    [_cardBackView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardBackView:)]];
+    VolunteerInfo* volunteer = [UserInfoManager sharedInstance].volunteer;
+    NSArray * array = volunteer.certifPhotos;
+    
+    typeof(self) __weak wself = self;
+    if (array.count > 0) {
+        NSDictionary* dic = array[0];
+        [self.mutableArray replaceObjectAtIndex:0 withObject:dic];
+        
+        [self.cardFrontView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
+            
+            wself.hasFront = YES;
+            for (UIView* subView in wself.cardFrontView.subviews) {
+                [subView removeFromSuperview];
+            }
+        }];
+    }
+    if (array.count > 1) {
+        NSDictionary* dic = array[1];
+        [self.mutableArray replaceObjectAtIndex:1 withObject:dic];
+        
+        [self.cardBackView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
+            
+            wself.hasBack = YES;
+            for (UIView* subView in wself.cardBackView.subviews) {
+                [subView removeFromSuperview];
+            }
+        }];
+        
+    }
 }
 
 

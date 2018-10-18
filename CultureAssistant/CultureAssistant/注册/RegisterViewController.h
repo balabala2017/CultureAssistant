@@ -8,5 +8,5 @@
 
 @interface RegisterViewController : CustomViewController
 
-@property(nonatomic,assign)BOOL modifyVolunteer;
+
 @end

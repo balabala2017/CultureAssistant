@@ -257,7 +257,13 @@
             _textView3.bottomLabel.text = array[0];
         }
     }
-    _textView4.bottomLabel.text = recruitDetail.recruitEndDate;
+    
+    if (recruitDetail.recruitEndDate.length > 0) {
+        NSArray* array = [recruitDetail.recruitEndDate componentsSeparatedByString:@" "];
+        if (array.count > 0) {
+            _textView4.bottomLabel.text = array[0];
+        }
+    }
     
 }
 

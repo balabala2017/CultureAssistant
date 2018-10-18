@@ -40,7 +40,7 @@
         
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.result isKindOfClass:[NSDictionary class]]) {
-            wself.totalServiceLabel.text = [NSString stringWithFormat:@"总服务时长:   %@小时",[(NSDictionary *)model.result objectForKey:@"totalServiceTime"]];
+            wself.totalServiceLabel.text = [NSString stringWithFormat:@"总服务时长:%@小时(已审核)",[(NSDictionary *)model.result objectForKey:@"totalServiceTime"]];
             
             NSDictionary* dic = [(NSDictionary *)model.result objectForKey:@"page"];
             NSArray* array = dic[@"result"];
@@ -55,16 +55,12 @@
                 }
                  [wself.tableView reloadData];
             }
-        }else{
-            [wself.tableView.mj_footer endRefreshing];
         }
         [wself.tableView.mj_header endRefreshing];
         
     }failure:^(id JSON, NSError *error){
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD MBProgressHUDWithView:self.view Str:JSON];
-        [wself.tableView.mj_header endRefreshing];
-        [wself.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -77,14 +73,11 @@
     return 45;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ServiceRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServiceRecordCell" forIndexPath:indexPath];
     cell.serviceRecord = self.dataArray[indexPath.row];
     return cell;
 }
-
-
 
 #pragma mark-
 
@@ -115,9 +108,13 @@
         }];
         
         _totalServiceLabel = [UILabel new];
-        _totalServiceLabel.font = [UIFont systemFontOfSize:17];
+        if (SCREENWIDTH < 375) {
+            _totalServiceLabel.font = [UIFont systemFontOfSize:15];
+        }else{
+            _totalServiceLabel.font = [UIFont systemFontOfSize:17];
+        }
         _totalServiceLabel.textColor = BaseColor;
-        _totalServiceLabel.text = @"总服务时长:   1000小时";
+        _totalServiceLabel.text = @"总服务时长: 0小时(已审核)";
         [topView addSubview:_totalServiceLabel];
         [_totalServiceLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.centerY.equalTo(topView);
@@ -167,11 +164,15 @@
     
     typeof(self) __weak wself = self;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [wself.tableView.mj_header endRefreshing];
+        
         wself.cpage = 1;
         [wself.dataArray removeAllObjects];
         [wself getServicRecord];
     }];
     _tableView.mj_footer = [MJRefreshBackNormalFooter  footerWithRefreshingBlock:^{
+        [wself.tableView.mj_footer endRefreshing];
+        
         wself.cpage ++;
         [wself getServicRecord];
     }];

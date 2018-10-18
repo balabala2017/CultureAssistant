@@ -37,8 +37,12 @@
 
     
     VolunteerInfo* volunteer = [UserInfoManager sharedInstance].volunteer;
-    [self.serviceTimes addObjectsFromArray:volunteer.serviceTimeList];
-    [self.serviceTypes addObjectsFromArray:volunteer.serviceTypeList];
+    if (![volunteer.serviceTimeList isKindOfClass:[NSNull class]]) {
+       [self.serviceTimes addObjectsFromArray:volunteer.serviceTimeList];
+    }
+    if (![volunteer.serviceTypeList isKindOfClass:[NSNull class]]) {
+        [self.serviceTypes addObjectsFromArray:volunteer.serviceTypeList];
+    }
     
     self.sectionArray = @[@"———— 服务意向 ————",@"———— 服务时间 ————"];
     

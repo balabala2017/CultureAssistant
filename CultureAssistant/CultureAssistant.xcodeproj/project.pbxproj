@@ -10,6 +10,8 @@
 		7703F4BC1F85C62A0052B2D6 /* RegisterDropTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7703F4BB1F85C62A0052B2D6 /* RegisterDropTableView.m */; };
 		770789841F51587D00F167B9 /* ULBCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 770789831F51587D00F167B9 /* ULBCollectionViewFlowLayout.m */; };
 		7718A3CC1F7AA9FF00E5954D /* RecruitConditionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7718A3CB1F7AA9FF00E5954D /* RecruitConditionController.m */; };
+		771E68FB2175735E0052DE7E /* CameraTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 771E68F72175735E0052DE7E /* CameraTopView.m */; };
+		771E68FC2175735E0052DE7E /* ScanningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771E68F82175735E0052DE7E /* ScanningViewController.m */; };
 		773E4A861F55AF0F009387BF /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E4A851F55AF0F009387BF /* SearchView.m */; };
 		773E992C1F7E918F0077D182 /* RecruitEnrollResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E992B1F7E918F0077D182 /* RecruitEnrollResultController.m */; };
 		774507C41F7BE34900A0043D /* RecruitDetailTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774507C31F7BE34900A0043D /* RecruitDetailTopView.m */; };
@@ -23,6 +25,15 @@
 		776F3A4B1F56FA9B0047DBF0 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A4A1F56FA9B0047DBF0 /* AboutViewController.m */; };
 		776F3A4E1F56FAAC0047DBF0 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A4D1F56FAAC0047DBF0 /* SettingViewController.m */; };
 		776F3A511F5702D50047DBF0 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A501F5702D50047DBF0 /* SignInViewController.m */; };
+		77CAE0E82170A796003751FB /* DCScanningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAE0DB2170A796003751FB /* DCScanningViewController.m */; };
+		77CAE0E92170A796003751FB /* flsah_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0DD2170A796003751FB /* flsah_normal@2x.png */; };
+		77CAE0EA2170A796003751FB /* navigationbarScanBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E02170A796003751FB /* navigationbarScanBg.png */; };
+		77CAE0EB2170A796003751FB /* DCScanTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAE0E22170A796003751FB /* DCScanTool.m */; };
+		77CAE0EC2170A796003751FB /* flash_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E32170A796003751FB /* flash_select@2x.png */; };
+		77CAE0ED2170A796003751FB /* DCFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAE0E42170A796003751FB /* DCFlashButton.m */; };
+		77CAE0EE2170A796003751FB /* DCScanIdentifyAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAE0E52170A796003751FB /* DCScanIdentifyAreaView.m */; };
+		77CAE0EF2170A796003751FB /* scan_photo_album.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E62170A796003751FB /* scan_photo_album.png */; };
+		77CAE0F02170A796003751FB /* sqr_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E72170A796003751FB /* sqr_line@2x.png */; };
 		77F637411F54612F0093284B /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637151F54612E0093284B /* UMMobClick.framework */; };
 		77F637581F5462160093284B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637571F5462160093284B /* libsqlite3.tbd */; };
 		77F6375A1F5462230093284B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637591F5462230093284B /* CoreGraphics.framework */; };
@@ -178,8 +189,6 @@
 		BEB8472B1F4C48FD00070553 /* InfoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB8472A1F4C48FD00070553 /* InfoListViewController.m */; };
 		BEB8472F1F4C4C5800070553 /* WYScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB8472E1F4C4C5800070553 /* WYScrollView.m */; };
 		BEB847321F4C4D9D00070553 /* CustomElementView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB847311F4C4D9D00070553 /* CustomElementView.m */; };
-		BEB98B001F57A5CA0099D9F4 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB98AFF1F57A5CA0099D9F4 /* AuthenticationViewController.m */; };
-		BEB98B031F57A8F80099D9F4 /* ModifyNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB98B021F57A8F80099D9F4 /* ModifyNicknameViewController.m */; };
 		BEB98B061F57AC480099D9F4 /* ModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB98B051F57AC480099D9F4 /* ModifyPasswordViewController.m */; };
 		BEB98B0A1F57AD9A0099D9F4 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB98B091F57AD9A0099D9F4 /* VPImageCropperViewController.m */; };
 		BEB98B0F1F57FEE90099D9F4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEB98B0E1F57FEE90099D9F4 /* CoreLocation.framework */; };
@@ -201,6 +210,10 @@
 		770789831F51587D00F167B9 /* ULBCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULBCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		7718A3CA1F7AA9FF00E5954D /* RecruitConditionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecruitConditionController.h; sourceTree = "<group>"; };
 		7718A3CB1F7AA9FF00E5954D /* RecruitConditionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecruitConditionController.m; sourceTree = "<group>"; };
+		771E68F72175735E0052DE7E /* CameraTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraTopView.m; sourceTree = "<group>"; };
+		771E68F82175735E0052DE7E /* ScanningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanningViewController.m; sourceTree = "<group>"; };
+		771E68F92175735E0052DE7E /* CameraTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTopView.h; sourceTree = "<group>"; };
+		771E68FA2175735E0052DE7E /* ScanningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanningViewController.h; sourceTree = "<group>"; };
 		773E4A841F55AF0F009387BF /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
 		773E4A851F55AF0F009387BF /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
 		773E992A1F7E918F0077D182 /* RecruitEnrollResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecruitEnrollResultController.h; sourceTree = "<group>"; };
@@ -227,6 +240,19 @@
 		776F3A4D1F56FAAC0047DBF0 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		776F3A4F1F5702D50047DBF0 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		776F3A501F5702D50047DBF0 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		77CAE0DB2170A796003751FB /* DCScanningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCScanningViewController.m; sourceTree = "<group>"; };
+		77CAE0DC2170A796003751FB /* DCScanTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCScanTool.h; sourceTree = "<group>"; };
+		77CAE0DD2170A796003751FB /* flsah_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flsah_normal@2x.png"; sourceTree = "<group>"; };
+		77CAE0DE2170A796003751FB /* DCScanIdentifyAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCScanIdentifyAreaView.h; sourceTree = "<group>"; };
+		77CAE0DF2170A796003751FB /* DCFlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFlashButton.h; sourceTree = "<group>"; };
+		77CAE0E02170A796003751FB /* navigationbarScanBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbarScanBg.png; sourceTree = "<group>"; };
+		77CAE0E12170A796003751FB /* DCScanningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCScanningViewController.h; sourceTree = "<group>"; };
+		77CAE0E22170A796003751FB /* DCScanTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCScanTool.m; sourceTree = "<group>"; };
+		77CAE0E32170A796003751FB /* flash_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flash_select@2x.png"; sourceTree = "<group>"; };
+		77CAE0E42170A796003751FB /* DCFlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFlashButton.m; sourceTree = "<group>"; };
+		77CAE0E52170A796003751FB /* DCScanIdentifyAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCScanIdentifyAreaView.m; sourceTree = "<group>"; };
+		77CAE0E62170A796003751FB /* scan_photo_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan_photo_album.png; sourceTree = "<group>"; };
+		77CAE0E72170A796003751FB /* sqr_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sqr_line@2x.png"; sourceTree = "<group>"; };
 		77F637151F54612E0093284B /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		77F637571F5462160093284B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		77F637591F5462230093284B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -519,10 +545,6 @@
 		BEB8472E1F4C4C5800070553 /* WYScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYScrollView.m; sourceTree = "<group>"; };
 		BEB847301F4C4D9D00070553 /* CustomElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomElementView.h; sourceTree = "<group>"; };
 		BEB847311F4C4D9D00070553 /* CustomElementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomElementView.m; sourceTree = "<group>"; };
-		BEB98AFE1F57A5CA0099D9F4 /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationViewController.h; sourceTree = "<group>"; };
-		BEB98AFF1F57A5CA0099D9F4 /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationViewController.m; sourceTree = "<group>"; };
-		BEB98B011F57A8F80099D9F4 /* ModifyNicknameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyNicknameViewController.h; sourceTree = "<group>"; };
-		BEB98B021F57A8F80099D9F4 /* ModifyNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyNicknameViewController.m; sourceTree = "<group>"; };
 		BEB98B041F57AC480099D9F4 /* ModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPasswordViewController.h; sourceTree = "<group>"; };
 		BEB98B051F57AC480099D9F4 /* ModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPasswordViewController.m; sourceTree = "<group>"; };
 		BEB98B081F57AD9A0099D9F4 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
@@ -577,6 +599,17 @@
 			path = ULBCollectionViewFlowLayout;
 			sourceTree = "<group>";
 		};
+		771E68F62175735E0052DE7E /* 扫描 */ = {
+			isa = PBXGroup;
+			children = (
+				771E68F92175735E0052DE7E /* CameraTopView.h */,
+				771E68F72175735E0052DE7E /* CameraTopView.m */,
+				771E68FA2175735E0052DE7E /* ScanningViewController.h */,
+				771E68F82175735E0052DE7E /* ScanningViewController.m */,
+			);
+			path = "扫描";
+			sourceTree = "<group>";
+		};
 		776F3A3F1F56F8490047DBF0 /* 注册登录 */ = {
 			isa = PBXGroup;
 			children = (
@@ -588,14 +621,30 @@
 				776F3A441F56FA550047DBF0 /* ModifyPhoneNumViewController.m */,
 				776F3A461F56FA6D0047DBF0 /* FindPasswordViewController.h */,
 				776F3A471F56FA6D0047DBF0 /* FindPasswordViewController.m */,
-				BEB98AFE1F57A5CA0099D9F4 /* AuthenticationViewController.h */,
-				BEB98AFF1F57A5CA0099D9F4 /* AuthenticationViewController.m */,
-				BEB98B011F57A8F80099D9F4 /* ModifyNicknameViewController.h */,
-				BEB98B021F57A8F80099D9F4 /* ModifyNicknameViewController.m */,
 				BEB98B041F57AC480099D9F4 /* ModifyPasswordViewController.h */,
 				BEB98B051F57AC480099D9F4 /* ModifyPasswordViewController.m */,
 			);
 			name = "注册登录";
+			sourceTree = "<group>";
+		};
+		77CAE0DA2170A796003751FB /* CDDCDDScanning */ = {
+			isa = PBXGroup;
+			children = (
+				77CAE0DB2170A796003751FB /* DCScanningViewController.m */,
+				77CAE0DC2170A796003751FB /* DCScanTool.h */,
+				77CAE0DD2170A796003751FB /* flsah_normal@2x.png */,
+				77CAE0DE2170A796003751FB /* DCScanIdentifyAreaView.h */,
+				77CAE0DF2170A796003751FB /* DCFlashButton.h */,
+				77CAE0E02170A796003751FB /* navigationbarScanBg.png */,
+				77CAE0E12170A796003751FB /* DCScanningViewController.h */,
+				77CAE0E22170A796003751FB /* DCScanTool.m */,
+				77CAE0E32170A796003751FB /* flash_select@2x.png */,
+				77CAE0E42170A796003751FB /* DCFlashButton.m */,
+				77CAE0E52170A796003751FB /* DCScanIdentifyAreaView.m */,
+				77CAE0E62170A796003751FB /* scan_photo_album.png */,
+				77CAE0E72170A796003751FB /* sqr_line@2x.png */,
+			);
+			path = CDDCDDScanning;
 			sourceTree = "<group>";
 		};
 		77F637561F5462160093284B /* Frameworks */ = {
@@ -656,6 +705,7 @@
 			children = (
 				BEAB8E701F430CED0053F174 /* Utility */,
 				BEAB8D061F430A770053F174 /* 第三方 */,
+				771E68F62175735E0052DE7E /* 扫描 */,
 				BECC10001F4452D7003FA9BA /* 城市 */,
 				BECC0FFF1F444D11003FA9BA /* 搜索 */,
 				BEAB8D021F430A560053F174 /* 我的 */,
@@ -771,6 +821,7 @@
 		BEAB8D061F430A770053F174 /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				77CAE0DA2170A796003751FB /* CDDCDDScanning */,
 				BEB98B071F57AD9A0099D9F4 /* VPImageCropper */,
 				77F637151F54612E0093284B /* UMMobClick.framework */,
 				BE9D52D11F539C7C00CE861C /* MRZoomScrollView */,
@@ -1356,6 +1407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77CAE0EF2170A796003751FB /* scan_photo_album.png in Resources */,
 				BEAB8E0E1F430BC40053F174 /* jjrb.js in Resources */,
 				BEAB8CF81F42B2DF0053F174 /* LaunchScreen.storyboard in Resources */,
 				BEAB8E121F430BC40053F174 /* mutil.png in Resources */,
@@ -1364,6 +1416,7 @@
 				BEAB8E1F1F430BC40053F174 /* templateMeeting.html in Resources */,
 				BEAB8E101F430BC40053F174 /* jquery.min.js in Resources */,
 				BEAB8E151F430BC40053F174 /* news_qa.auto.css in Resources */,
+				77CAE0F02170A796003751FB /* sqr_line@2x.png in Resources */,
 				BE8F06971FBECD4E0018D719 /* default667h@2x.png in Resources */,
 				BEAB8E0D1F430BC40053F174 /* img_replace.js in Resources */,
 				BEAB8E181F430BC40053F174 /* pic_video_default.jpg in Resources */,
@@ -1376,13 +1429,16 @@
 				BEAB8E0F1F430BC40053F174 /* jquery-1.7.1.min.js in Resources */,
 				BEAB8E1E1F430BC40053F174 /* template_longWords.html in Resources */,
 				BEAB8CF31F42B2DE0053F174 /* Main.storyboard in Resources */,
+				77CAE0EA2170A796003751FB /* navigationbarScanBg.png in Resources */,
 				BEAB8E131F430BC40053F174 /* mutil_sel.png in Resources */,
 				BEAB8E541F430BC40053F174 /* MJRefresh.bundle in Resources */,
 				BEAB8E1B1F430BC40053F174 /* single_sel.png in Resources */,
 				BEAB8E191F430BC40053F174 /* pic_video_default.png in Resources */,
 				BEAB8E1A1F430BC40053F174 /* single.png in Resources */,
 				BEAB8E111F430BC40053F174 /* large-font.js in Resources */,
+				77CAE0E92170A796003751FB /* flsah_normal@2x.png in Resources */,
 				BE7B7F63205008E700013ED2 /* volunteer_bg.jpg in Resources */,
+				77CAE0EC2170A796003751FB /* flash_select@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,6 +1480,7 @@
 				BEAB8E6B1F430BC40053F174 /* UIImageView+HighlightedWebCache.m in Sources */,
 				BEAB8E811F430D590053F174 /* RequestHelper.m in Sources */,
 				776F3A4B1F56FA9B0047DBF0 /* AboutViewController.m in Sources */,
+				771E68FC2175735E0052DE7E /* ScanningViewController.m in Sources */,
 				BEAB8E321F430BC40053F174 /* JSONModelClassProperty.m in Sources */,
 				BEAB8E4F1F430BC40053F174 /* MJRefreshBackNormalFooter.m in Sources */,
 				BEB98B0A1F57AD9A0099D9F4 /* VPImageCropperViewController.m in Sources */,
@@ -1440,6 +1497,7 @@
 				BEA2D21D1F71458B00F6572B /* EnrollRecordController.m in Sources */,
 				BEAB8E5C1F430BC40053F174 /* MKAnnotationView+WebCache.m in Sources */,
 				BEAB8E391F430BC40053F174 /* JSONValueTransformer.m in Sources */,
+				77CAE0EE2170A796003751FB /* DCScanIdentifyAreaView.m in Sources */,
 				773E4A861F55AF0F009387BF /* SearchView.m in Sources */,
 				BEAB8E3E1F430BC40053F174 /* MASLayoutConstraint.m in Sources */,
 				BEAB8E531F430BC40053F174 /* MJRefreshStateHeader.m in Sources */,
@@ -1450,6 +1508,7 @@
 				BEAB8E8D1F43179D0053F174 /* CustomViewController.m in Sources */,
 				774507C71F7BF6A600A0043D /* RecruitDetailBottomView.m in Sources */,
 				BEAB8E0C1F430BC40053F174 /* UIWebView+AFNetworking.m in Sources */,
+				77CAE0ED2170A796003751FB /* DCFlashButton.m in Sources */,
 				BEAB8E7D1F430D590053F174 /* AFNetAPIClient.m in Sources */,
 				BEAB8E691F430BC40053F174 /* UIImage+MultiFormat.m in Sources */,
 				BEAB8E331F430BC40053F174 /* JSONModelError.m in Sources */,
@@ -1465,7 +1524,6 @@
 				BEAB8E581F430BC40053F174 /* UIScrollView+MJRefresh.m in Sources */,
 				BEAB8E601F430BC40053F174 /* SDImageCacheConfig.m in Sources */,
 				BEAB8E451F430BC40053F174 /* MBProgressHUD.m in Sources */,
-				BEB98B031F57A8F80099D9F4 /* ModifyNicknameViewController.m in Sources */,
 				BEAB8E661F430BC40053F174 /* SDWebImagePrefetcher.m in Sources */,
 				BEAB8E681F430BC40053F174 /* UIImage+GIF.m in Sources */,
 				BEAB8E081F430BC40053F174 /* UIButton+AFNetworking.m in Sources */,
@@ -1478,15 +1536,16 @@
 				BEAB8CED1F42B2DE0053F174 /* AppDelegate.m in Sources */,
 				BEAB8DFF1F430BC40053F174 /* AFNetworkReachabilityManager.m in Sources */,
 				BEAB8E2B1F430BC40053F174 /* IQPreviousNextView.m in Sources */,
+				77CAE0E82170A796003751FB /* DCScanningViewController.m in Sources */,
 				BEAB8E491F430BC40053F174 /* MJRefreshFooter.m in Sources */,
 				BEAB8E6C1F430BC40053F174 /* UIImageView+WebCache.m in Sources */,
 				BEAB8E481F430BC40053F174 /* MJRefreshComponent.m in Sources */,
 				BEAB8E0B1F430BC40053F174 /* UIRefreshControl+AFNetworking.m in Sources */,
-				BEB98B001F57A5CA0099D9F4 /* AuthenticationViewController.m in Sources */,
 				BEAB8E511F430BC40053F174 /* MJRefreshGifHeader.m in Sources */,
 				BEAB8E5F1F430BC40053F174 /* SDImageCache.m in Sources */,
 				BECC0FFE1F442E8D003FA9BA /* PersonViewController.m in Sources */,
 				BEAB8E4A1F430BC40053F174 /* MJRefreshHeader.m in Sources */,
+				77CAE0EB2170A796003751FB /* DCScanTool.m in Sources */,
 				BEAB8E901F4317BF0053F174 /* CustomDetailViewController.m in Sources */,
 				773E992C1F7E918F0077D182 /* RecruitEnrollResultController.m in Sources */,
 				BEC479381F73676200044545 /* RecruitDetailController.m in Sources */,
@@ -1503,6 +1562,7 @@
 				BEAB8E4C1F430BC40053F174 /* MJRefreshAutoNormalFooter.m in Sources */,
 				BEAB8E001F430BC40053F174 /* AFSecurityPolicy.m in Sources */,
 				BECC0FFB1F442E5F003FA9BA /* RecruitViewController.m in Sources */,
+				771E68FB2175735E0052DE7E /* CameraTopView.m in Sources */,
 				BEAB8E241F430BC40053F174 /* IQUIView+Hierarchy.m in Sources */,
 				BEAB8E011F430BC40053F174 /* AFURLRequestSerialization.m in Sources */,
 				BEAB8E061F430BC40053F174 /* AFNetworkActivityIndicatorManager.m in Sources */,

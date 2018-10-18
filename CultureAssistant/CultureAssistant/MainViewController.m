@@ -12,6 +12,7 @@
 #import "RecruitConditionController.h"
 
 #import "CustomNavigationController.h"
+#import "ScanningViewController.h"
 
 @interface MainViewController ()<CLLocationManagerDelegate>
 
@@ -30,6 +31,7 @@
 @property(nonatomic,strong)UIBarButtonItem *cityItem;
 @property(nonatomic,strong)UIBarButtonItem *searchItem;
 @property(nonatomic,strong)UIBarButtonItem *filterItem;
+@property(nonatomic,strong)UIBarButtonItem *scanItem;
 
 @property(nonatomic,assign)NSInteger selectIndex;
 @property(nonatomic,strong)NSMutableArray* barItemArray;
@@ -96,7 +98,13 @@
     [filterButton setImage:[UIImage imageNamed:@"filter_icon"] forState:UIControlStateNormal];
     [filterButton addTarget:self action:@selector(filterButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     self.filterItem = [[UIBarButtonItem alloc]initWithCustomView:filterButton];
-
+    
+    
+    UIButton* scanButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [scanButton setImage:[[UIImage imageNamed:@"scan_icon"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [scanButton addTarget:self action:@selector(scanButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    self.scanItem = [[UIBarButtonItem alloc] initWithCustomView:scanButton];
+    self.navigationItem.leftBarButtonItem = self.scanItem;
     
     
     NSArray* vc = @[@"InfoViewController",
@@ -251,26 +259,6 @@
                 if ([[UserInfoManager sharedInstance].userModel.auditFlag length] > 0) {
                     [[NSNotificationCenter  defaultCenter] postNotificationName:@"delivery_check_state" object:nil userInfo:@{@"checkState":[UserInfoManager sharedInstance].userModel.auditFlag}];
                 }
-                
-//                switch ([[UserInfoManager sharedInstance].userModel.auditFlag intValue]) {
-//                    case 1:
-//                        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"待审核"];
-//                        break;
-//                    case 2:
-//                        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"审核通过/待发布"];
-//                        break;
-//                    case 3:
-//                        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"审核不通过"];
-//                        break;
-//                    case 4:
-//                        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"取消审核"];
-//                        break;
-//                    default:
-//                        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"你已经是志愿者了"];
-//                        break;
-//                }
-//                [self performSelector:@selector(testFunction) withObject:nil afterDelay:.1f];
-//                return;
             }
         }
     }
@@ -299,6 +287,11 @@
 
     switch (item.tag) {
         case 0:
+        {
+            self.navigationItem.leftBarButtonItem = self.scanItem;
+            self.navigationItem.rightBarButtonItem = self.searchItem;
+        }
+            break;
         case 1:
         {
             self.navigationItem.leftBarButtonItem = nil;
@@ -333,6 +326,7 @@
 //    self.selectedIndex = self.selectIndex;
 }
 
+#pragma mark- 按钮点击事件
 - (void)locationButtonClicked:(UIButton *)button{
     CityViewController* controller = [CityViewController new];
     controller.locationCity = self.locationCity;
@@ -347,6 +341,21 @@
 - (void)filterButtonClicked:(UIButton *)button{
     RecruitConditionController* controller = [RecruitConditionController new];
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)scanButtonClicked:(UIButton *)button
+{
+     if (![UserInfoManager sharedInstance].isAlreadyLogin){
+         LoginViewController* loginVC = [[LoginViewController alloc] init];
+         [self.navigationController pushViewController:loginVC animated:YES];
+         return;
+     }
+    ScanningViewController* vc = [ScanningViewController new];
+    typeof(self) __weak wself = self;
+    vc.feedbackScanningResult = ^(NSString *message){
+
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark- NSNotification
@@ -530,8 +539,8 @@
 {
     if (![[UserInfoManager sharedInstance].userModel.volunteerFlag boolValue]) return;
     
-    //修改完成  变成待审核状态
-    [UserInfoManager sharedInstance].userModel.auditFlag = @"1";
+    //修改完成  变成待审核状态  先改成修改后不需要审核
+//    [UserInfoManager sharedInstance].userModel.auditFlag = @"1";
     
     [AFNetAPIClient GET:APIGetVolunteerInfo parameters:[RequestParameters commonRequestParameter] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
@@ -613,6 +622,8 @@
             volunteer.registerDate = [dic[@"volunteer"] objectForKey:@"registerDate"];
             volunteer.volunteNo = [dic[@"volunteer"] objectForKey:@"volunteNo"];
             volunteer.verifyRemark = [dic[@"volunteer"] objectForKey:@"verifyRemark"];
+            
+            volunteer.certifPhotos = dic[@"certifPhotos"];
             
             LibraryModel* library = [[LibraryModel alloc] initWithDictionary:dic[@"org"] error:nil];
             volunteer.volunteerLibrary = library;

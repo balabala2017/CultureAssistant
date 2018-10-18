@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "VPImageCropperViewController.h"
 
-@interface EditViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,VPImageCropperDelegate,UIPopoverControllerDelegate>
+@interface EditViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,VPImageCropperDelegate,UIPopoverControllerDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UIImageView* headerIcon;
 @property(nonatomic,strong)UITextField* phoneField;
 @property(nonatomic,strong)UITextField* nickNameField;
@@ -112,6 +112,7 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+#pragma mark-
 -(void)takePhoto
 {
     NSString *mediaType = AVMediaTypeVideo;
@@ -234,6 +235,13 @@
     }];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField == _phoneField) {
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark-
 - (void)setupMainUI
 {
@@ -271,6 +279,7 @@
     }];
     {
         _phoneField = [UITextField new];
+        _phoneField.delegate = self;
         _phoneField.font = [UIFont systemFontOfSize:16];
         _phoneField.placeholder = @"输入手机号码";
         _phoneField.textAlignment = NSTextAlignmentRight;

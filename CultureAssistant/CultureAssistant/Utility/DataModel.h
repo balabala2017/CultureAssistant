@@ -293,6 +293,7 @@
 @property (nonatomic,strong)NSString<Optional> * serviceStartTime;//服务时间
 @property (nonatomic,strong)NSString<Optional> * eventName;
 @property (nonatomic,strong)NSString<Optional> * totalServiceTime;//服务时长
+@property (nonatomic,strong)NSString<Optional> * statu;//1-待审核, 2-审核通过/待发布, 3-审核不通过, 4-取消审核
 @end
 
 
@@ -475,6 +476,16 @@
 
 @property(nonatomic,strong)LibraryModel<Optional> * volunteerLibrary;//修改页面用到
 
+@property(nonatomic,strong)NSArray<Optional> * certifPhotos;//身份证件信息
+
+@end
+
+
+#pragma mark- 扫描结果
+@interface ScanResult : JSONModel
+@property(nonatomic,strong)NSString<Optional> * type;
+@property(nonatomic,strong)NSString<Optional> * id;
+@property(nonatomic,strong)NSString<Optional> * msg;
 @end
 
 #pragma mark-  用户

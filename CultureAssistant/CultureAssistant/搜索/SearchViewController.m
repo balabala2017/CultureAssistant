@@ -48,7 +48,6 @@
     [self getHistoryNews];
     
     self.searchNewsArr = [NSMutableArray array];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

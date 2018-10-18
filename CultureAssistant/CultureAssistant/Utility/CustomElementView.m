@@ -2388,6 +2388,7 @@
         
         _rightLabel = [UILabel new];
         _rightLabel.text = @"3小时";
+        _rightLabel.numberOfLines = 2;
         _rightLabel.textColor = [UIColor colorWithHexString:@"666666"];
         _rightLabel.font = [UIFont boldSystemFontOfSize:12];
         _rightLabel.textAlignment = NSTextAlignmentCenter;
@@ -2397,7 +2398,6 @@
             make.right.equalTo(0);
             make.width.equalTo(90);
         }];
-        
         
     }
     return self;
@@ -2413,8 +2413,12 @@
         }
     }
     _midLabel.text = serviceRecord.eventName;
-    _rightLabel.text = [NSString stringWithFormat:@"%@小时",serviceRecord.totalServiceTime];
     
+    if ([serviceRecord.statu isEqualToString:@"1"]) {
+        _rightLabel.text = [NSString stringWithFormat:@"%@小时(待审核)",serviceRecord.totalServiceTime];
+    }else{
+        _rightLabel.text = [NSString stringWithFormat:@"%@小时",serviceRecord.totalServiceTime];
+    }
 }
 @end
 

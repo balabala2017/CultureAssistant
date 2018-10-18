@@ -373,7 +373,7 @@
         [whiteView addSubview:scoreLabel];
         [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.top.equalTo(wself.userName.bottom).offset(20);
-            make.left.equalTo(20);
+            make.left.equalTo(5);
         }];
         
         UIImageView* lastView = nil;
@@ -399,7 +399,7 @@
         _totalTimeLabel.font = [UIFont systemFontOfSize:15];
         [whiteView addSubview:_totalTimeLabel];
         [_totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make){
-            make.right.equalTo(whiteView.right).offset(-20);
+            make.right.equalTo(whiteView.right).offset(-5);
             make.centerY.equalTo(scoreLabel);
         }];
         

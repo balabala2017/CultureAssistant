@@ -88,6 +88,7 @@
 @property(nonatomic,strong)NSArray* librarys;//场馆
 
 @property(nonatomic,strong)VolunteerInfoView* infoView;
+@property(nonatomic,assign)BOOL modifyVolunteer;
 @end
 
 @implementation RegisterViewController
@@ -141,8 +142,6 @@
     }];
     
    
-    
-    
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 2)
     {
         _infoView = [VolunteerInfoView new];
@@ -150,6 +149,9 @@
         _infoView.removeInfoViewToModify = ^{
             [wself.infoView removeFromSuperview];
             wself.infoView = nil;
+            
+            wself.modifyVolunteer = YES;
+            [wself.tableView reloadData];
         };
         [self.view addSubview:_infoView];
         [_infoView mas_makeConstraints:^(MASConstraintMaker *make){
@@ -282,7 +284,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(freshPageContent:) name:@"GetVolunteerInfo_Finish" object:nil];
 }
 
-- (void)onDeliveryCheckState:(NSNotification *)notify{
+- (void)onDeliveryCheckState:(NSNotification *)notify
+{
     NSDictionary* dic = [notify userInfo];
     if ([dic[@"checkState"] intValue] == 2)
     {
@@ -291,8 +294,12 @@
         _infoView = [VolunteerInfoView new];
         typeof(self) __weak wself = self;
         _infoView.removeInfoViewToModify = ^{
+            
             [wself.infoView removeFromSuperview];
             wself.infoView = nil;
+            
+            wself.modifyVolunteer = YES;
+            [wself.tableView reloadData];
         };
         [self.view addSubview:_infoView];
         [self.view bringSubviewToFront:_infoView];
@@ -737,9 +744,11 @@
         cell.showStar = NO;
         switch (indexPath.row) {
             case 0:{//地区
+                if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] != 2) {
+                    cell.showSelectBtn = YES;
+                }
                 cell.showStar = YES;
                 self.areaTextField = cell.textField;
-                cell.showSelectBtn = YES;
                 if (self.tempCity) {
                     self.areaTextField.text = self.tempCity.AREA_NAME;
                 }
@@ -750,10 +759,12 @@
             }
                 break;
             case 1:{//场馆
+                if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] != 2) {
+                    cell.showSelectBtn = YES;
+                }
                 cell.showStar = YES;
                 self.libraryTextField = cell.textField;
                 self.libraryTextField.inputView = self.pickerView;
-                cell.showSelectBtn = YES;
                 
                if (self.tempLibrary) {
                     self.libraryTextField.text = self.tempLibrary.name;
@@ -772,10 +783,12 @@
             }
                 break;
             case 3:{//性别
+                if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] != 2) {
+                    cell.showSelectBtn = YES;
+                }
                 cell.showStar = YES;
                 self.sexTextField = cell.textField;
                 self.sexTextField.inputView = self.pickerView;
-                cell.showSelectBtn = YES;
                 if (self.sexData) {
                     self.sexTextField.text = self.sexData.name;
                 }
@@ -783,10 +796,12 @@
                 break;
 
             case 4:{//学历
+                if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] != 2) {
+                    cell.showSelectBtn = YES;
+                }
                 cell.showStar = YES;
                 self.educationTextField = cell.textField;
                 self.educationTextField.inputView = self.pickerView;
-                cell.showSelectBtn = YES;
                 if (self.educationData) {
                     self.educationTextField.text = self.educationData.name;
                 }
@@ -797,13 +812,7 @@
                 cell.showStar = YES;
                 cell.textField.text = @"居民身份证";
                 self.certifTypeTextField = cell.textField;
-                
-//                self.certifTypeTextField.inputView = self.pickerView;
-//                cell.showSelectBtn = YES;
-                
-//                if (self.certifTypeData) {
-//                    self.certifTypeTextField.text = self.certifTypeData.name;
-//                }
+
             }
                 break;
             case 6:{//证件号码
@@ -818,9 +827,6 @@
             case 7:{//出生年月日
                 cell.showStar = YES;
                 self.birthdayTextField = cell.textField;
-//                self.birthdayTextField.inputView = self.datePicker;
-//                cell.showSelectBtn = YES;
-                
                 tempString = self.dictionary[@"birthDay"];
                 if (tempString.length > 0) {
                     self.birthdayTextField.text = tempString;
@@ -1012,6 +1018,18 @@
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
         return NO;
     }
+    
+    if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 2
+        &&( textField == self.areaTextField
+        || textField == self.libraryTextField
+        || textField == self.nameTextField
+        || textField == self.sexTextField
+        || textField == self.educationTextField)) {
+        return NO;
+    }
+    
+    
+    
     if (textField == self.birthdayTextField || textField == self.certifTypeTextField) return NO;
     
     if (textField == self.certifNoTextField){
@@ -1523,9 +1541,7 @@
     if (!self.educationData) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择学历"];return;
     }
-//    if (!self.certifTypeData) {
-//        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择证件类型"];return;
-//    }
+
     tempString = self.dictionary[@"certifNo"];
     if (tempString.length <= 0) {
         [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请填写证件号码"];return;

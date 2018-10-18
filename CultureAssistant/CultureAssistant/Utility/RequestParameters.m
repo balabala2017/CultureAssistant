@@ -159,6 +159,7 @@
                          serviceTimes:(NSString *)serviceTimes     //可参与服务时间(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                          serviceTypes:(NSString *)serviceTypes     //服务类别(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                           workAddress:(NSString *)workAddress      //工作单位
+                           uploadJson:(NSString *)uploadJson       //证件图片信息
 {
     NSDictionary* dic = @{@"refType":@"VOLUNTEER",
                           @"orgId":orgId.length>0?orgId:@"",
@@ -187,7 +188,9 @@
                           @"hobby":hobby.length>0?hobby:@"",
                           @"serviceTimes":serviceTimes.length>0?serviceTimes:@"",
                           @"serviceTypes":serviceTypes.length>0?serviceTypes:@"",
-                          @"workAddress":workAddress.length>0?workAddress:@""};
+                          @"workAddress":workAddress.length>0?workAddress:@"",
+                          @"uploadJson":uploadJson.length>0?uploadJson:@""
+                          };
     return [[RequestHelper sharedInstance] prepareRequestparameter:dic];
 }
 
@@ -224,6 +227,7 @@
                          serviceTimes:(NSString *)serviceTimes     //可参与服务时间(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                          serviceTypes:(NSString *)serviceTypes     //服务类别(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                           workAddress:(NSString *)workAddress      //工作单位
+                           uploadJson:(NSString *)uploadJson       //证件图片信息
 {
     NSDictionary* dic = @{@"refType":@"VOLUNTEER",
                           @"id":volunteerId.length>0?volunteerId:@"",
@@ -257,7 +261,9 @@
                           @"hobby":hobby.length>0?hobby:@"",
                           @"serviceTimes":serviceTimes.length>0?serviceTimes:@"",
                           @"serviceTypes":serviceTypes.length>0?serviceTypes:@"",
-                          @"workAddress":workAddress.length>0?workAddress:@""};
+                          @"workAddress":workAddress.length>0?workAddress:@"",
+                          @"uploadJson":uploadJson.length>0?uploadJson:@""
+                          };
     return [[RequestHelper sharedInstance] prepareRequestparameter:dic];
 }
 

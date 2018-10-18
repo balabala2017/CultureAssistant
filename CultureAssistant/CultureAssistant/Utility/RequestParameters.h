@@ -93,7 +93,8 @@
                                 hobby:(NSString *)hobby            //爱好
                          serviceTimes:(NSString *)serviceTimes     //可参与服务时间(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                          serviceTypes:(NSString *)serviceTypes     //服务类别(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
-                          workAddress:(NSString *)workAddress;      //工作单位
+                          workAddress:(NSString *)workAddress      //工作单位
+                           uploadJson:(NSString *)uploadJson ;      //证件图片信息
 
 //更新志愿者信息
 + (NSDictionary *)doUpdateVolunteer:(NSString *)volunteerId//志愿者id
@@ -127,7 +128,8 @@
                               hobby:(NSString *)hobby            //爱好
                        serviceTimes:(NSString *)serviceTimes     //可参与服务时间(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
                        serviceTypes:(NSString *)serviceTypes     //服务类别(复选框,多选,存储每个选项的ID,ID间用英文的, 进行分割)
-                        workAddress:(NSString *)workAddress ;     //工作单位
+                        workAddress:(NSString *)workAddress      //工作单位
+                         uploadJson:(NSString *)uploadJson ;      //证件图片信息
 
 //获取地区列表
 + (NSDictionary *)getAreaListWithPid:(NSString *)pid pcode:(NSString *)pcode level:(NSString *)level;

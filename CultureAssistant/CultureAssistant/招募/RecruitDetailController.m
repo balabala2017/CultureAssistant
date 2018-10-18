@@ -69,18 +69,18 @@
         };
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if ([button.titleLabel.text isEqualToString:@"开始计时"]){
-        [self signInEvent:self.eventId];
-        _times = 0;
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
-        
-    }
-    
-    if (_times > 0){
-        [self stopTimer];
-        [self signOutEvent:self.serviceId];
-        [self.signBtn setTitle:@"开始计时" forState:UIControlStateNormal];
-    }
+//    else if ([button.titleLabel.text isEqualToString:@"开始计时"]){
+//        [self signInEvent:self.eventId];
+//        _times = 0;
+//        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+//
+//    }
+//
+//    if (_times > 0){
+//        [self stopTimer];
+//        [self signOutEvent:self.serviceId];
+//        [self.signBtn setTitle:@"开始计时" forState:UIControlStateNormal];
+//    }
 }
 
 - (void)onTimer
@@ -220,7 +220,8 @@
                     //2.正在计时：显示“已开始xx小时xx分xx秒”，点击结束计时，点击后恢复到未开始状态
                 
                     if ( [self.detail.applyFlag boolValue] && self.detail.apply){
-                        [self.signBtn setTitle:@"开始计时" forState:UIControlStateNormal];
+                        [self.signBtn setTitle:@"正在进行" forState:UIControlStateNormal];
+                        
                     }else{
                         self.btnView.hidden = YES;
                         [self.scrollView mas_updateConstraints:^(MASConstraintMaker *make){
@@ -390,6 +391,7 @@
     
     UIButton* backBtn = [UIButton new];
     [backBtn setImage:[UIImage imageNamed:@"back_icon"] forState:UIControlStateNormal];
+    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -22, 0, 0);
     [self.view addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.equalTo(STATUS_BAR_HEIGHT);
