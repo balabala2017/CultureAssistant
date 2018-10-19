@@ -14,7 +14,12 @@
 @property(nonatomic,strong)UIImageView* headerIcon;
 @property(nonatomic,strong)UITextField* phoneField;
 @property(nonatomic,strong)UITextField* nickNameField;
+@property(nonatomic,strong)UITextField* trueNameField;
+@property(nonatomic,strong)UIButton* maleBtn;
+@property(nonatomic,strong)UIButton* femaleBtn;
 @property(nonatomic,strong)UITextField* mailField;
+@property(nonatomic,strong)NSString* sexString;
+
 @end
 
 @implementation EditViewController
@@ -44,12 +49,19 @@
     
     NSDictionary* dic = [NSMutableDictionary dictionary];
     [dic setValue:userModel.userinfo.id forKey:@"id"];
-    if ([_phoneField.text length] > 0) {
-        [dic setValue:_phoneField.text forKey:@"phoneNum"];
-    }
+//    if ([_phoneField.text length] > 0) {
+//        [dic setValue:_phoneField.text forKey:@"phoneNum"];
+//    }
+//
     if ([_nickNameField.text length] > 0) {
         [dic setValue:_nickNameField.text forKey:@"nickName"];
     }
+    if ([_trueNameField.text length] > 0) {
+        [dic setValue:_trueNameField.text forKey:@"trueName"];
+    }
+    
+    [dic setValue:self.sexString forKey:@"sex"];
+    
     if ([_mailField.text length] > 0) {
         if ([NSString validateEmail:_mailField.text]) {
             [dic setValue:_mailField.text forKey:@"mail"];
@@ -57,6 +69,7 @@
             [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请输入正确的邮箱"];
         }
     }
+    
     
     dic = [[RequestHelper sharedInstance] prepareRequestparameter:dic];
     
@@ -87,6 +100,19 @@
     }
     _phoneField.text = userInfo.phoneNum;
     _nickNameField.text = userInfo.nickName;
+    
+    if ([userInfo.trueName length] > 0) {
+        _trueNameField.text = userInfo.trueName;
+    }
+    
+    if ([userInfo.sex isEqualToString:@"male"]) {
+        self.maleBtn.selected = YES;
+        self.femaleBtn.selected = NO;
+    }else if([userInfo.sex isEqualToString:@"female"]){
+        self.maleBtn.selected = NO;
+        self.femaleBtn.selected = YES;
+    }
+    
     if ([userInfo.mail length] > 0) {
         _mailField.text = userInfo.mail;
     }
@@ -242,6 +268,20 @@
     return YES;
 }
 
+- (void)onSelectSexAction:(UIButton *)button{
+
+    if (10 == button.tag) {
+        self.maleBtn.selected = YES;
+        self.femaleBtn.selected = NO;
+        self.sexString = @"male";
+    }else{
+        self.maleBtn.selected = NO;
+        self.femaleBtn.selected = YES;
+        self.sexString = @"female";
+    }
+    
+}
+
 #pragma mark-
 - (void)setupMainUI
 {
@@ -269,7 +309,7 @@
     }
     
     SettingCellView* cell2 = [SettingCellView new];
-    cell2.titleLabel.text = @"手机号码";
+    cell2.titleLabel.text = @"账号";
     cell2.arrowView.hidden = YES;
     [self.view addSubview:cell2];
     [cell2 mas_makeConstraints:^(MASConstraintMaker *make){
@@ -288,7 +328,7 @@
             make.centerY.equalTo(cell2);
             make.height.equalTo(40);
             make.width.equalTo(SCREENWIDTH-100);
-            make.right.equalTo(-10);
+            make.right.equalTo(-40);
         }];
     }
     
@@ -309,14 +349,12 @@
         [cell3 addSubview:_nickNameField];
         [_nickNameField mas_makeConstraints:^(MASConstraintMaker * make){
             make.centerY.equalTo(cell3);
-            make.height.equalTo(40);
-            make.width.equalTo(SCREENWIDTH-100);
-            make.right.equalTo(-10);
+            make.right.height.width.equalTo(self.phoneField);
         }];
     }
     
     SettingCellView* cell4 = [SettingCellView new];
-    cell4.titleLabel.text = @"邮箱";
+    cell4.titleLabel.text = @"真实姓名";
     cell4.arrowView.hidden = YES;
     [self.view addSubview:cell4];
     [cell4 mas_makeConstraints:^(MASConstraintMaker *make){
@@ -325,16 +363,85 @@
         make.height.equalTo(44);
     }];
     {
+        _trueNameField = [UITextField new];
+        _trueNameField.font = [UIFont systemFontOfSize:16];
+        _trueNameField.placeholder = @"输入真实姓名";
+        _trueNameField.textAlignment = NSTextAlignmentRight;
+        [cell4 addSubview:_trueNameField];
+        [_trueNameField mas_makeConstraints:^(MASConstraintMaker * make){
+            make.centerY.equalTo(cell4);
+            make.right.height.width.equalTo(self.phoneField);
+        }];
+    }
+    
+    SettingCellView* cell5 = [SettingCellView new];
+    cell5.titleLabel.text = @"性别";
+    cell5.arrowView.hidden = YES;
+    [self.view addSubview:cell5];
+    [cell5 mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.equalTo(cell4.bottom);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(44);
+    }];
+    {
+        
+        self.femaleBtn = [UIButton new];
+        self.femaleBtn.tag = 11;
+        [self.femaleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.femaleBtn setTitle:@"女" forState:UIControlStateNormal];
+        self.femaleBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        [self.femaleBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+        [self.femaleBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+        [self.femaleBtn setImage:[UIImage imageNamed:@"sex_unselect"] forState:UIControlStateNormal];
+        [self.femaleBtn setImage:[UIImage imageNamed:@"sex_selected"] forState:UIControlStateSelected];
+        [self.femaleBtn addTarget:self action:@selector(onSelectSexAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell5 addSubview:self.femaleBtn];
+        [self.femaleBtn mas_makeConstraints:^(MASConstraintMaker *make){
+            make.width.height.equalTo(44);
+            make.right.equalTo(cell5.right).offset(-47);
+            make.centerY.equalTo(cell5);
+        }];
+        
+        
+        self.maleBtn = [UIButton new];
+        self.maleBtn.tag = 10;
+        [self.maleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.maleBtn setTitle:@"男" forState:UIControlStateNormal];
+        self.maleBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        [self.maleBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+        [self.maleBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+        [self.maleBtn setImage:[UIImage imageNamed:@"sex_unselect"] forState:UIControlStateNormal];
+        [self.maleBtn setImage:[UIImage imageNamed:@"sex_selected"] forState:UIControlStateSelected];
+        [self.maleBtn addTarget:self action:@selector(onSelectSexAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell5 addSubview:self.maleBtn];
+        [self.maleBtn mas_makeConstraints:^(MASConstraintMaker *make){
+            make.width.height.equalTo(self.femaleBtn);
+            make.centerY.equalTo(cell5);
+            make.right.equalTo(self.femaleBtn.left).offset(-10);
+        }];
+        
+        self.maleBtn.selected = YES;
+        self.sexString = @"male";
+    }
+    
+    SettingCellView* cell6 = [SettingCellView new];
+    cell6.titleLabel.text = @"电子邮箱";
+    cell6.arrowView.hidden = YES;
+    [self.view addSubview:cell6];
+    [cell6 mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.equalTo(cell5.bottom);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(44);
+    }];
+    {
         _mailField = [UITextField new];
         _mailField.font = [UIFont systemFontOfSize:16];
         _mailField.placeholder = @"输入邮箱";
         _mailField.textAlignment = NSTextAlignmentRight;
-        [cell4 addSubview:_mailField];
+        [cell6 addSubview:_mailField];
         [_mailField mas_makeConstraints:^(MASConstraintMaker * make){
-            make.centerY.equalTo(cell4);
-            make.height.equalTo(40);
-            make.width.equalTo(SCREENWIDTH-100);
-            make.right.equalTo(-10);
+            make.centerY.equalTo(cell6);
+            make.right.height.width.equalTo(self.phoneField);
         }];
     }
 }

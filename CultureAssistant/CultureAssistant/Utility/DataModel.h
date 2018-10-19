@@ -496,6 +496,7 @@
 @property(nonatomic,strong)NSString<Optional> * birthday;
 @property(nonatomic,strong)NSString<Optional> * nickName;
 @property(nonatomic,strong)NSString<Optional> * userName;
+@property(nonatomic,strong)NSString<Optional> * trueName;
 @property(nonatomic,strong)NSString<Optional> * phoneNum;
 @property(nonatomic,strong)NSString<Optional> * sex;
 @property(nonatomic,strong)NSString<Optional> * score;
