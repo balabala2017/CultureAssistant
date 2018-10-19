@@ -274,6 +274,9 @@
         }
     }
     
+    if ([serviceType length] == 0) {
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择服务意向"];return;
+    }
     [self.dictionary setObject:serviceType forKey:@"serviceTypes"];
     
     NSString* serviceTime = @"";
@@ -284,6 +287,9 @@
         }else{
             serviceTime = [[serviceTime stringByAppendingString:@","] stringByAppendingString:str];
         }
+    }
+    if ([serviceTime length] == 0) {
+        [MBProgressHUD MBProgressHUDWithView:self.view Str:@"请选择服务时间"];return;
     }
      [self.dictionary setObject:serviceTime forKey:@"serviceTimes"];
     
