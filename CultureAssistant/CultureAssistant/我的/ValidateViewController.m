@@ -9,8 +9,9 @@
 #import "ValidateViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "RegisterThirdController.h"
+#import "APCutViewController.h"
 
-@interface ValidateViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPopoverControllerDelegate>
+@interface ValidateViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPopoverControllerDelegate,CutPhotoDelegate>
 @property(nonatomic,strong)UIImageView* cardFrontView;
 @property(nonatomic,strong)UIImageView* cardBackView;
 @property(nonatomic,assign)BOOL isFront;
@@ -141,8 +142,31 @@
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIImageWriteToSavedPhotosAlbum(originalImg, nil, nil, nil);
     }
+    
+    
+    APCutViewController *imgEditorVC = [[APCutViewController alloc] initWithImage:userImage];
+    imgEditorVC.delegate = self;
+    [self presentViewController:imgEditorVC animated:YES completion:^{
+        
+    }];
+
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    NSLog(@"%s",__func__);
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+#pragma mark- CutPhotoDelegate
+- (void)cutPhoto:(UIImage *)image
+{
+    UIImage * editImage = [self rotateImageWithAngle:image Angle:90 IsExpand:YES];
+
     if (self.isFront) {
-        _cardFrontView.image = userImage;
+        _cardFrontView.image = editImage;
         self.hasFront = YES;
         for (UIView* subView in _cardFrontView.subviews) {
             [subView removeFromSuperview];
@@ -153,13 +177,13 @@
             [self.mutableArray replaceObjectAtIndex:0 withObject:dic];
             
         } failure:^(id JSON){
-
+            
         }];
-
+        
     }
     else
     {
-        _cardBackView.image = userImage;
+        _cardBackView.image = editImage;
         self.hasBack = YES;
         for (UIView* subView in _cardBackView.subviews) {
             [subView removeFromSuperview];
@@ -173,14 +197,7 @@
             
         }];
     }
-}
 
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    NSLog(@"%s",__func__);
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
 }
 
 //上传图片
@@ -321,7 +338,7 @@
     {
         _cardFrontView.userInteractionEnabled = YES;
         _cardBackView.userInteractionEnabled = YES;
-        
+
         [_cardFrontView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardFrontView:)]];
         [_cardBackView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardBackView:)]];
     }
@@ -358,6 +375,40 @@
     }
 }
 
+/*
+ iOS UIImage 图像旋转
+ vImg：待旋转的图
+ vAngle：旋转角度
+ vIsExpand：是否扩展，如果不扩展，那么图像大小不变，但被截掉一部分
+ */
+- (UIImage*)rotateImageWithAngle:(UIImage*)vImg Angle:(CGFloat)vAngle IsExpand:(BOOL)vIsExpand
+{
+    CGSize imgSize = CGSizeMake(vImg.size.width * vImg.scale, vImg.size.height * vImg.scale);
+    
+    CGSize outputSize = imgSize;
+    if (vIsExpand) {
+        CGRect rect = CGRectMake(0, 0, imgSize.width, imgSize.height);
+        //旋转
+        rect = CGRectApplyAffineTransform(rect, CGAffineTransformMakeRotation(vAngle*M_PI/180.0));
+        
+        //NSLog(@"rotateImageWithAngle, size0:%f, size1:%f", imgSize.width, rect.size.width);
+        outputSize = CGSizeMake(CGRectGetWidth(rect), CGRectGetHeight(rect));
+    }
+    
+    UIGraphicsBeginImageContext(outputSize);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextTranslateCTM(context, outputSize.width / 2, outputSize.height / 2);
+    CGContextRotateCTM(context, vAngle*M_PI/180.0);
+    CGContextTranslateCTM(context, -imgSize.width / 2, -imgSize.height / 2);
+    
+    [vImg drawInRect:CGRectMake(0, 0, imgSize.width, imgSize.height)];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 
 
 @end

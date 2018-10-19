@@ -6,7 +6,6 @@
 #import "SettingViewController.h"
 #import "ModifyPasswordViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "VPImageCropperViewController.h"
 #import "EditViewController.h"
 
 @interface SettingViewController ()

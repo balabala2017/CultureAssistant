@@ -1105,10 +1105,7 @@
             }
         }
     }
-//    else if (textField == self.birthdayTextField)
-//    {
-//        [self dateChanged];
-//    }
+
     else if (textField == self.educationTextField)
     {
         self.dataArray = [DeviceHelper sharedInstance].educations;
@@ -1134,31 +1131,7 @@
             }
         }
     }
-//    else if (textField == self.certifTypeTextField)
-//    {
-//        self.dataArray = [DeviceHelper sharedInstance].certifTypes;
-//        [self.pickerView reloadAllComponents];
-//
-//        if (self.dataArray.count > 0 )
-//        {
-//            [self.pickerView selectRow:0 inComponent:0 animated:NO];
-//
-//            if (!self.certifTypeData) {
-//                InitDictData* data = self.dataArray[0];
-//                self.certifTypeData = data;
-//                self.certifTypeTextField.text = data.name;
-//                [self.dictionary setObject:self.certifTypeData.id forKey:@"certifType"];
-//            }else{
-//                for (NSInteger i = 0; i < self.dataArray.count; i++) {
-//                    InitDictData* data = self.dataArray[i];
-//                    if ([data.id intValue] == [self.certifTypeData.id intValue]) {
-//                        [self.pickerView selectRow:i inComponent:0 animated:NO];
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//    }
+
     else if (textField == self.politicalTextField)
     {
         self.dataArray = [DeviceHelper sharedInstance].politicals;
@@ -1284,8 +1257,8 @@
     else if (textField == self.jobTextField && self.jobTextField.text.length > 0){
         [self.dictionary setObject:self.jobTextField.text forKey:@"job"];
     }
-    else if (textField == self.postCodeTextField && self.postCodeTextField.text.length > 0){
-        [self.dictionary setObject:self.postCodeTextField.text forKey:@"profession"];
+    else if (textField == self.professionTextField && self.professionTextField.text.length > 0){
+        [self.dictionary setObject:self.professionTextField.text forKey:@"profession"];
     }
     else if (textField == self.schoolTextField && self.schoolTextField.text.length > 0){
         [self.dictionary setObject:self.schoolTextField.text forKey:@"school"];
