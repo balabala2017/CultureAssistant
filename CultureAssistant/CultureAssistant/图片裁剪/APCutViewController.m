@@ -72,7 +72,7 @@
     self = [super init];
     if (self) {
 
-        NSLog(@"%s  %@",__func__,originalImage);
+//        NSLog(@"%s  %@",__func__,originalImage);
         self.originalImage = originalImage;
         
         
@@ -112,7 +112,12 @@
         {
             typeof(self) __weak wself = self ;
             [self.showView imageFromCurrent:^(UIImage *img) {
-                [wself.delegate cutPhoto:img];
+
+                if (CGRectGetWidth(wself.showView.cutRect) > CGRectGetHeight(wself.showView.cutRect)) {
+                    [wself.delegate cutPhoto:img withOrientation:horizontal];
+                }else{
+                    [wself.delegate cutPhoto:img withOrientation:vertical];
+                }
                 
                 [wself dismissViewControllerAnimated:YES completion:^{
                     

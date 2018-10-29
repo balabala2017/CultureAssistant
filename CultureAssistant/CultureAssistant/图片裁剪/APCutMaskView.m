@@ -108,6 +108,7 @@
     showView = [APCutFrameView new];
     showView.isShowGrid = YES;
     [self addSubview:showView];
+
 }
 
 //rect为显示的裁剪框rect，而不是承载裁剪框的view的frame

@@ -132,7 +132,7 @@
 //拍照 获取照片
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     
-    NSLog(@"%s  \n%@",__func__,info);
+//    NSLog(@"%s  \n%@",__func__,info);
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -161,9 +161,15 @@
 }
 
 #pragma mark- CutPhotoDelegate
-- (void)cutPhoto:(UIImage *)image
+- (void)cutPhoto:(UIImage *)image withOrientation:(NSString *)orientation
 {
-    UIImage * editImage = [self rotateImageWithAngle:image Angle:90 IsExpand:YES];
+    UIImage * editImage ;
+    if ([orientation isEqualToString:horizontal]) {
+        editImage = [self rotateImageWithAngle:image Angle:0 IsExpand:YES];
+    }else{
+        editImage = [self rotateImageWithAngle:image Angle:90 IsExpand:YES];
+    }
+    
 
     if (self.isFront) {
         _cardFrontView.image = editImage;
@@ -352,26 +358,30 @@
         NSDictionary* dic = array[0];
         [self.mutableArray replaceObjectAtIndex:0 withObject:dic];
         
-        [self.cardFrontView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
-            
-            wself.hasFront = YES;
-            for (UIView* subView in wself.cardFrontView.subviews) {
-                [subView removeFromSuperview];
-            }
-        }];
+        if (![dic[@"remoteUrl"] isKindOfClass:[NSNull class]] && [dic[@"remoteUrl"] length] > 0) {
+            [self.cardFrontView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
+                
+                wself.hasFront = YES;
+                for (UIView* subView in wself.cardFrontView.subviews) {
+                    [subView removeFromSuperview];
+                }
+            }];
+        }
     }
+    
     if (array.count > 1) {
         NSDictionary* dic = array[1];
         [self.mutableArray replaceObjectAtIndex:1 withObject:dic];
         
-        [self.cardBackView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
-            
-            wself.hasBack = YES;
-            for (UIView* subView in wself.cardBackView.subviews) {
-                [subView removeFromSuperview];
-            }
-        }];
-        
+        if (![dic[@"remoteUrl"] isKindOfClass:[NSNull class]] && [dic[@"remoteUrl"] length] > 0) {
+            [self.cardBackView sd_setImageWithURL:[NSURL URLWithString:dic[@"remoteUrl"]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL){
+                
+                wself.hasBack = YES;
+                for (UIView* subView in wself.cardBackView.subviews) {
+                    [subView removeFromSuperview];
+                }
+            }];
+        }
     }
 }
 

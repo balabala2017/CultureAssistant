@@ -10,9 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * horizontal = @"horizontal";
+static NSString *  vertical = @"vertical";
+
 @protocol CutPhotoDelegate <NSObject>
 
-- (void)cutPhoto:(UIImage *)image;
+- (void)cutPhoto:(UIImage *)image withOrientation:(NSString *)orientation;
 
 @end
 
