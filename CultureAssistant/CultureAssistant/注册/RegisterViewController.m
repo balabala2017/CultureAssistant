@@ -156,7 +156,7 @@
         [self.view addSubview:_infoView];
         [_infoView mas_makeConstraints:^(MASConstraintMaker *make){
             make.top.left.right.equalTo(self.view);
-            make.bottom.equalTo(self.view.bottom).offset(-49);
+            make.bottom.equalTo(-TAB_BAR_HEIGHT);
         }];
     }
     else if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 3)
@@ -288,7 +288,7 @@
         [self.view bringSubviewToFront:_infoView];
         [_infoView mas_makeConstraints:^(MASConstraintMaker *make){
             make.top.left.right.equalTo(self.view);
-            make.bottom.equalTo(self.view.bottom).offset(-49);
+            make.bottom.equalTo(-TAB_BAR_HEIGHT);
         }];
     }
     else if ([dic[@"checkState"] intValue] == 3)

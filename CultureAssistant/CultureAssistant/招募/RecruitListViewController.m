@@ -82,8 +82,6 @@
     self.cpage = 1;
     self.dataArray = [NSMutableArray array];
     
-    
-    NSLog(@"%s %@",__func__,self.activeState);
     [self getEventsList];
     
     

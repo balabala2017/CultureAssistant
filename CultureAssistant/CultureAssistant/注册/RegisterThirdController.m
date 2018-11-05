@@ -58,8 +58,9 @@
     [_btn addTarget:self action:@selector(onRegisterAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn];
     [_btn mas_makeConstraints:^(MASConstraintMaker *make){
-        make.left.right.bottom.equalTo(self.view);
-        make.height.equalTo(40+HOME_INDICATOR_HEIGHT);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(40);
+        make.bottom.equalTo(-HOME_INDICATOR_HEIGHT);
     }];
     //审核状态不可修改
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {

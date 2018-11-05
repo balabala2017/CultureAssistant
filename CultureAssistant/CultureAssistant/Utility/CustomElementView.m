@@ -1816,6 +1816,8 @@
 //content是根据网址获得的网页源码字符串
 + (NSString *)StripHT:(NSString *)content{
     
+    if ([content length] == 0) return @"";
+    
     NSRegularExpression *regularExpretion=[NSRegularExpression regularExpressionWithPattern:@"<[^>]*>|\n" options:0 error:nil];
     
     content=[regularExpretion
