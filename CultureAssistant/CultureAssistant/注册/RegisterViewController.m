@@ -197,23 +197,6 @@
     [self.datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
 
     
-//    if (self.modifyVolunteer)
-//    {
-//        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        backButton.frame = CGRectMake(0, 0, 44, 44);
-//        [backButton setImage:[UIImage imageNamed:@"back_icon"] forState:UIControlStateNormal];
-//        [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
-//        self.navigationItem.leftBarButtonItem = leftItem;
-//
-//        self.title = @"修改志愿者信息";
-//
-//        [_tableView mas_updateConstraints:^(MASConstraintMaker *make){
-//            make.bottom.equalTo(self.view.bottom);
-//        }];
-//    }
-    
-    
     //获取全国省份
     [self getAreaList:@"" pcode:@"" level:@"1"];
     
@@ -322,11 +305,22 @@
 
 - (void)freshPageContent:(NSNotification *)notify{
     
-    [self.infoView removeFromSuperview];
-    self.infoView = nil;
-    
     [self initDictionaryData];
+
+    //审核状态不可修改
+    if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
+        [self.nextBtn setTitle:@"审核中，不允许修改" forState:UIControlStateNormal];
+        self.nextBtn.enabled = NO;
+    }else{
+        [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        self.nextBtn.enabled = YES;
+    }
+    
     [self.tableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
     //审核状态不可修改
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
@@ -336,6 +330,8 @@
         [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
         self.nextBtn.enabled = YES;
     }
+    
+    [self.tableView reloadData];
 }
 #pragma mark-
 - (void)changeCityLibrary:(NSNotification *)notify{
@@ -871,7 +867,9 @@
                 tempString = self.dictionary[@"domicile"];
                 if (tempString.length > 0) {
                     self.nativePlaceTextField.text = tempString;
-                }else{
+                }
+                else
+                {
                     NSString* provinceName = @"";
                     NSString* cityName = @"";
                     NSString* countyName = @"";

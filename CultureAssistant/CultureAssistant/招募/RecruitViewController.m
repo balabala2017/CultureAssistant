@@ -13,8 +13,6 @@
 
 @property(nonatomic,strong)WYScrollView *WYNetScrollView;
 
-@property(nonatomic,strong)UIScrollView* scrollView;
-
 @property(nonatomic,strong)UIScrollView* menuScrollView;//标签
 @property(nonatomic,strong)UIScrollView* bigScrollView;
 
@@ -37,17 +35,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-//    _scrollView = [UIScrollView new];
-//    _scrollView.delegate = self;
-//    [self.view addSubview:_scrollView];
-//    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make){
-//        make.top.left.right.equalTo(self.view);
-//        make.bottom.equalTo(self.view.bottom).offset(-49);
-//    }];
-//
-//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT+SCREENWIDTH/2.f);
-    
-    
     self.channelArray = @[@"全部",@"预热中",@"报名中",@"进行中",@"已结束",@"已结项"];
     
     [self creatSubviews];
@@ -173,11 +160,10 @@
 
     for (NSInteger i = 0; i < self.channelArray.count; i++) {
         RecruitListViewController *VC = [[RecruitListViewController alloc] init];
-        VC.view.frame = CGRectMake(i*self.bigScrollView.bounds.size.width, 0, self.bigScrollView.bounds.size.width, self.bigScrollView.bounds.size.height);
         VC.activeState = stateArray[i];
-
         [self.bigScrollView addSubview:VC.view];
         [self addChildViewController:VC];
+        VC.view.frame = CGRectMake(i*self.bigScrollView.bounds.size.width, 0, self.bigScrollView.bounds.size.width, self.bigScrollView.bounds.size.height);
     }
 }
 
@@ -262,8 +248,7 @@
         self.areaCode = @"";
         self.orgId = library.id;
     }
-    
-//    [self getBannerList];
+
 }
 
 - (void)dealloc{

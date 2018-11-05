@@ -252,7 +252,7 @@
         [_bgView addSubview:_iconView];
         
         if (!_titleLabel) {
-            _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 0, ScrollWidth-25-95, 40)];
+            _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScrollWidth-10-95, 40)];
             _titleLabel.textColor = [UIColor whiteColor];
             _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         }

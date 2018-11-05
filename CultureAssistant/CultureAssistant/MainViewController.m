@@ -252,12 +252,19 @@
     if (1 == item.tag)
     {
         if (![UserInfoManager sharedInstance].isAlreadyLogin){
+            
             [self performSelector:@selector(showLoginView) withObject:nil afterDelay:.1f];
             return;
-        }else{
+        }
+        else
+        {
             if ([[UserInfoManager sharedInstance].userModel.volunteerFlag boolValue] == YES) {
+                
                 if ([[UserInfoManager sharedInstance].userModel.auditFlag length] > 0) {
-                    [[NSNotificationCenter  defaultCenter] postNotificationName:@"delivery_check_state" object:nil userInfo:@{@"checkState":[UserInfoManager sharedInstance].userModel.auditFlag}];
+                    
+                    [[NSNotificationCenter  defaultCenter] postNotificationName:@"delivery_check_state"
+                                                                         object:nil
+                                                                       userInfo:@{@"checkState":[UserInfoManager sharedInstance].userModel.auditFlag}];
                 }
             }
         }
