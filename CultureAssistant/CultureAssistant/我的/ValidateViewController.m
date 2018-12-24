@@ -144,12 +144,20 @@
     }
     
     
-    APCutViewController *imgEditorVC = [[APCutViewController alloc] initWithImage:userImage];
+    UIImage *image = userImage;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(50, 0, (40 + 30 + 30 + 10), 0);
+    
+    JPImageresizerConfigure *configure = [JPImageresizerConfigure defaultConfigureWithResizeImage:image make:^(JPImageresizerConfigure *configure) {
+        configure.jp_contentInsets(contentInsets);
+    }];
+    
+    
+    APCutViewController *imgEditorVC = [[APCutViewController alloc] init];
     imgEditorVC.delegate = self;
+    imgEditorVC.configure = configure;
     [self presentViewController:imgEditorVC animated:YES completion:^{
         
     }];
-
 }
 
 
@@ -161,15 +169,9 @@
 }
 
 #pragma mark- CutPhotoDelegate
-- (void)cutPhoto:(UIImage *)image withOrientation:(NSString *)orientation
+- (void)cutPhoto:(UIImage *)image
 {
-    UIImage * editImage ;
-    if ([orientation isEqualToString:horizontal]) {
-        editImage = [self rotateImageWithAngle:image Angle:0 IsExpand:YES];
-    }else{
-        editImage = [self rotateImageWithAngle:image Angle:90 IsExpand:YES];
-    }
-    
+    UIImage * editImage = image;
 
     if (self.isFront) {
         _cardFrontView.image = editImage;
@@ -293,7 +295,7 @@
     _cardFrontView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sfz_01"]];
     [self.view addSubview:_cardFrontView];
     [_cardFrontView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.size.equalTo(CGSizeMake(270, 170));
+        make.size.equalTo(CGSizeMake(270, 270*54/85.6));
         make.centerX.equalTo(self.view);
         make.top.equalTo(50);
     }];
@@ -318,7 +320,7 @@
     _cardBackView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sfz_02"]];
     [self.view addSubview:_cardBackView];
     [_cardBackView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.size.equalTo(CGSizeMake(270, 170));
+        make.size.equalTo(CGSizeMake(270, 270*54/85.6));
         make.centerX.equalTo(self.view);
         make.top.equalTo(self.cardFrontView.bottom).offset(20);
     }];

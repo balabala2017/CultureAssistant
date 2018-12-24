@@ -840,9 +840,9 @@
 
         
         [_selectBtn mas_makeConstraints:^(MASConstraintMaker *make){
-            make.right.equalTo(self.right).offset(-15);
+            make.right.equalTo(self);
             make.top.bottom.equalTo(self);
-            make.width.equalTo(30);
+            make.width.equalTo(60);
         }];
     }
     return self;

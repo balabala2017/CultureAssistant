@@ -8,4 +8,6 @@
 
 @interface VolunteerInfoView : UIView
 @property(nonatomic,copy)void(^removeInfoViewToModify)(void);
+
+- (void)reloadContent;
 @end

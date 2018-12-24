@@ -125,6 +125,8 @@
 
 - (void)signEvent:(NSString *)eventId
 {
+    if ([eventId length] <= 0) return;
+        
     NSDictionary* dic = @{@"eventId":eventId};
     dic = [[RequestHelper sharedInstance] prepareRequestparameter:dic];
     

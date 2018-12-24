@@ -358,7 +358,6 @@
          return;
      }
     ScanningViewController* vc = [ScanningViewController new];
-    typeof(self) __weak wself = self;
     vc.feedbackScanningResult = ^(NSString *message){
 
     };

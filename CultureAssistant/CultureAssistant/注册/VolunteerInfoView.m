@@ -120,7 +120,6 @@
         
         _numberLabel = [self valueLabel];
         _numberLabel.text = volunteer.volunteNo;
-
         [self addSubview:_numberLabel];
         [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make){
             make.left.equalTo(label5.right).offset(20);
@@ -135,6 +134,22 @@
     if (self.removeInfoViewToModify) {
         self.removeInfoViewToModify();
     }
+}
+
+- (void)reloadContent
+{
+    VolunteerInfo* volunteer = [UserInfoManager sharedInstance].volunteer;
+    
+    _nameLabel.text = volunteer.realName;
+    _sexLabel.text = [volunteer.sex intValue] == 1?@"女":@"男";
+    _areaLabel.text = volunteer.areaName;
+    
+    NSArray* array ;
+    if([volunteer.registerDate length] > 0){
+        array = [volunteer.registerDate componentsSeparatedByString:@" "];
+    }
+    _dateLabel.text = array.count>1?array[0]:@"";
+    _numberLabel.text = volunteer.volunteNo;
 }
 
 - (UILabel *)profileLabel{

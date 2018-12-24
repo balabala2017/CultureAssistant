@@ -322,6 +322,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    if (_infoView != nil)
+    {
+        [_infoView reloadContent];
+    }
+    
     //审核状态不可修改
     if ([[UserInfoManager sharedInstance].userModel.auditFlag intValue] == 1) {
         [self.nextBtn setTitle:@"审核中，不允许修改" forState:UIControlStateNormal];

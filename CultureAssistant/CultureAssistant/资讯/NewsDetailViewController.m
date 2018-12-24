@@ -198,7 +198,7 @@
     }
     
     [webView evaluateJavaScript: @"document.body.scrollHeight" completionHandler:^(NSString *string, NSError * error){
-        int scrollHeight = [string intValue];
+        CGFloat scrollHeight = [string floatValue];
         
         [self.webView mas_updateConstraints:^(MASConstraintMaker *make){
             make.height.equalTo(scrollHeight);

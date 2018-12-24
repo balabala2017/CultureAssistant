@@ -7,13 +7,11 @@
 //
 
 #import "APCutViewController.h"
-#import "APCutSelView.h"
-#import "XMTool.h"
+
 
 @interface APCutViewController ()
-@property (nonatomic, strong) UIImage *originalImage;
-@property (nonatomic, strong) APCutSelView *showView;
-@property (nonatomic, assign) CGFloat imgRotation;
+
+@property (nonatomic, weak) JPImageresizerView *imageresizerView;
 @end
 
 @implementation APCutViewController
@@ -21,7 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSLog(@"%s",__func__);
     self.view.backgroundColor = [UIColor blackColor];
     
     UIButton * cancelBtn = [UIButton new];
@@ -37,8 +34,8 @@
     }];
     
     
-    NSArray* array = @[@"旋转+",@"旋转-",@"切图"];
-    CGFloat btnWidth = SCREENWIDTH/3.f;
+    NSArray* array = @[@"旋转",@"裁剪"];
+    CGFloat btnWidth = SCREENWIDTH/2.f;
     
     for (NSInteger i = 0; i < array.count; i ++)
     {
@@ -56,30 +53,22 @@
         }];
     }
     
-    
-    self.showView = [APCutSelView new];
-    [self.view addSubview:self.showView];
-    [self.showView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.equalTo(cancelBtn.bottom).offset(50);
-        make.left.right.equalTo(self.view);
-        make.bottom.equalTo(-50-HOME_INDICATOR_HEIGHT);
+
+    __weak typeof(self) wSelf = self;
+    JPImageresizerView *imageresizerView = [JPImageresizerView imageresizerViewWithConfigure:self.configure imageresizerIsCanRecovery:^(BOOL isCanRecovery) {
+        __strong typeof(wSelf) sSelf = wSelf;
+        if (!sSelf) return;
+
+    } imageresizerIsPrepareToScale:^(BOOL isPrepareToScale) {
+        __strong typeof(wSelf) sSelf = wSelf;
+        if (!sSelf) return;
+
     }];
+    [self.view insertSubview:imageresizerView atIndex:0];
     
-    self.showView.orgImg = self.originalImage;
-}
+    self.imageresizerView = imageresizerView;
+    self.imageresizerView.resizeWHScale = 85.6 / 54.0;
 
-- (id)initWithImage:(UIImage *)originalImage{
-    self = [super init];
-    if (self) {
-
-//        NSLog(@"%s  %@",__func__,originalImage);
-        self.originalImage = originalImage;
-        
-        
-        
-        
-    }
-    return self;
 }
 
 #pragma mark- 按钮点击事件
@@ -96,30 +85,25 @@
     switch (button.tag) {
         case 0:
         {
-            self.imgRotation += M_PI/18/5;
-            self.showView.rotationAngle = self.imgRotation;
+            [self.imageresizerView rotation];
         }
             break;
             
         case 1:
         {
-            self.imgRotation -= M_PI/18/5;
-            self.showView.rotationAngle = self.imgRotation;
-        }
-            break;
-            
-        case 2:
-        {
-            typeof(self) __weak wself = self ;
-            [self.showView imageFromCurrent:^(UIImage *img) {
-
-                if (CGRectGetWidth(wself.showView.cutRect) > CGRectGetHeight(wself.showView.cutRect)) {
-                    [wself.delegate cutPhoto:img withOrientation:horizontal];
-                }else{
-                    [wself.delegate cutPhoto:img withOrientation:vertical];
+            __weak typeof(self) weakSelf = self;
+            [self.imageresizerView imageresizerWithComplete:^(UIImage *resizeImage) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (!strongSelf) return;
+                
+                if (!resizeImage) {
+                    NSLog(@"没有裁剪图片");
+                    return;
                 }
                 
-                [wself dismissViewControllerAnimated:YES completion:^{
+                [strongSelf.delegate cutPhoto:resizeImage];
+                
+                [strongSelf dismissViewControllerAnimated:YES completion:^{
                     
                 }];
             }];

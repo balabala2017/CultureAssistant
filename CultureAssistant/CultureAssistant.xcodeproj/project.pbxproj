@@ -12,11 +12,6 @@
 		7718A3CC1F7AA9FF00E5954D /* RecruitConditionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7718A3CB1F7AA9FF00E5954D /* RecruitConditionController.m */; };
 		771E68FB2175735E0052DE7E /* CameraTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 771E68F72175735E0052DE7E /* CameraTopView.m */; };
 		771E68FC2175735E0052DE7E /* ScanningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771E68F82175735E0052DE7E /* ScanningViewController.m */; };
-		771F583821797D1200FD1306 /* APCutMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F582F21797D1200FD1306 /* APCutMaskView.m */; };
-		771F583921797D1200FD1306 /* UIImage_XMImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F583321797D1200FD1306 /* UIImage_XMImage.m */; };
-		771F583A21797D1200FD1306 /* APCutFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F583421797D1200FD1306 /* APCutFrameView.m */; };
-		771F583B21797D1200FD1306 /* XMTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F583521797D1200FD1306 /* XMTool.m */; };
-		771F583C21797D1200FD1306 /* APCutSelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F583621797D1200FD1306 /* APCutSelView.m */; };
 		771F583F21797D7B00FD1306 /* APCutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771F583E21797D7B00FD1306 /* APCutViewController.m */; };
 		773E4A861F55AF0F009387BF /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E4A851F55AF0F009387BF /* SearchView.m */; };
 		773E992C1F7E918F0077D182 /* RecruitEnrollResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E992B1F7E918F0077D182 /* RecruitEnrollResultController.m */; };
@@ -24,6 +19,10 @@
 		774507C71F7BF6A600A0043D /* RecruitDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774507C61F7BF6A600A0043D /* RecruitDetailBottomView.m */; };
 		77559BF220DCF74000798AD0 /* ValidateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77559BF120DCF74000798AD0 /* ValidateViewController.m */; };
 		775C68801F6973D30009052A /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775C687F1F6973D30009052A /* LibraryViewController.m */; };
+		776364B5219569B4006FA94D /* JPImageresizerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 776364AD219569B4006FA94D /* JPImageresizerView.m */; };
+		776364B6219569B4006FA94D /* UIImage+JPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 776364AE219569B4006FA94D /* UIImage+JPExtension.m */; };
+		776364B7219569B4006FA94D /* JPImageresizerFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 776364AF219569B4006FA94D /* JPImageresizerFrameView.m */; };
+		776364B8219569B4006FA94D /* JPImageresizerConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 776364B2219569B4006FA94D /* JPImageresizerConfigure.m */; };
 		7764033C216DAC6F00EFAF62 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7764033B216DAC6F00EFAF62 /* EditViewController.m */; };
 		776F3A3E1F56F8150047DBF0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A3D1F56F8150047DBF0 /* LoginViewController.m */; };
 		776F3A451F56FA550047DBF0 /* ModifyPhoneNumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776F3A441F56FA550047DBF0 /* ModifyPhoneNumViewController.m */; };
@@ -220,16 +219,6 @@
 		771E68F82175735E0052DE7E /* ScanningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanningViewController.m; sourceTree = "<group>"; };
 		771E68F92175735E0052DE7E /* CameraTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTopView.h; sourceTree = "<group>"; };
 		771E68FA2175735E0052DE7E /* ScanningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanningViewController.h; sourceTree = "<group>"; };
-		771F582E21797D1200FD1306 /* XMTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTool.h; sourceTree = "<group>"; };
-		771F582F21797D1200FD1306 /* APCutMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCutMaskView.m; sourceTree = "<group>"; };
-		771F583021797D1200FD1306 /* UIImage_XMImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_XMImage.h; sourceTree = "<group>"; };
-		771F583121797D1200FD1306 /* APCutFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCutFrameView.h; sourceTree = "<group>"; };
-		771F583221797D1200FD1306 /* APCutSelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCutSelView.h; sourceTree = "<group>"; };
-		771F583321797D1200FD1306 /* UIImage_XMImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_XMImage.m; sourceTree = "<group>"; };
-		771F583421797D1200FD1306 /* APCutFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCutFrameView.m; sourceTree = "<group>"; };
-		771F583521797D1200FD1306 /* XMTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMTool.m; sourceTree = "<group>"; };
-		771F583621797D1200FD1306 /* APCutSelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCutSelView.m; sourceTree = "<group>"; };
-		771F583721797D1200FD1306 /* APCutMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCutMaskView.h; sourceTree = "<group>"; };
 		771F583D21797D7B00FD1306 /* APCutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APCutViewController.h; sourceTree = "<group>"; };
 		771F583E21797D7B00FD1306 /* APCutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APCutViewController.m; sourceTree = "<group>"; };
 		773E4A841F55AF0F009387BF /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
@@ -244,6 +233,15 @@
 		77559BF120DCF74000798AD0 /* ValidateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ValidateViewController.m; sourceTree = "<group>"; };
 		775C687E1F6973D30009052A /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
 		775C687F1F6973D30009052A /* LibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryViewController.m; sourceTree = "<group>"; };
+		776364AC219569B4006FA94D /* JPImageresizerConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPImageresizerConfigure.h; sourceTree = "<group>"; };
+		776364AD219569B4006FA94D /* JPImageresizerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPImageresizerView.m; sourceTree = "<group>"; };
+		776364AE219569B4006FA94D /* UIImage+JPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JPExtension.m"; sourceTree = "<group>"; };
+		776364AF219569B4006FA94D /* JPImageresizerFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPImageresizerFrameView.m; sourceTree = "<group>"; };
+		776364B0219569B4006FA94D /* JPImageresizerTypedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPImageresizerTypedef.h; sourceTree = "<group>"; };
+		776364B1219569B4006FA94D /* JPImageresizerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPImageresizerView.h; sourceTree = "<group>"; };
+		776364B2219569B4006FA94D /* JPImageresizerConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPImageresizerConfigure.m; sourceTree = "<group>"; };
+		776364B3219569B4006FA94D /* JPImageresizerFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPImageresizerFrameView.h; sourceTree = "<group>"; };
+		776364B4219569B4006FA94D /* UIImage+JPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JPExtension.h"; sourceTree = "<group>"; };
 		7764033A216DAC6F00EFAF62 /* EditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		7764033B216DAC6F00EFAF62 /* EditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		776F3A3C1F56F8150047DBF0 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -631,20 +629,27 @@
 		771F582D21797C7400FD1306 /* 图片裁剪 */ = {
 			isa = PBXGroup;
 			children = (
-				771F583121797D1200FD1306 /* APCutFrameView.h */,
-				771F583421797D1200FD1306 /* APCutFrameView.m */,
-				771F583721797D1200FD1306 /* APCutMaskView.h */,
-				771F582F21797D1200FD1306 /* APCutMaskView.m */,
-				771F583221797D1200FD1306 /* APCutSelView.h */,
-				771F583621797D1200FD1306 /* APCutSelView.m */,
-				771F583021797D1200FD1306 /* UIImage_XMImage.h */,
-				771F583321797D1200FD1306 /* UIImage_XMImage.m */,
-				771F582E21797D1200FD1306 /* XMTool.h */,
-				771F583521797D1200FD1306 /* XMTool.m */,
+				776364AB219569B4006FA94D /* JPImageresizerView */,
 				771F583D21797D7B00FD1306 /* APCutViewController.h */,
 				771F583E21797D7B00FD1306 /* APCutViewController.m */,
 			);
 			path = "图片裁剪";
+			sourceTree = "<group>";
+		};
+		776364AB219569B4006FA94D /* JPImageresizerView */ = {
+			isa = PBXGroup;
+			children = (
+				776364AC219569B4006FA94D /* JPImageresizerConfigure.h */,
+				776364B2219569B4006FA94D /* JPImageresizerConfigure.m */,
+				776364B1219569B4006FA94D /* JPImageresizerView.h */,
+				776364AD219569B4006FA94D /* JPImageresizerView.m */,
+				776364B4219569B4006FA94D /* UIImage+JPExtension.h */,
+				776364AE219569B4006FA94D /* UIImage+JPExtension.m */,
+				776364B3219569B4006FA94D /* JPImageresizerFrameView.h */,
+				776364AF219569B4006FA94D /* JPImageresizerFrameView.m */,
+				776364B0219569B4006FA94D /* JPImageresizerTypedef.h */,
+			);
+			path = JPImageresizerView;
 			sourceTree = "<group>";
 		};
 		776F3A3F1F56F8490047DBF0 /* 注册登录 */ = {
@@ -1504,8 +1509,10 @@
 				BEAEB9D71F4D715900B0D2F9 /* NewsDetailViewController.m in Sources */,
 				BEAB8E0A1F430BC40053F174 /* UIProgressView+AFNetworking.m in Sources */,
 				BEAB8E261F430BC40053F174 /* IQUIWindow+Hierarchy.m in Sources */,
+				776364B7219569B4006FA94D /* JPImageresizerFrameView.m in Sources */,
 				BEAB8E4D1F430BC40053F174 /* MJRefreshAutoStateFooter.m in Sources */,
 				BEAB8E6D1F430BC40053F174 /* UIView+WebCache.m in Sources */,
+				776364B6219569B4006FA94D /* UIImage+JPExtension.m in Sources */,
 				BEAB8E431F430BC40053F174 /* View+MASAdditions.m in Sources */,
 				BEAEB9E01F4D8E4E00B0D2F9 /* TextFontSliderView.m in Sources */,
 				BEAB8E031F430BC40053F174 /* AFURLSessionManager.m in Sources */,
@@ -1521,9 +1528,6 @@
 				771E68FC2175735E0052DE7E /* ScanningViewController.m in Sources */,
 				BEAB8E321F430BC40053F174 /* JSONModelClassProperty.m in Sources */,
 				BEAB8E4F1F430BC40053F174 /* MJRefreshBackNormalFooter.m in Sources */,
-				771F583A21797D1200FD1306 /* APCutFrameView.m in Sources */,
-				771F583C21797D1200FD1306 /* APCutSelView.m in Sources */,
-				771F583921797D1200FD1306 /* UIImage_XMImage.m in Sources */,
 				BEB98B0A1F57AD9A0099D9F4 /* VPImageCropperViewController.m in Sources */,
 				BEB8472B1F4C48FD00070553 /* InfoListViewController.m in Sources */,
 				BEB1E5961F7BB8B8002E0755 /* RecruitPostDescController.m in Sources */,
@@ -1550,7 +1554,6 @@
 				774507C71F7BF6A600A0043D /* RecruitDetailBottomView.m in Sources */,
 				BEAB8E0C1F430BC40053F174 /* UIWebView+AFNetworking.m in Sources */,
 				77CAE0ED2170A796003751FB /* DCFlashButton.m in Sources */,
-				771F583B21797D1200FD1306 /* XMTool.m in Sources */,
 				BEAB8E7D1F430D590053F174 /* AFNetAPIClient.m in Sources */,
 				BEAB8E691F430BC40053F174 /* UIImage+MultiFormat.m in Sources */,
 				BEAB8E331F430BC40053F174 /* JSONModelError.m in Sources */,
@@ -1600,6 +1603,7 @@
 				BEAB8E651F430BC40053F174 /* SDWebImageManager.m in Sources */,
 				BEAB8E441F430BC40053F174 /* ViewController+MASAdditions.m in Sources */,
 				BEAB8E611F430BC40053F174 /* SDWebImageCompat.m in Sources */,
+				776364B8219569B4006FA94D /* JPImageresizerConfigure.m in Sources */,
 				BEAB8E2E1F430BC40053F174 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				BEAB8E4C1F430BC40053F174 /* MJRefreshAutoNormalFooter.m in Sources */,
 				BEAB8E001F430BC40053F174 /* AFSecurityPolicy.m in Sources */,
@@ -1620,10 +1624,10 @@
 				7718A3CC1F7AA9FF00E5954D /* RecruitConditionController.m in Sources */,
 				BEAB8E2C1F430BC40053F174 /* IQTitleBarButtonItem.m in Sources */,
 				771F583F21797D7B00FD1306 /* APCutViewController.m in Sources */,
-				771F583821797D1200FD1306 /* APCutMaskView.m in Sources */,
 				BEB847321F4C4D9D00070553 /* CustomElementView.m in Sources */,
 				BEAB8DFE1F430BC40053F174 /* AFHTTPSessionManager.m in Sources */,
 				BEAB8E361F430BC40053F174 /* JSONHTTPClient.m in Sources */,
+				776364B5219569B4006FA94D /* JPImageresizerView.m in Sources */,
 				776F3A3E1F56F8150047DBF0 /* LoginViewController.m in Sources */,
 				BEAB8E421F430BC40053F174 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				BEAB8E231F430BC40053F174 /* IQUITextFieldView+Additions.m in Sources */,

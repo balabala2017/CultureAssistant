@@ -61,7 +61,7 @@
             aString = [aString stringByReplacingOccurrencesOfString:@"amp;" withString:@""];
             aString=[aString stringByReplacingOccurrencesOfString:@"&#183;" withString:@"."];
             
-            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
+//            NSLog(@"\n\n%@ \n\n%@\n\n",[NSString stringWithFormat:@"%@",task.response.URL],aString);
             
             
             DataModel * model = [[DataModel alloc] initWithString:aString error:nil];

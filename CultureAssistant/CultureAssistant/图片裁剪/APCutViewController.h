@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JPImageresizerView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString * horizontal = @"horizontal";
-static NSString *  vertical = @"vertical";
 
 @protocol CutPhotoDelegate <NSObject>
 
-- (void)cutPhoto:(UIImage *)image withOrientation:(NSString *)orientation;
+- (void)cutPhoto:(UIImage *)image;
 
 @end
 
@@ -23,7 +22,7 @@ static NSString *  vertical = @"vertical";
 
 @property (nonatomic, weak) id<CutPhotoDelegate> delegate;
 
-- (id)initWithImage:(UIImage *)originalImage;
+@property (nonatomic, strong) JPImageresizerConfigure *configure;
 @end
 
 NS_ASSUME_NONNULL_END
