@@ -16,18 +16,18 @@
     [super viewDidLoad];
     self.title = @"志愿者誓词";
     
-    UILabel* lable = [UILabel new];
-    lable.text = @"———— 服务协议 ————";
-    lable.textColor = [UIColor colorWithHexString:@"999999"];
-    lable.font = [UIFont systemFontOfSize:12];
-    lable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:lable];
-    [lable mas_makeConstraints:^(MASConstraintMaker *make){
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(10);
-    }];
+//    UILabel* lable = [UILabel new];
+//    lable.text = @"———— 服务协议 ————";
+//    lable.textColor = [UIColor colorWithHexString:@"999999"];
+//    lable.font = [UIFont systemFontOfSize:12];
+//    lable.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:lable];
+//    [lable mas_makeConstraints:^(MASConstraintMaker *make){
+//        make.centerX.equalTo(self.view);
+//        make.top.equalTo(10);
+//    }];
     
-    NSString* string = @"我自愿成为一名助残志愿者，\n弘扬人道主义思想，\n践行志愿服务精神，\n不计报酬，尽己所能，\n为残联人士奉献爱心和力量！";
+    NSString* string = @"我自愿成为一名助残志愿者，\n弘扬人道主义思想，\n践行志愿服务精神，\n不计报酬，尽己所能，\n为残障人士奉献爱心和力量！";
     
     NSDictionary *attrDict = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:@"666666"],
                                NSFontAttributeName : [UIFont systemFontOfSize:14]};
@@ -46,7 +46,7 @@
     textLabel.attributedText = attrStr;
     [self.view addSubview:textLabel];
     [textLabel mas_makeConstraints:^(MASConstraintMaker *make){
-        make.top.equalTo(lable.bottom).offset(15);
+        make.top.equalTo(15);
         make.left.right.equalTo(self.view);
     }];
     
@@ -88,8 +88,8 @@
     }];
     boxBtn.selected = YES;
     
-    lable = [UILabel new];
-    lable.text = @"我已阅读并同意以上协议";
+    UILabel * lable = [UILabel new];
+    lable.text = @"我已阅读并同意以上誓词";
     lable.textColor = [UIColor colorWithHexString:@"666666"];
     lable.font = [UIFont systemFontOfSize:12];
     lable.textAlignment = NSTextAlignmentCenter;
