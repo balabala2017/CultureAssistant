@@ -10,6 +10,7 @@
 #import "VolunteerInfoView.h"
 #import "RegisterFaultViewController.h"
 
+
 @interface RegisterViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property(nonatomic,strong)UITableView* tableView;
 
@@ -167,7 +168,8 @@
         vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         [self presentViewController:vc animated:NO completion:nil];
     }
-    
+
+
     self.nextBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     self.nextBtn.backgroundColor = BaseColor;
     [self.nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
@@ -265,6 +267,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeliveryCheckState:) name:@"delivery_check_state" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(freshPageContent:) name:@"Logout_Account" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(freshPageContent:) name:@"GetVolunteerInfo_Finish" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRegisterSuccess:) name:SHOW_REGISTER_SUCCESS object:nil];
 }
 
 - (void)onDeliveryCheckState:(NSNotification *)notify
@@ -317,6 +320,28 @@
     }
     
     [self.tableView reloadData];
+}
+
+- (void)onRegisterSuccess:(NSNotification *)notify
+{
+    if (_infoView != nil) return;
+    
+    _infoView = [VolunteerInfoView new];
+    typeof(self) __weak wself = self;
+    _infoView.removeInfoViewToModify = ^{
+        
+        [wself.infoView removeFromSuperview];
+        wself.infoView = nil;
+        
+        wself.modifyVolunteer = YES;
+        [wself.tableView reloadData];
+    };
+    [self.view addSubview:_infoView];
+    [self.view bringSubviewToFront:_infoView];
+    [_infoView mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.left.right.equalTo(self.view);
+        make.bottom.equalTo(-TAB_BAR_HEIGHT);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

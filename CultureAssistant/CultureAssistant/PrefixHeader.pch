@@ -108,6 +108,11 @@
 #define ThirdLoginOpenid       @"THIRDLOGINOPENID"
 #define ThirdLoginType         @"THIRDLOGINTYPE"
 
+
+#define HAVE_SHOWED_HINT @"HAVE_SHOWED_HINT"
+#define SHOW_REGISTER_SUCCESS @"SHOW_REGISTER_SUCCESS"
+
+
 #define twsm_secretKey  @"f36f3e02dee7e1c429f3ab91e106d898"   //不参与加密之前的排序
 #define twsm_appId      @"8d1da37fe9294024a4306c14abf53ac5"   //不参与加密
 

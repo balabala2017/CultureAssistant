@@ -39,6 +39,7 @@
 		77CAE0EE2170A796003751FB /* DCScanIdentifyAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAE0E52170A796003751FB /* DCScanIdentifyAreaView.m */; };
 		77CAE0EF2170A796003751FB /* scan_photo_album.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E62170A796003751FB /* scan_photo_album.png */; };
 		77CAE0F02170A796003751FB /* sqr_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CAE0E72170A796003751FB /* sqr_line@2x.png */; };
+		77D9F4A821D328BF00654C0D /* RegisterSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9F4A721D328BF00654C0D /* RegisterSuccessController.m */; };
 		77F637411F54612F0093284B /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637151F54612E0093284B /* UMMobClick.framework */; };
 		77F637581F5462160093284B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637571F5462160093284B /* libsqlite3.tbd */; };
 		77F6375A1F5462230093284B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F637591F5462230093284B /* CoreGraphics.framework */; };
@@ -269,6 +270,8 @@
 		77CAE0E52170A796003751FB /* DCScanIdentifyAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCScanIdentifyAreaView.m; sourceTree = "<group>"; };
 		77CAE0E62170A796003751FB /* scan_photo_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan_photo_album.png; sourceTree = "<group>"; };
 		77CAE0E72170A796003751FB /* sqr_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sqr_line@2x.png"; sourceTree = "<group>"; };
+		77D9F4A621D328BF00654C0D /* RegisterSuccessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterSuccessController.h; sourceTree = "<group>"; };
+		77D9F4A721D328BF00654C0D /* RegisterSuccessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterSuccessController.m; sourceTree = "<group>"; };
 		77F637151F54612E0093284B /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		77F637571F5462160093284B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		77F637591F5462230093284B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -845,6 +848,8 @@
 				BE7B7F6520500E3500013ED2 /* VolunteerInfoView.m */,
 				BE7D4B702057E202000E1BE4 /* RegisterFaultViewController.h */,
 				BE7D4B712057E202000E1BE4 /* RegisterFaultViewController.m */,
+				77D9F4A621D328BF00654C0D /* RegisterSuccessController.h */,
+				77D9F4A721D328BF00654C0D /* RegisterSuccessController.m */,
 			);
 			path = "注册";
 			sourceTree = "<group>";
@@ -1564,6 +1569,7 @@
 				BEAB8E621F430BC40053F174 /* SDWebImageDecoder.m in Sources */,
 				BEAB8E091F430BC40053F174 /* UIImageView+AFNetworking.m in Sources */,
 				776F3A451F56FA550047DBF0 /* ModifyPhoneNumViewController.m in Sources */,
+				77D9F4A821D328BF00654C0D /* RegisterSuccessController.m in Sources */,
 				BEAB8E591F430BC40053F174 /* UIView+MJExtension.m in Sources */,
 				BEAB8CF01F42B2DE0053F174 /* ViewController.m in Sources */,
 				BEAB8E581F430BC40053F174 /* UIScrollView+MJRefresh.m in Sources */,

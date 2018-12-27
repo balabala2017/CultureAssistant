@@ -353,6 +353,8 @@
         
         [NSTimer scheduledTimerWithTimeInterval:10*60 target:self selector:@selector(refreshTokenCode) userInfo:nil repeats:YES];
         
+        
+        
     }
     return self;
 }
@@ -410,6 +412,15 @@
     }failure:^(id JSON, NSError *error){
         
     }];
+    
+    
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+
+    //已注册
+    if (self.userModel.volunteerFlag && ![userDefaults boolForKey:HAVE_SHOWED_HINT]) {
+        [self getUserCenterInfo:nil];
+    }
+    
 }
 
 - (void)getUserCenterInfo:(void (^)(BOOL finished))success{
@@ -419,7 +430,15 @@
         if ([model.code intValue] == 200 && [model.result isKindOfClass:[NSDictionary class]]) {
             
             self.userModel = [UserModel userModelWithJson:(NSDictionary *)model.result];
-
+            
+            NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+            if ([self.userModel.auditFlag integerValue] == 2 && ![userDefaults boolForKey:HAVE_SHOWED_HINT]) {
+                [userDefaults setBool:YES forKey:HAVE_SHOWED_HINT];
+                [userDefaults synchronize];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_REGISTER_SUCCESS object:nil];
+            }
+            
             [self saveUserinfo:(NSDictionary *)model.result];
             success(YES);
         }

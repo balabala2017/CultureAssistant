@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+
 }
 
 - (void)setSubChannelsArr:(NSArray *)subChannelsArr{

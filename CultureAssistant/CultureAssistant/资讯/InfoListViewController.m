@@ -102,8 +102,10 @@
         if ([model.result isKindOfClass:[NSDictionary class]]){
             self.banners = [BannerList BannerListWithDictionary:(NSDictionary *)model.result];
             if(self.banners.list.count>0 || self.listArray.count>0){
+                NSLog(@"getBannerList......1");
                 self.blankView.hidden = YES;
             }else{
+                NSLog(@"getBannerList......2");
                 self.blankView.hidden = NO;
             }
             [self.tableView reloadData];
@@ -145,8 +147,10 @@
                 [self.tableView.mj_footer endRefreshing];
             }
             if(self.banners.list.count>0 || self.listArray.count>0){
+                NSLog(@"getArticleLsit+++++++++1");
                 self.blankView.hidden = YES;
             }else{
+                NSLog(@"getArticleLsit+++++++++2");
                 self.blankView.hidden = NO;
             }
             [self.tableView reloadData];

@@ -13,6 +13,7 @@
 
 #import "CustomNavigationController.h"
 #import "ScanningViewController.h"
+#import "RegisterSuccessController.h"
 
 @interface MainViewController ()<CLLocationManagerDelegate>
 
@@ -175,6 +176,9 @@
     [self addNSNotification];
     
     [self checkAppUpdate];
+    
+    
+
 }
 
 //- (void)viewWillLayoutSubviews{
@@ -191,6 +195,7 @@
         [self getChannelList];
     }
 }
+
 
 //资讯页面的频道
 - (void)getChannelList{
@@ -235,6 +240,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"refresh_volunteer_info" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVolunteerToUpdate) name:@"ModifySuccess_Notify" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRegisterSuccess:) name:SHOW_REGISTER_SUCCESS object:nil];
 }
 
 #pragma mark-
@@ -371,15 +377,12 @@
     if ([dic objectForKey:SelectedCityKey]) {
         CityModel* city = dic[SelectedCityKey];
         if (city.ORG_ID.length > 0) {
-//            [self.locationButton setTitle:city.SHOW_NAME forState:UIControlStateNormal];
             cityNameStr = city.SHOW_NAME;
         }else{
-//            [self.locationButton setTitle:city.AREA_NAME forState:UIControlStateNormal];
             cityNameStr = city.AREA_NAME;
         }
     }else{
         LibraryModel* library = dic[SelectedLibraryKey];
-//        [self.locationButton setTitle:library.name forState:UIControlStateNormal];
         cityNameStr = library.name;
     }
     if (cityNameStr.length > 5) {
@@ -414,11 +417,6 @@
     }
     else
     {
-//        if ([[UserInfoManager sharedInstance].userModel.volunteerFlag boolValue] == YES) {
-//            [MBProgressHUD MBProgressHUDWithView:self.view Str:@"您已是志愿者了"];
-//            [self performSelector:@selector(testFunction) withObject:nil afterDelay:.1f];
-//            return;
-//        }
         self.selectedIndex = 1;
         _blueView.frame = CGRectMake(SCREENWIDTH/4.0, 0, SCREENWIDTH/4.0, 49);
         
@@ -436,6 +434,18 @@
     _blueView.frame = CGRectMake(0.0, 0, SCREENWIDTH/4.0, 49);
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = self.searchItem;
+}
+
+- (void)showRegisterSuccess:(NSNotification *)notify
+{
+    [self performSelector:@selector(DelayShowRegisterSuccess) withObject:nil afterDelay:1.f];
+}
+
+- (void)DelayShowRegisterSuccess
+{
+    RegisterSuccessController* vc = [RegisterSuccessController new];
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 #pragma mark-
@@ -544,10 +554,7 @@
 - (void)getVolunteerToUpdate
 {
     if (![[UserInfoManager sharedInstance].userModel.volunteerFlag boolValue]) return;
-    
-    //修改完成  变成待审核状态  先改成修改后不需要审核
-//    [UserInfoManager sharedInstance].userModel.auditFlag = @"1";
-    
+
     [AFNetAPIClient GET:APIGetVolunteerInfo parameters:[RequestParameters commonRequestParameter] success:^(id JSON, NSError *error){
         DataModel* model = [[DataModel alloc] initWithString:JSON error:nil];
         if ([model.code isEqualToString:@"200"] && [model.result isKindOfClass:[NSDictionary class]]) {
